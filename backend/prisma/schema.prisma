@@ -1,0 +1,176 @@
+// Tutor Lagbe - Prisma Schema
+// PostgreSQL Database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum TuitionType {
+  ONLINE
+  OFFLINE
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String
+  role      Role     @default(STUDENT)
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tutorProfile     TutorProfile?
+  bookingsAsStudent Booking[]     @relation("StudentBookings")
+  reviewsWritten    Review[]      @relation("StudentReviews")
+  sentMessages      Message[]     @relation("SenderMessages")
+  receivedMessages  Message[]     @relation("ReceiverMessages")
+  notifications     Notification[]
+
+  @@map("users")
+}
+
+model TutorProfile {
+  id                 String             @id @default(uuid())
+  userId             String             @unique
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Profile fields
+  bio                String?
+  photoUrl           String?
+  coverPhotoUrl      String?
+  subjects           String[]           // e.g., ["Math", "Physics"]
+  classes            String[]           // e.g., ["Class 9", "Class 10"]
+  mediums            String[]           // e.g., ["Bangla Medium", "English Version"]
+  gender             String?
+  locationDistrict   String?
+  locationArea       String?
+  expectedSalary     Float?             // Monthly expected salary in BDT
+  hourlyRate         Float?             // Hourly rate in BDT
+  experienceYears    Int                @default(0)
+  qualification      String?
+  institution        String?
+
+  // Verification
+  verificationStatus VerificationStatus @default(PENDING)
+  nidNumber          String?
+  documentUrl        String?
+
+  // Schedule availability
+  availableSlots     String[]           // e.g., ["Sat-10:00", "Sun-15:00"]
+
+  // Rating
+  averageRating      Float              @default(0)
+  totalReviews       Int                @default(0)
+
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  // Relations
+  bookings           Booking[]
+  reviews            Review[]
+
+  @@map("tutor_profiles")
+}
+
+model Booking {
+  id             String        @id @default(uuid())
+  studentId      String
+  student        User          @relation("StudentBookings", fields: [studentId], references: [id])
+  tutorProfileId String
+  tutor          TutorProfile  @relation(fields: [tutorProfileId], references: [id])
+
+  date           DateTime
+  timeSlot       String
+  tuitionType    TuitionType
+  address        String?
+  status         BookingStatus @default(PENDING)
+  notes          String?
+  amount         Float?
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("bookings")
+}
+
+model Review {
+  id             String       @id @default(uuid())
+  studentId      String
+  student        User         @relation("StudentReviews", fields: [studentId], references: [id])
+  tutorProfileId String
+  tutor          TutorProfile @relation(fields: [tutorProfileId], references: [id])
+
+  rating         Int          // 1 to 5
+  comment        String?
+  createdAt      DateTime     @default(now())
+
+  @@map("reviews")
+}
+
+model Message {
+  id           String   @id @default(uuid())
+  senderId     String
+  sender       User     @relation("SenderMessages", fields: [senderId], references: [id])
+  receiverId   String
+  receiver     User     @relation("ReceiverMessages", fields: [receiverId], references: [id])
+  content      String
+  fileUrl      String?
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@map("messages")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      String   // BOOKING_ACCEPTED, SESSION_REMINDER, PAYMENT_SUCCESS, NEW_MESSAGE
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+  bookingId     String
+  userId        String
+  amount        Float
+  method        String   // BKASH, NAGAD, ROCKET, VISA, MASTERCARD
+  status        String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  transactionId String?
+  createdAt     DateTime @default(now())
+
+  @@map("payments")
+}
