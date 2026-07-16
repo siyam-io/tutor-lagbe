@@ -64,6 +64,7 @@ function BookingContent() {
     setIsSubmitting(true);
     setError("");
     try {
+      const totalAmount = tutorRate + 50;
       const { data } = await api.post("/bookings", {
         tutorProfileId: tutorId,
         date: selectedDate,
@@ -71,10 +72,26 @@ function BookingContent() {
         tuitionType: mode.includes("Online") ? "ONLINE" : "OFFLINE",
         address: mode.includes("Online") ? "Online (Google Meet)" : address || "Student Home Address",
         notes: `${topic ? `Topic: ${topic}. ` : ""}${notes}`,
-        amount: tutorRate + 50,
+        amount: totalAmount,
       });
 
-      if (data.success) {
+      if (data.success && data.data) {
+        const bookingId = data.data.id;
+        // Instantly initiate payment and redirect to SSLCommerz checkout
+        try {
+          const payRes = await api.post("/payments/initiate", {
+            bookingId,
+            amount: totalAmount,
+          });
+          if (payRes.data.success && payRes.data.gatewayUrl) {
+            window.location.href = payRes.data.gatewayUrl;
+            return;
+          }
+        } catch (payErr) {
+          console.error("Payment initiation failed:", payErr);
+          router.push("/payments?status=fail");
+          return;
+        }
         router.push("/dashboard/student");
       } else {
         setError(data.error || "Failed to book session");

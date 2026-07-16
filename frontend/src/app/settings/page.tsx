@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { HiOutlineUser, HiOutlineLockClosed, HiOutlineBell, HiOutlineGlobe, HiOutlineMoon, HiOutlineAcademicCap, HiPlus, HiTrash, HiCheck } from "react-icons/hi";
 import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/api";
+import { SUBJECTS, CLASSES, MEDIUMS } from "@shared/types";
 
 export default function SettingsPage() {
   const { user, setUser } = useAuthStore();
@@ -37,6 +38,62 @@ export default function SettingsPage() {
     availableSlots: [] as string[],
     faqs: [] as { question: string; answer: string }[],
   });
+
+  // Local selectors for Step 2 Tag Editors
+  const [selectedSub, setSelectedSub] = useState("");
+  const [selectedCls, setSelectedCls] = useState("");
+  const [selectedMed, setSelectedMed] = useState("");
+  const [selectedSlotDay, setSelectedSlotDay] = useState("Sat");
+  const [selectedSlotTime, setSelectedSlotTime] = useState("10:00");
+
+  const addSubject = () => {
+    if (!selectedSub) return;
+    if (tutorProfile.subjects.includes(selectedSub)) return;
+    setTutorProfile((prev) => ({ ...prev, subjects: [...prev.subjects, selectedSub] }));
+    setSelectedSub("");
+  };
+
+  const removeSubject = (sub: string) => {
+    setTutorProfile((prev) => ({ ...prev, subjects: prev.subjects.filter((s) => s !== sub) }));
+  };
+
+  const addClass = () => {
+    if (!selectedCls) return;
+    if (tutorProfile.classes.includes(selectedCls)) return;
+    setTutorProfile((prev) => ({ ...prev, classes: [...prev.classes, selectedCls] }));
+    setSelectedCls("");
+  };
+
+  const removeClass = (cls: string) => {
+    setTutorProfile((prev) => ({ ...prev, classes: prev.classes.filter((c) => c !== cls) }));
+  };
+
+  const addMedium = () => {
+    if (!selectedMed) return;
+    if (tutorProfile.mediums.includes(selectedMed)) return;
+    setTutorProfile((prev) => ({ ...prev, mediums: [...prev.mediums, selectedMed] }));
+    setSelectedMed("");
+  };
+
+  const removeMedium = (med: string) => {
+    setTutorProfile((prev) => ({ ...prev, mediums: prev.mediums.filter((m) => m !== med) }));
+  };
+
+  const addSlot = () => {
+    const slot = `${selectedSlotDay}-${selectedSlotTime}`;
+    if (tutorProfile.availableSlots.includes(slot)) {
+      alert("This slot already exists!");
+      return;
+    }
+    setTutorProfile((prev) => ({ ...prev, availableSlots: [...prev.availableSlots, slot] }));
+  };
+
+  const removeSlot = (slotToRemove: string) => {
+    setTutorProfile((prev) => ({
+      ...prev,
+      availableSlots: prev.availableSlots.filter((s) => s !== slotToRemove),
+    }));
+  };
 
   const [loadingTutor, setLoadingTutor] = useState(false);
   const [tutorSuccessMsg, setTutorSuccessMsg] = useState("");
@@ -164,6 +221,10 @@ export default function SettingsPage() {
       if (data.success && data.fileUrl) {
         if (targetField === "avatarUrl") {
           setForm((prev) => ({ ...prev, avatarUrl: data.fileUrl }));
+          setTutorProfile((prev) => ({ ...prev, photoUrl: data.fileUrl }));
+        } else if (targetField === "photoUrl") {
+          setTutorProfile((prev) => ({ ...prev, photoUrl: data.fileUrl }));
+          setForm((prev) => ({ ...prev, avatarUrl: data.fileUrl }));
         } else {
           setTutorProfile((prev) => ({ ...prev, [targetField]: data.fileUrl }));
         }
@@ -218,6 +279,7 @@ export default function SettingsPage() {
     try {
       const { data } = await api.put("/tutors/profile", {
         ...tutorProfile,
+        photoUrl: form.avatarUrl, // Sync photoUrl with avatarUrl on save
         expectedSalary: Number(tutorProfile.expectedSalary),
         hourlyRate: Number(tutorProfile.hourlyRate),
         experienceYears: Number(tutorProfile.experienceYears),
@@ -360,17 +422,14 @@ export default function SettingsPage() {
                     <div className="space-y-6 animate-slide-up">
                       <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 1: Personal Details & Biography</h3>
 
-                      {/* Portrait Photo Upload */}
+                      {/* Synced Profile Photo Status */}
                       <div className="flex items-center gap-5 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
                         <div className="w-16 h-16 rounded-xl bg-slate-200 dark:bg-slate-850 flex items-center justify-center text-slate-500 font-bold overflow-hidden shadow-sm">
-                          {tutorProfile.photoUrl ? <img src={tutorProfile.photoUrl} alt="Portrait" className="w-full h-full object-cover" /> : "Portrait"}
+                          {form.avatarUrl ? <img src={form.avatarUrl} alt="Portrait" className="w-full h-full object-cover" /> : "Portrait"}
                         </div>
                         <div>
-                          <label className="text-xs bg-primary-600 hover:bg-primary-700 text-white font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
-                            {uploadingImage ? "Compressing & Uploading..." : "Upload Profile Photo"}
-                            <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "photoUrl")} disabled={uploadingImage} />
-                          </label>
-                          <p className="text-[10px] text-slate-400 mt-2">Images will be compressed automatically to under 500KB.</p>
+                          <p className="text-xs font-bold text-slate-700 dark:text-slate-300">Profile Photo</p>
+                          <p className="text-[10px] text-slate-400 mt-1">Synced with your account profile picture (Tab 1).</p>
                         </div>
                       </div>
 
@@ -436,51 +495,211 @@ export default function SettingsPage() {
                   {/* Step 2: Teaching & Schedule */}
                   {tutorStep === 2 && (
                     <div className="space-y-6 animate-slide-up">
-                      <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 2: Subjects, Classes, and availability</h3>
+                      <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 2: Subjects, Classes, and Availability</h3>
 
-                      <div>
-                        <label className="label">Subjects I Teach (Comma-separated)</label>
-                        <input 
-                          type="text" 
-                          placeholder="Mathematics, Physics, Chemistry" 
-                          value={tutorProfile.subjects.join(", ")} 
-                          onChange={(e) => setTutorProfile({ ...tutorProfile, subjects: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
-                          className="input-field" 
-                        />
+                      {/* Subjects Tag Editor */}
+                      <div className="space-y-2">
+                        <label className="label">Subjects I Teach</label>
+                        <div className="flex gap-2">
+                          <select
+                            value={selectedSub}
+                            onChange={(e) => setSelectedSub(e.target.value)}
+                            className="input-field text-sm flex-1"
+                          >
+                            <option value="">-- Choose Subject --</option>
+                            {SUBJECTS.map((sub) => (
+                              <option key={sub} value={sub}>
+                                {sub}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            onClick={addSubject}
+                            className="btn-primary px-4 flex items-center justify-center"
+                          >
+                            <HiPlus className="w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-2 pt-1.5">
+                          {tutorProfile.subjects.length === 0 ? (
+                            <span className="text-xs text-slate-400">No subjects added yet.</span>
+                          ) : (
+                            tutorProfile.subjects.map((sub) => (
+                              <span
+                                key={sub}
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                              >
+                                {sub}
+                                <button
+                                  type="button"
+                                  onClick={() => removeSubject(sub)}
+                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                >
+                                  ×
+                                </button>
+                              </span>
+                            ))
+                          )}
+                        </div>
                       </div>
 
-                      <div>
-                        <label className="label">Classes I Teach (Comma-separated)</label>
-                        <input 
-                          type="text" 
-                          placeholder="Class 9, Class 10, HSC" 
-                          value={tutorProfile.classes.join(", ")} 
-                          onChange={(e) => setTutorProfile({ ...tutorProfile, classes: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
-                          className="input-field" 
-                        />
+                      {/* Classes Tag Editor */}
+                      <div className="space-y-2">
+                        <label className="label">Classes I Teach</label>
+                        <div className="flex gap-2">
+                          <select
+                            value={selectedCls}
+                            onChange={(e) => setSelectedCls(e.target.value)}
+                            className="input-field text-sm flex-1"
+                          >
+                            <option value="">-- Choose Class --</option>
+                            {CLASSES.map((cls) => (
+                              <option key={cls} value={cls}>
+                                {cls}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            onClick={addClass}
+                            className="btn-primary px-4 flex items-center justify-center"
+                          >
+                            <HiPlus className="w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-2 pt-1.5">
+                          {tutorProfile.classes.length === 0 ? (
+                            <span className="text-xs text-slate-400">No classes added yet.</span>
+                          ) : (
+                            tutorProfile.classes.map((cls) => (
+                              <span
+                                key={cls}
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                              >
+                                {cls}
+                                <button
+                                  type="button"
+                                  onClick={() => removeClass(cls)}
+                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                >
+                                  ×
+                                </button>
+                              </span>
+                            ))
+                          )}
+                        </div>
                       </div>
 
-                      <div>
-                        <label className="label">Mediums I Teach (Comma-separated)</label>
-                        <input 
-                          type="text" 
-                          placeholder="Bangla Medium, English Version" 
-                          value={tutorProfile.mediums.join(", ")} 
-                          onChange={(e) => setTutorProfile({ ...tutorProfile, mediums: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
-                          className="input-field" 
-                        />
+                      {/* Mediums Tag Editor */}
+                      <div className="space-y-2">
+                        <label className="label">Mediums I Teach</label>
+                        <div className="flex gap-2">
+                          <select
+                            value={selectedMed}
+                            onChange={(e) => setSelectedMed(e.target.value)}
+                            className="input-field text-sm flex-1"
+                          >
+                            <option value="">-- Choose Medium --</option>
+                            {MEDIUMS.map((med) => (
+                              <option key={med} value={med}>
+                                {med}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            onClick={addMedium}
+                            className="btn-primary px-4 flex items-center justify-center"
+                          >
+                            <HiPlus className="w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-2 pt-1.5">
+                          {tutorProfile.mediums.length === 0 ? (
+                            <span className="text-xs text-slate-400">No mediums added yet.</span>
+                          ) : (
+                            tutorProfile.mediums.map((med) => (
+                              <span
+                                key={med}
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                              >
+                                {med}
+                                <button
+                                  type="button"
+                                  onClick={() => removeMedium(med)}
+                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                >
+                                  ×
+                                </button>
+                              </span>
+                            ))
+                          )}
+                        </div>
                       </div>
 
-                      <div>
-                        <label className="label">Weekly Available Slots (Comma-separated)</label>
-                        <input 
-                          type="text" 
-                          placeholder="Sat-10:00, Sun-15:00, Mon-18:00" 
-                          value={tutorProfile.availableSlots.join(", ")} 
-                          onChange={(e) => setTutorProfile({ ...tutorProfile, availableSlots: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
-                          className="input-field" 
-                        />
-                        <p className="text-[10px] text-slate-400 mt-1">Example format: Day-Time24h (e.g. Sat-10:00, Sun-18:30)</p>
+                      {/* Weekly Available Slots visual editor */}
+                      <div className="space-y-3 border-t border-slate-200 dark:border-slate-850 pt-4">
+                        <label className="label">Weekly Available Slots</label>
+                        
+                        {/* Selected Slots badges */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {tutorProfile.availableSlots.length === 0 ? (
+                            <span className="text-xs text-slate-400">No weekly available slots configured.</span>
+                          ) : (
+                            tutorProfile.availableSlots.map((slot) => (
+                              <span
+                                key={slot}
+                                className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded bg-primary-50 text-primary-700 dark:bg-primary-950/40 dark:text-primary-300 border border-primary-200 dark:border-primary-900"
+                              >
+                                {slot}
+                                <button
+                                  type="button"
+                                  onClick={() => removeSlot(slot)}
+                                  className="text-primary-750 hover:text-red-500 font-bold ml-1.5 text-sm"
+                                >
+                                  ×
+                                </button>
+                              </span>
+                            ))
+                          )}
+                        </div>
+
+                        {/* Add slot selectors */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+                          <div>
+                            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Day</label>
+                            <select
+                              value={selectedSlotDay}
+                              onChange={(e) => setSelectedSlotDay(e.target.value)}
+                              className="input-field text-xs py-1.5"
+                            >
+                              <option value="Sat">Saturday</option>
+                              <option value="Sun">Sunday</option>
+                              <option value="Mon">Monday</option>
+                              <option value="Tue">Tuesday</option>
+                              <option value="Wed">Wednesday</option>
+                              <option value="Thu">Thursday</option>
+                              <option value="Fri">Friday</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Time</label>
+                            <input
+                              type="time"
+                              value={selectedSlotTime}
+                              onChange={(e) => setSelectedSlotTime(e.target.value)}
+                              className="input-field text-xs py-1.5"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={addSlot}
+                            className="btn-primary py-2 text-xs font-bold flex items-center justify-center gap-1"
+                          >
+                            <HiPlus className="w-4 h-4" /> Add Slot
+                          </button>
+                        </div>
                       </div>
 
                       <div className="flex justify-between pt-4 border-t border-slate-100 dark:border-slate-800">

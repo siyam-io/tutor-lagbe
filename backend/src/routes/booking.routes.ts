@@ -7,7 +7,7 @@ const router = Router();
 // POST /api/bookings - Create a booking request (Auth: Student)
 router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
   try {
-    const { tutorProfileId, date, timeSlot, tuitionType, address, notes } = req.body;
+    const { tutorProfileId, date, timeSlot, tuitionType, address, notes, amount } = req.body;
 
     const booking = await prisma.booking.create({
       data: {
@@ -18,6 +18,7 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
         tuitionType,
         address,
         notes,
+        amount: amount ? Number(amount) : null,
       },
     });
 

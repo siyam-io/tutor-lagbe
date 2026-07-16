@@ -38,6 +38,27 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ success: false, error: "Failed to create review" });
   }
 });
+// GET /api/reviews/student - Get reviews written by student
+router.get("/student", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const reviews = await prisma.review.findMany({
+      where: { studentId: req.userId },
+      include: {
+        tutor: {
+          include: {
+            user: { select: { id: true, name: true, avatarUrl: true } },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return res.json({ success: true, data: reviews });
+  } catch (error) {
+    console.error("Fetch student reviews error:", error);
+    return res.status(500).json({ success: false, error: "Failed to fetch student reviews" });
+  }
+});
 
 // GET /api/reviews/tutor/:tutorId
 router.get("/tutor/:tutorId", async (req: AuthRequest, res: Response) => {

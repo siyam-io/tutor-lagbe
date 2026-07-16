@@ -17,6 +17,7 @@ import {
   HiOutlineClipboardList,
   HiOutlineBell,
   HiOutlineShieldCheck,
+  HiOutlineHeart,
 } from "react-icons/hi";
 
 interface SidebarProps {
@@ -26,6 +27,7 @@ interface SidebarProps {
 const studentLinks = [
   { href: "/dashboard/student", label: "Dashboard", icon: HiOutlineHome },
   { href: "/dashboard/student/bookings", label: "My Bookings", icon: HiOutlineBookOpen },
+  { href: "/wishlist", label: "My Wishlist", icon: HiOutlineHeart },
   { href: "/schedule", label: "Schedule", icon: HiOutlineCalendar },
   { href: "/messages", label: "Messages", icon: HiOutlineChat },
   { href: "/payments", label: "Payments", icon: HiOutlineCreditCard },

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { HiOutlineStar, HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineAcademicCap, HiOutlineChatAlt, HiCheck, HiOutlineShare, HiOutlineHeart, HiOutlineBriefcase } from "react-icons/hi";
+import { HiOutlineStar, HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineAcademicCap, HiOutlineChatAlt, HiCheck, HiOutlineShare, HiOutlineHeart, HiHeart, HiOutlineBriefcase } from "react-icons/hi";
 import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/api";
 
@@ -146,14 +146,37 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
   const name = tutor.user?.name || "Tutor";
   const bio = tutor.bio || "I help students build strong concepts in Mathematics and problem solving with easy techniques and real-life examples.";
   const subjects = tutor.subjects || [];
-  const rating = tutor.averageRating || 4.9;
-  const totalReviews = tutor.totalReviews || 120;
+  const rating = tutor.averageRating || 0.0;
+  const totalReviews = tutor.totalReviews || 0;
   const hourlyRate = tutor.hourlyRate || Math.round((tutor.expectedSalary || 16000) / 32) || 800;
-  const experience = tutor.experienceYears || 5;
-  const institution = tutor.institution || "BUET";
-  const qualification = tutor.qualification || "Mathematics Specialist";
+  const experience = tutor.experienceYears || 0;
+  const institution = tutor.institution || "N/A";
+  const qualification = tutor.qualification || "Tutor Profile";
   const location = tutor.locationDistrict || "Dhaka";
-  const area = tutor.locationArea || "Dhanmondi";
+  const area = tutor.locationArea || "";
+
+  // Dynamic statistics calculations
+  const totalBookingsCount = tutor.bookings?.length || 0;
+  const completedCount = (tutor.bookings || []).filter((b: any) => b.status === "COMPLETED").length;
+  
+  // Calculate unique student count
+  const uniqueStudentsCount = Array.from(
+    new Set((tutor.bookings || []).map((b: any) => b.studentId))
+  ).length;
+
+  // Calculate Response Rate: ratio of non-pending responses
+  const respondedBookings = (tutor.bookings || []).filter(
+    (b: any) => b.status !== "PENDING"
+  ).length;
+  const responseRate = totalBookingsCount > 0 
+    ? Math.round((respondedBookings / totalBookingsCount) * 100) 
+    : 100;
+
+  // Languages based on medium
+  const languagesList = ["Bengali (Native)"];
+  if (tutor.mediums?.some((m: string) => m.toLowerCase().includes("english"))) {
+    languagesList.push("English (Fluent)");
+  }
 
   return (
     <>
@@ -172,11 +195,21 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
             </nav>
 
             <div className="flex gap-2">
-              <button className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-all">
-                <HiOutlineShare className="w-4 h-4" /> Share
-              </button>
-              <button className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-all">
-                <HiOutlineHeart className="w-4 h-4" /> Save
+              <button 
+                onClick={handleToggleWishlist}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-all shadow-sm"
+              >
+                {isWishlisted ? (
+                  <>
+                    <HiHeart className="w-4 h-4 text-red-500 fill-current" />
+                    <span>Saved</span>
+                  </>
+                ) : (
+                  <>
+                    <HiOutlineHeart className="w-4 h-4 text-slate-500" />
+                    <span>Save</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -196,9 +229,11 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                     </div>
                   )}
                   {/* Verified Overlay */}
-                  <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1">
-                    🛡️ ID Verified
-                  </span>
+                  {tutor.verificationStatus === "APPROVED" && (
+                    <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1">
+                      🛡️ ID Verified
+                    </span>
+                  )}
                   {/* Online Dot */}
                   <span className="absolute top-3 right-3 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
                 </div>
@@ -209,7 +244,9 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                 <div>
                   <h1 className="text-2xl md:text-3xl font-extrabold text-slate-950 dark:text-white flex items-center gap-1.5">
                     {name}
-                    <span className="text-blue-500 text-lg" title="Verified Tutor">✓</span>
+                    {tutor.verificationStatus === "APPROVED" && (
+                      <span className="text-blue-500 text-lg" title="Verified Tutor">✓</span>
+                    )}
                   </h1>
                   <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">{qualification}</p>
                 </div>
@@ -222,7 +259,7 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                     <span className="text-slate-400">({totalReviews} Reviews)</span>
                   </div>
                   <span className="text-slate-300">•</span>
-                  <span>10K+ Students</span>
+                  <span>{uniqueStudentsCount} Active Student{uniqueStudentsCount !== 1 ? "s" : ""}</span>
                 </div>
 
                 {/* Institution / Experience / Location list */}
@@ -237,13 +274,13 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                   </span>
                   <span className="flex items-center gap-1.5">
                     <HiOutlineLocationMarker className="w-4 h-4 text-slate-400" />
-                    {area}, {location}
+                    {area ? `${area}, ` : ""}{location}
                   </span>
                 </div>
 
                 {/* Badge Tag */}
                 <span className="inline-block text-[10px] bg-green-50/50 dark:bg-green-950/20 text-green-600 dark:text-green-400 font-bold px-2 py-0.5 rounded-lg border border-green-200/50 dark:border-green-950/50">
-                  Online & Home Tutor
+                  {tutor.mediums?.join(" & ") || "Online & Home Tutor"}
                 </span>
 
                 {/* Mini Paragraph Bio */}
@@ -260,16 +297,11 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                         {sub}
                       </span>
                     ))}
-                    {subjects.length > 4 && (
-                      <span className="text-[10px] bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-3 py-1 rounded-xl border border-slate-100 dark:border-slate-800">
-                        +{subjects.length - 4}
-                      </span>
-                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Right Booking Call to Action (3/12 width) */}
+              {/* Right Booking Call to Action */}
               <div className="lg:col-span-3 bg-slate-50 dark:bg-slate-800/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-5">
                 <div>
                   <span className="text-2xl font-extrabold text-slate-900 dark:text-white">৳ {hourlyRate}</span>
@@ -287,7 +319,7 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                   </div>
                   <div className="flex items-center gap-2">
                     <HiCheck className="w-4 h-4 text-blue-500" />
-                    <span>100% Satisfaction</span>
+                    <span>100% Satisfaction Guarantee</span>
                   </div>
                 </div>
 
@@ -295,9 +327,6 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                   <Link href={`/booking?tutorId=${tutor.id}`} className="w-full btn-primary py-3 font-bold text-xs rounded-xl flex items-center justify-center gap-2">
                     <HiOutlineCalendar className="w-4 h-4" /> Book a Session
                   </Link>
-                  <button className="w-full py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
-                    <HiOutlineChatAlt className="w-4 h-4" /> Message
-                  </button>
                 </div>
               </div>
 
@@ -347,70 +376,81 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                       </div>
                       <div className="bg-slate-50 dark:bg-slate-850 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-800">
                         <span className="text-xs text-slate-400 font-medium">Students Taught</span>
-                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">10K+</p>
+                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">{uniqueStudentsCount}</p>
                       </div>
                       <div className="bg-slate-50 dark:bg-slate-850 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-800">
                         <span className="text-xs text-slate-400 font-medium">Classes Completed</span>
-                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">1,200+</p>
+                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">{completedCount}</p>
                       </div>
                       <div className="bg-slate-50 dark:bg-slate-850 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-800">
                         <span className="text-xs text-slate-400 font-medium">Response Rate</span>
-                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">98%</p>
+                        <p className="font-extrabold text-slate-900 dark:text-white text-base mt-1">{responseRate}%</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* What Students Say Review Slider */}
-                  <div className="card p-6 md:p-8 space-y-6">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
-                        ⭐ What Students Say
-                      </h3>
-                      <button className="text-xs text-primary-600 hover:text-primary-700 font-bold">View All Reviews</button>
-                    </div>
-
-                    <div className="border border-slate-150 dark:border-slate-800 p-5 rounded-2xl bg-white dark:bg-slate-900 space-y-4">
-                      <div className="flex justify-between items-start">
-                        <div className="flex gap-3">
-                          <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-500">
-                            NJ
-                          </div>
-                          <div>
-                            <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">Nusrat Jahan</h4>
-                            <p className="text-[10px] text-slate-400 font-medium mt-0.5">HSC Student</p>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <div className="flex items-center gap-0.5 text-yellow-500 text-xs">
-                            {"★★★★★".split("").map((star, idx) => <span key={idx}>{star}</span>)}
-                            <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">5.0</span>
-                          </div>
-                          <span className="text-[10px] text-slate-400 font-semibold block mt-1">2 weeks ago</span>
-                        </div>
+                  {/* What Students Say Slider */}
+                  {reviews.length > 0 && (
+                    <div className="card p-6 md:p-8 space-y-6">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
+                          ⭐ What Students Say
+                        </h3>
+                        <button 
+                          onClick={() => setActiveTab("reviews")}
+                          className="text-xs text-primary-600 hover:text-primary-700 font-bold"
+                        >
+                          View All Reviews
+                        </button>
                       </div>
 
-                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Fahad vaiya explains concepts very clearly. His solving techniques and shortcuts helped me a lot in my exams. Highly recommended!
-                      </p>
+                      <div className="border border-slate-150 dark:border-slate-800 p-5 rounded-2xl bg-white dark:bg-slate-900 space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div className="flex gap-3">
+                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-500">
+                              {reviews[0].student?.name ? reviews[0].student.name.split(" ").map((n: string) => n[0]).join("") : "S"}
+                            </div>
+                            <div>
+                              <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">{reviews[0].student?.name}</h4>
+                              <p className="text-[10px] text-slate-400 font-medium mt-0.5">Verified Student</p>
+                            </div>
+                          </div>
+
+                          <div className="text-right">
+                            <div className="flex items-center gap-0.5 text-yellow-500 text-xs">
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <span key={i}>{i < reviews[0].rating ? "★" : "☆"}</span>
+                              ))}
+                              <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{reviews[0].rating.toFixed(1)}</span>
+                            </div>
+                            <span className="text-[10px] text-slate-400 font-semibold block mt-1">
+                              {new Date(reviews[0].createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                          {reviews[0].comment}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Teaching Approach */}
                   <div className="card p-6 md:p-8 space-y-6">
                     <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
-                      💡 Teaching Approach
+                      💡 Highlights
                     </h3>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {[
-                        { title: "Concept Based Learning", desc: "Focuses on building core principles before problem-solving." },
-                        { title: "Problem Solving Techniques", desc: "Easy shortcuts, formulas, and math techniques." },
-                        { title: "Regular Assessments", desc: "Weekly quizzes and tests to review learning progress." },
-                        { title: "Friendly & Supportive Environment", desc: "Interactive classes with zero hesitation." }
+                        { title: "ID Verification Verified", desc: "Tutor profile identity and certificates checked by platform.", icon: "🛡️" },
+                        { title: "Highly Experienced", desc: `Over ${experience} year${experience !== 1 ? 's' : ''} of active experience tutoring students.`, icon: "💼" },
+                        { title: "Proven Track Record", desc: `Successfully completed ${completedCount} classes on Tutor Lagbe.`, icon: "📊" },
+                        { title: "Dynamic Availability", desc: `Offers slots on days like ${Array.from(new Set((tutor.availableSlots || []).map((s: string) => s.split("-")[0]))).join(", ") || "various weekdays"}.`, icon: "📅" }
                       ].map((item, idx) => (
                         <div key={idx} className="flex gap-3.5 p-4 bg-slate-50 dark:bg-slate-850 border border-slate-100 dark:border-slate-800 rounded-xl">
-                          <span className="text-xl">🎓</span>
+                          <span className="text-xl">{item.icon}</span>
                           <div>
                             <h5 className="font-bold text-slate-900 dark:text-white text-xs">{item.title}</h5>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">{item.desc}</p>
@@ -424,7 +464,7 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
 
               {activeTab === "reviews" && (
                 <div className="space-y-6">
-                  {/* Write a review section - Only visible to logged in STUDENTs */}
+                  {/* Write a review section */}
                   {isAuthenticated && user?.role === "STUDENT" && (
                     <form onSubmit={handlePostReview} className="card p-6 md:p-8 space-y-4 border border-primary-100 dark:border-primary-950 bg-gradient-to-br from-white to-primary-50/10 dark:from-slate-900 dark:to-primary-950/10 shadow-sm">
                       <h3 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
@@ -488,7 +528,7 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                                   {rev.student?.avatarUrl ? (
                                     <img src={rev.student.avatarUrl} alt={rev.student.name} className="w-full h-full object-cover" />
                                   ) : (
-                                    rev.student?.name?.[0] || "S"
+                                    rev.student?.name ? rev.student.name.split(" ").map((n: string) => n[0]).join("") : "S"
                                   )}
                                 </div>
                                 <div>
@@ -593,35 +633,40 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
             {/* Right Widgets Column (4/12 width) */}
             <div className="lg:col-span-4 space-y-6">
               
-              {/* Availability Status Card */}
+              {/* Availability Status Card (Dynamic grouping from availableSlots) */}
               <div className="card p-5 space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-1.5">
-                    📅 Availability
-                  </h3>
-                  <button className="text-[10px] text-primary-600 hover:text-primary-700 font-bold">View Calendar</button>
-                </div>
+                <h3 className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-1.5">
+                  📅 Availability Slots
+                </h3>
 
-                <div className="space-y-3.5 text-xs">
-                  {[
-                    { day: "Monday", time: "6:00 PM - 10:00 PM", status: "Available" },
-                    { day: "Tuesday", time: "6:00 PM - 10:00 PM", status: "Available" },
-                    { day: "Wednesday", time: "6:00 PM - 10:00 PM", status: "Available" },
-                    { day: "Thursday", time: "6:00 PM - 10:00 PM", status: "Available" },
-                    { day: "Friday", time: "6:00 PM - 10:00 PM", status: "Available" },
-                    { day: "Saturday", time: "10:00 AM - 8:00 PM", status: "Available" },
-                    { day: "Sunday", time: "Not Available", status: "Unavailable" },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-slate-600 dark:text-slate-400">
-                      <span className="font-medium">{item.day}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-slate-400">{item.time}</span>
-                        <span className={`font-bold ${item.status === "Available" ? "text-green-600" : "text-red-500"}`}>
-                          • {item.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                <div className="space-y-3 text-xs">
+                  {tutor.availableSlots && tutor.availableSlots.length > 0 ? (
+                    (() => {
+                      const daysMap: Record<string, string[]> = {};
+                      tutor.availableSlots.forEach((slot: string) => {
+                        const [day, time] = slot.split("-");
+                        if (day && time) {
+                          if (!daysMap[day]) daysMap[day] = [];
+                          daysMap[day].push(time);
+                        }
+                      });
+                      return Object.entries(daysMap).map(([day, times]) => (
+                        <div key={day} className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                          <span className="font-semibold text-slate-800 dark:text-slate-200">
+                            {day === "Sat" ? "Saturday" :
+                             day === "Sun" ? "Sunday" :
+                             day === "Mon" ? "Monday" :
+                             day === "Tue" ? "Tuesday" :
+                             day === "Wed" ? "Wednesday" :
+                             day === "Thu" ? "Thursday" : "Friday"}
+                          </span>
+                          <span className="text-primary-600 font-medium">{times.join(", ")}</span>
+                        </div>
+                      ));
+                    })()
+                  ) : (
+                    <p className="text-slate-500">No available slots.</p>
+                  )}
                 </div>
               </div>
 
@@ -637,20 +682,8 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                       🏫
                     </div>
                     <div>
-                      <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">BSc in Mathematics</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Bangladesh University of Engineering and Technology (BUET)</p>
-                      <span className="text-[9px] font-bold text-slate-400 block mt-1">2015 - 2019</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3">
-                    <div className="w-9 h-9 bg-blue-50 dark:bg-blue-950/20 text-blue-500 rounded-xl flex items-center justify-center text-base flex-shrink-0">
-                      🏫
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">HSC - Science</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Notre Dame College, Dhaka</p>
-                      <span className="text-[9px] font-bold text-slate-400 block mt-1">2013 - 2015</span>
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">{qualification}</h4>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{institution}</p>
                     </div>
                   </div>
                 </div>
@@ -663,7 +696,7 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
                 </h3>
 
                 <div className="flex gap-2">
-                  {["Bengali (Native)", "English (Fluent)", "Hindi (Basic)"].map((lang) => (
+                  {languagesList.map((lang) => (
                     <span key={lang} className="text-[10px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-3 py-1 rounded-xl border border-slate-150 dark:border-slate-800">
                       {lang}
                     </span>

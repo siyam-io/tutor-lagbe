@@ -28,6 +28,8 @@ router.get("/", async (req: AuthRequest, res: Response) => {
       verificationStatus: "APPROVED",
     };
 
+    const andConditions: any[] = [];
+
     if (search) {
       const searchStr = search as string;
       const matchingUsers = await prisma.user.findMany({
@@ -41,15 +43,17 @@ router.get("/", async (req: AuthRequest, res: Response) => {
       const capitalizedSearch = searchStr.charAt(0).toUpperCase() + searchStr.slice(1).toLowerCase();
       const upperSearch = searchStr.toUpperCase();
 
-      where.OR = [
-        { qualification: { contains: searchStr, mode: "insensitive" } },
-        { institution: { contains: searchStr, mode: "insensitive" } },
-        { userId: { in: matchingUserIds } },
-        { subjects: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
-        { classes: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
-        { locationArea: { contains: searchStr, mode: "insensitive" } },
-        { locationDistrict: { contains: searchStr, mode: "insensitive" } },
-      ];
+      andConditions.push({
+        OR: [
+          { qualification: { contains: searchStr, mode: "insensitive" } },
+          { institution: { contains: searchStr, mode: "insensitive" } },
+          { userId: { in: matchingUserIds } },
+          { subjects: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
+          { classes: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
+          { locationArea: { contains: searchStr, mode: "insensitive" } },
+          { locationDistrict: { contains: searchStr, mode: "insensitive" } },
+        ]
+      });
     }
 
     if (subject) where.subjects = { has: subject as string };
@@ -62,12 +66,19 @@ router.get("/", async (req: AuthRequest, res: Response) => {
     if (minRating) where.averageRating = { gte: Number(minRating) };
 
     // Budget filter
-    const budgetWhere: Record<string, unknown> = {};
     if (minBudget || maxBudget) {
-      budgetWhere.expectedSalary = {};
-      if (minBudget) (budgetWhere.expectedSalary as Record<string, number>).gte = Number(minBudget);
-      if (maxBudget) (budgetWhere.expectedSalary as Record<string, number>).lte = Number(maxBudget);
-      Object.assign(where, budgetWhere);
+      const min = minBudget ? Number(minBudget) : 0;
+      const max = maxBudget ? Number(maxBudget) : 999999;
+      andConditions.push({
+        OR: [
+          { hourlyRate: { gte: min, lte: max } },
+          { expectedSalary: { gte: min, lte: max } }
+        ]
+      });
+    }
+
+    if (andConditions.length > 0) {
+      where.AND = andConditions;
     }
 
     const [tutors, total] = await Promise.all([
@@ -136,6 +147,9 @@ router.get("/:id", async (req: AuthRequest, res: Response) => {
           },
           orderBy: { createdAt: "desc" },
         },
+        bookings: {
+          select: { id: true, status: true }
+        }
       },
     });
 
