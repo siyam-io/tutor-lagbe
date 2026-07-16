@@ -13,6 +13,7 @@ import notificationRoutes from "./routes/notification.routes";
 import paymentRoutes from "./routes/payment.routes";
 import uploadRoutes from "./routes/upload.routes";
 import wishlistRoutes from "./routes/wishlist.routes";
+import withdrawalRoutes from "./routes/withdrawal.routes";
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/withdrawals", withdrawalRoutes);
 
 // Global error handler
 app.use(

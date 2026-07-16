@@ -166,9 +166,30 @@ router.get("/:id", async (req: AuthRequest, res: Response) => {
 // PUT /api/tutors/profile - Update profile details (Auth: Tutor)
 router.put("/profile", authenticate, authorize("TUTOR"), async (req: AuthRequest, res: Response) => {
   try {
+    const current = await prisma.tutorProfile.findUnique({
+      where: { userId: req.userId },
+    });
+
+    if (!current) {
+      return res.status(404).json({ success: false, error: "Tutor profile not found" });
+    }
+
+    const data = { ...req.body };
+
+    // Reset status if NID doc/details or qualifications are updated
+    const isCriticalUpdate = 
+      (data.nidNumber !== undefined && data.nidNumber !== current.nidNumber) ||
+      (data.documentUrl !== undefined && data.documentUrl !== current.documentUrl) ||
+      (data.qualification !== undefined && data.qualification !== current.qualification) ||
+      (data.institution !== undefined && data.institution !== current.institution);
+
+    if (isCriticalUpdate) {
+      data.verificationStatus = "PENDING";
+    }
+
     const profile = await prisma.tutorProfile.update({
       where: { userId: req.userId },
-      data: req.body,
+      data,
     });
 
     return res.json({ success: true, data: profile });

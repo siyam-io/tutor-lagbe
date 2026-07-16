@@ -38,6 +38,21 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
       },
     });
 
+    // Notify receiver
+    const sender = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: { name: true },
+    });
+
+    await prisma.notification.create({
+      data: {
+        userId: receiverId,
+        title: "New Message",
+        message: `You have a new message from ${sender?.name || "Someone"}: "${content.substring(0, 40)}${content.length > 40 ? "..." : ""}"`,
+        type: "NEW_MESSAGE",
+      },
+    });
+
     return res.status(201).json({ success: true, data: message });
   } catch (error) {
     return res.status(500).json({ success: false, error: "Failed to send message" });

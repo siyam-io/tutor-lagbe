@@ -157,9 +157,12 @@ export default function StudentWishlistPage() {
 
                     <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-auto flex justify-between items-center">
                       <div>
-                        <p className="text-[10px] uppercase font-bold text-slate-400">Monthly Tuition</p>
-                        <p className="text-sm font-extrabold text-primary-600 dark:text-primary-400">
-                          ৳{tutor.expectedSalary?.toLocaleString() || "6,000"}
+                        <p className="text-[10px] uppercase font-bold text-slate-400">Monthly / Hourly Rate</p>
+                        <p className="text-xs font-bold text-primary-600 dark:text-primary-400">
+                          ৳{tutor.expectedSalary?.toLocaleString() || "6,000"}/mo
+                        </p>
+                        <p className="text-[10px] text-slate-500 font-semibold">
+                          ৳{tutor.hourlyRate || 500}/hr
                         </p>
                       </div>
                       <Link href={`/tutors/${tutor.id}`} className="btn-primary py-1.5 px-4 text-xs font-semibold">

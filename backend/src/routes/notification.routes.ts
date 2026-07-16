@@ -18,6 +18,20 @@ router.get("/", authenticate, async (req: AuthRequest, res: Response) => {
   }
 });
 
+// PATCH /api/notifications/read-all
+router.patch("/read-all", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    await prisma.notification.updateMany({
+      where: { userId: req.userId, isRead: false },
+      data: { isRead: true },
+    });
+
+    return res.json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: "Failed to mark all notifications as read" });
+  }
+});
+
 // PATCH /api/notifications/:id/read
 router.patch("/:id/read", authenticate, async (req: AuthRequest, res: Response) => {
   try {

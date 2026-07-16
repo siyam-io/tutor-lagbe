@@ -304,8 +304,14 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
               {/* Right Booking Call to Action */}
               <div className="lg:col-span-3 bg-slate-50 dark:bg-slate-800/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-5">
                 <div>
-                  <span className="text-2xl font-extrabold text-slate-900 dark:text-white">৳ {hourlyRate}</span>
-                  <span className="text-xs text-slate-400 font-medium"> /hr</span>
+                  <div>
+                    <span className="text-2xl font-extrabold text-slate-900 dark:text-white">৳ {hourlyRate}</span>
+                    <span className="text-xs text-slate-400 font-medium"> /hr</span>
+                  </div>
+                  <div className="mt-1">
+                    <span className="text-sm font-bold text-primary-600 dark:text-primary-400">৳ {tutor.expectedSalary?.toLocaleString() || "6,000"}</span>
+                    <span className="text-[10px] text-slate-400 font-medium"> /month</span>
+                  </div>
                 </div>
 
                 <div className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400 font-semibold">

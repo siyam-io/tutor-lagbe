@@ -1,6 +1,6 @@
-// Authentication middleware
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import prisma from "../lib/prisma";
 
 const getJwtSecret = () => process.env.JWT_SECRET || "tutor-lagbe-secret-key-dev";
 
@@ -9,7 +9,7 @@ export interface AuthRequest extends Request {
   userRole?: string;
 }
 
-export const authenticate = (
+export const authenticate = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
@@ -25,6 +25,16 @@ export const authenticate = (
       userId: string;
       role: string;
     };
+
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      select: { isBanned: true },
+    });
+
+    if (!user || user.isBanned) {
+      return res.status(403).json({ success: false, error: "Your account has been suspended by the administrator." });
+    }
+
     req.userId = decoded.userId;
     req.userRole = decoded.role;
     next();

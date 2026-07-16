@@ -9,11 +9,30 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
   try {
     const { tutorProfileId, date, timeSlot, tuitionType, address, notes, amount } = req.body;
 
+    const parsedDate = new Date(date);
+
+    // Collision check: check if this slot is already booked or pending
+    const existingBooking = await prisma.booking.findFirst({
+      where: {
+        tutorProfileId,
+        date: parsedDate,
+        timeSlot,
+        status: { in: ["PENDING", "ACCEPTED"] },
+      },
+    });
+
+    if (existingBooking) {
+      return res.status(400).json({
+        success: false,
+        error: "This time slot is already booked or has a pending request. Please choose another slot.",
+      });
+    }
+
     const booking = await prisma.booking.create({
       data: {
         studentId: req.userId!,
         tutorProfileId,
-        date: new Date(date),
+        date: parsedDate,
         timeSlot,
         tuitionType,
         address,
@@ -21,6 +40,27 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
         amount: amount ? Number(amount) : null,
       },
     });
+
+    // Notify the tutor
+    const tutorProfile = await prisma.tutorProfile.findUnique({
+      where: { id: tutorProfileId },
+      include: { user: { select: { name: true, id: true } } },
+    });
+    const student = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: { name: true },
+    });
+
+    if (tutorProfile) {
+      await prisma.notification.create({
+        data: {
+          userId: tutorProfile.userId,
+          title: "New Booking Request",
+          message: `${student?.name || "A student"} requested a tuition on ${parsedDate.toLocaleDateString()} at ${timeSlot}.`,
+          type: "BOOKING_REQUESTED",
+        },
+      });
+    }
 
     return res.status(201).json({ success: true, data: booking });
   } catch (error) {
@@ -83,6 +123,24 @@ router.patch("/:id/status", authenticate, async (req: AuthRequest, res: Response
     const booking = await prisma.booking.update({
       where: { id: req.params.id },
       data: { status },
+      include: {
+        student: { select: { id: true, name: true } },
+        tutor: {
+          include: {
+            user: { select: { name: true } }
+          }
+        }
+      }
+    });
+
+    // Notify the student
+    await prisma.notification.create({
+      data: {
+        userId: booking.studentId,
+        title: `Booking ${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}`,
+        message: `Your tuition request with ${booking.tutor?.user?.name || "Tutor"} has been ${status.toLowerCase()}.`,
+        type: `BOOKING_${status}`,
+      },
     });
 
     return res.json({ success: true, data: booking });

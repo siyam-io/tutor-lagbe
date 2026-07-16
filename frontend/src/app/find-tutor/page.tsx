@@ -409,7 +409,8 @@ function FindTutorContent() {
                             <span className="inline-block text-[10px] bg-green-50/50 dark:bg-green-950/20 text-green-600 dark:text-green-400 font-bold px-2 py-0.5 rounded-lg border border-green-200/50 dark:border-green-950/50 mb-1">
                               Online & Home Tutor
                             </span>
-                            <p className="font-extrabold text-slate-900 dark:text-white text-lg">৳ {tutorRate} <span className="text-xs text-slate-400 font-normal">/hr</span></p>
+                            <p className="font-extrabold text-slate-900 dark:text-white text-lg">৳ {tutor.hourlyRate || 500} <span className="text-xs text-slate-400 font-normal">/hr</span></p>
+                            <p className="text-[10px] font-bold text-primary-600 dark:text-primary-400">৳ {tutor.expectedSalary?.toLocaleString() || "6,000"} <span className="text-[9px] text-slate-400 font-normal">/month</span></p>
                             <p className="text-[10px] text-slate-400 flex items-center justify-end gap-1.5 mt-0.5">
                               <HiOutlineLocationMarker className="w-3.5 h-3.5 text-slate-400" />
                               {tutor.locationArea || "Dhanmondi"}, {tutor.locationDistrict || "Dhaka"}

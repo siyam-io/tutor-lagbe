@@ -461,9 +461,14 @@ function BookingContent() {
                       <span className="text-slate-400 text-[10px]">({tutor?.totalReviews || 120} Reviews)</span>
                     </div>
 
-                    <span className="inline-block mt-2 text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
-                      Online & Home Tutor
-                    </span>
+                    <div className="flex gap-1.5 flex-wrap mt-2">
+                      <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
+                        ৳{tutor?.hourlyRate || 500}/hr
+                      </span>
+                      <span className="text-[10px] bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 font-bold px-2 py-0.5 rounded-full">
+                        ৳{tutor?.expectedSalary?.toLocaleString() || "6,000"}/mo
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

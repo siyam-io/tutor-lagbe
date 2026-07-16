@@ -111,10 +111,40 @@ router.post("/success", async (req, res) => {
       });
 
       // Update corresponding booking status to ACCEPTED/COMPLETED if needed
-      await prisma.booking.update({
+      const booking = await prisma.booking.update({
         where: { id: payment.bookingId },
         data: { status: "ACCEPTED" }, // Mark booking as Accepted/Active upon payment
+        include: {
+          student: { select: { name: true } },
+          tutor: {
+            include: {
+              user: { select: { id: true, name: true } }
+            }
+          }
+        }
       });
+
+      // Notify student
+      await prisma.notification.create({
+        data: {
+          userId: payment.userId,
+          title: "Payment Successful",
+          message: `Your payment of ৳${payment.amount} to ${booking.tutor?.user?.name || "Tutor"} was successful.`,
+          type: "PAYMENT_SUCCESS",
+        },
+      });
+
+      // Notify tutor
+      if (booking.tutor?.userId) {
+        await prisma.notification.create({
+          data: {
+            userId: booking.tutor.userId,
+            title: "Payment Received",
+            message: `You received a payment of ৳${payment.amount} from ${booking.student?.name || "Student"}.`,
+            type: "PAYMENT_SUCCESS",
+          },
+        });
+      }
     }
 
     const frontend_url = process.env.FRONTEND_URL || "http://localhost:3000";
@@ -172,6 +202,55 @@ router.post("/cancel", async (req, res) => {
 
   const frontend_url = process.env.FRONTEND_URL || "http://localhost:3000";
   return res.redirect(`${frontend_url}/payments?status=cancel`);
+});
+
+// GET /api/payments/tutor - Get tutor's earnings/received payments
+router.get("/tutor", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const tutorProfile = await prisma.tutorProfile.findUnique({
+      where: { userId: req.userId! },
+    });
+
+    if (!tutorProfile) {
+      return res.status(404).json({ success: false, error: "Tutor profile not found" });
+    }
+
+    const bookings = await prisma.booking.findMany({
+      where: { tutorProfileId: tutorProfile.id },
+      include: {
+        student: {
+          select: {
+            name: true,
+            avatarUrl: true,
+          },
+        },
+      },
+    });
+
+    const bookingIds = bookings.map((b) => b.id);
+
+    const payments = await prisma.payment.findMany({
+      where: {
+        bookingId: { in: bookingIds },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    // Map student names back to payments for frontend rendering
+    const bookingMap = new Map(bookings.map((b) => [b.id, b]));
+    const data = payments.map((p) => {
+      const b = bookingMap.get(p.bookingId);
+      return {
+        ...p,
+        booking: b ? { student: b.student } : null,
+      };
+    });
+
+    return res.json({ success: true, data });
+  } catch (error) {
+    console.error("Fetch tutor payments error:", error);
+    return res.status(500).json({ success: false, error: "Failed to fetch earnings records" });
+  }
 });
 
 // GET /api/payments - Get user payments

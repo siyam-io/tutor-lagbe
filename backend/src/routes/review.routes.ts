@@ -9,6 +9,22 @@ router.post("/", authenticate, async (req: AuthRequest, res: Response) => {
   try {
     const { tutorProfileId, rating, comment } = req.body;
 
+    // Validate if the student has an active or completed booking with this tutor
+    const activeBooking = await prisma.booking.findFirst({
+      where: {
+        studentId: req.userId!,
+        tutorProfileId,
+        status: { in: ["ACCEPTED", "COMPLETED"] },
+      },
+    });
+
+    if (!activeBooking) {
+      return res.status(403).json({
+        success: false,
+        error: "You can only write a review for tutors you have booked and had accepted/completed.",
+      });
+    }
+
     const review = await prisma.review.create({
       data: {
         studentId: req.userId!,
