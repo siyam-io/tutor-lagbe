@@ -18,14 +18,39 @@ router.get("/", async (req: AuthRequest, res: Response) => {
       maxBudget,
       minExperience,
       minRating,
+      search,
       page = "1",
       limit = "12",
     } = req.query;
 
     const skip = (Number(page) - 1) * Number(limit);
-    const where: Record<string, unknown> = {
+    const where: Record<string, any> = {
       verificationStatus: "APPROVED",
     };
+
+    if (search) {
+      const searchStr = search as string;
+      const matchingUsers = await prisma.user.findMany({
+        where: {
+          name: { contains: searchStr, mode: "insensitive" },
+        },
+        select: { id: true },
+      });
+      const matchingUserIds = matchingUsers.map((u) => u.id);
+
+      const capitalizedSearch = searchStr.charAt(0).toUpperCase() + searchStr.slice(1).toLowerCase();
+      const upperSearch = searchStr.toUpperCase();
+
+      where.OR = [
+        { qualification: { contains: searchStr, mode: "insensitive" } },
+        { institution: { contains: searchStr, mode: "insensitive" } },
+        { userId: { in: matchingUserIds } },
+        { subjects: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
+        { classes: { hasSome: [searchStr, capitalizedSearch, upperSearch] } },
+        { locationArea: { contains: searchStr, mode: "insensitive" } },
+        { locationDistrict: { contains: searchStr, mode: "insensitive" } },
+      ];
+    }
 
     if (subject) where.subjects = { has: subject as string };
     if (classFilter) where.classes = { has: classFilter as string };

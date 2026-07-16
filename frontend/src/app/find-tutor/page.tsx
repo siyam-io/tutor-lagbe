@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { HiOutlineSearch, HiOutlineLocationMarker, HiOutlineHeart, HiStar } from "react-icons/hi";
 import { SUBJECTS, CLASSES, MEDIUMS, DISTRICTS } from "@shared/types";
+import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/api";
 
 function FindTutorContent() {
@@ -16,6 +17,44 @@ function FindTutorContent() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+  const { user, isAuthenticated } = useAuthStore();
+
+  const fetchWishlistIds = async () => {
+    if (!isAuthenticated || user?.role !== "STUDENT") return;
+    try {
+      const { data } = await api.get("/wishlist/ids");
+      if (data.success) {
+        setWishlistIds(data.data || []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch wishlist ids:", err);
+    }
+  };
+
+  const handleToggleWishlist = async (tutorId: string) => {
+    if (!isAuthenticated) {
+      window.location.href = "/login";
+      return;
+    }
+    if (user?.role !== "STUDENT") return;
+    try {
+      const { data } = await api.post(`/wishlist/${tutorId}`);
+      if (data.success) {
+        if (data.added) {
+          setWishlistIds((prev) => [...prev, tutorId]);
+        } else {
+          setWishlistIds((prev) => prev.filter((id) => id !== tutorId));
+        }
+      }
+    } catch (err) {
+      console.error("Failed to toggle wishlist:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWishlistIds();
+  }, [isAuthenticated, user]);
 
   // States matching the image filters
   const [searchVal, setSearchVal] = useState(searchParams.get("search") || "");
@@ -87,7 +126,7 @@ function FindTutorContent() {
 
   useEffect(() => {
     fetchTutors();
-  }, [currentPage]);
+  }, [currentPage, filters]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -379,7 +418,14 @@ function FindTutorContent() {
 
                           {/* Action Buttons row */}
                           <div className="flex gap-2 items-center">
-                            <button className="p-2 border border-slate-200 dark:border-slate-800 hover:border-red-500 rounded-xl text-slate-400 hover:text-red-500 transition-all bg-white dark:bg-slate-900">
+                            <button
+                              onClick={() => handleToggleWishlist(tutor.id)}
+                              className={`p-2 border rounded-xl transition-all bg-white dark:bg-slate-900 ${
+                                wishlistIds.includes(tutor.id)
+                                  ? "border-red-500 text-red-500 bg-red-50 dark:bg-red-950/20 fill-current"
+                                  : "border-slate-200 dark:border-slate-800 text-slate-400 hover:border-red-500 hover:text-red-500"
+                              }`}
+                            >
                               <HiOutlineHeart className="w-5 h-5" />
                             </button>
                             <Link href={`/tutors/${tutor.id}`} className="btn-primary text-xs font-bold py-2.5 px-6 rounded-xl">

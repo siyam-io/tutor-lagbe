@@ -11,6 +11,8 @@ import reviewRoutes from "./routes/review.routes";
 import messageRoutes from "./routes/message.routes";
 import notificationRoutes from "./routes/notification.routes";
 import paymentRoutes from "./routes/payment.routes";
+import uploadRoutes from "./routes/upload.routes";
+import wishlistRoutes from "./routes/wishlist.routes";
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use("/uploads", express.static("uploads"));
 
 // Request logger middleware
 app.use((req, res, next) => {
@@ -52,6 +55,8 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Global error handler
 app.use(

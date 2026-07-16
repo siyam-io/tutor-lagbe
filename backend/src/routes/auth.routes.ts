@@ -125,4 +125,20 @@ router.get("/me", authenticate, async (req: AuthRequest, res: Response) => {
   }
 });
 
+// PUT /api/auth/profile
+router.put("/profile", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { name, phone, avatarUrl } = req.body;
+    const user = await prisma.user.update({
+      where: { id: req.userId },
+      data: { name, phone, avatarUrl },
+      select: { id: true, name: true, email: true, phone: true, role: true, avatarUrl: true, createdAt: true },
+    });
+    return res.json({ success: true, data: user });
+  } catch (error) {
+    console.error("Update profile error:", error);
+    return res.status(500).json({ success: false, error: "Failed to update profile settings" });
+  }
+});
+
 export default router;

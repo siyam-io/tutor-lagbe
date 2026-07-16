@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { HiOutlineStar, HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineAcademicCap, HiOutlineChatAlt, HiCheck, HiOutlineShare, HiOutlineHeart, HiOutlineBriefcase } from "react-icons/hi";
+import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/api";
 
 export default function TutorProfilePage({ params }: { params: { id: string } }) {
@@ -12,6 +13,86 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
   const [tutor, setTutor] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { user, isAuthenticated } = useAuthStore();
+
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [newRating, setNewRating] = useState(5);
+  const [newComment, setNewComment] = useState("");
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const [reviewSuccessMsg, setReviewSuccessMsg] = useState("");
+
+  const fetchWishlistStatus = async () => {
+    if (!isAuthenticated || user?.role !== "STUDENT") return;
+    try {
+      const { data } = await api.get("/wishlist/ids");
+      if (data.success && data.data) {
+        setIsWishlisted((data.data as string[]).includes(params.id));
+      }
+    } catch (err) {
+      console.error("Failed to fetch wishlist status:", err);
+    }
+  };
+
+  const handleToggleWishlist = async () => {
+    if (!isAuthenticated) {
+      window.location.href = "/login";
+      return;
+    }
+    if (user?.role !== "STUDENT") return;
+    try {
+      const { data } = await api.post(`/wishlist/${params.id}`);
+      if (data.success) {
+        setIsWishlisted(data.added);
+      }
+    } catch (err) {
+      console.error("Failed to toggle wishlist:", err);
+    }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const { data } = await api.get(`/reviews/tutor/${params.id}`);
+      if (data.success) {
+        setReviews(data.data || []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch reviews:", err);
+    }
+  };
+
+  const handlePostReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      window.location.href = "/login";
+      return;
+    }
+    if (user?.role !== "STUDENT") return;
+    setSubmittingReview(true);
+    setReviewSuccessMsg("");
+    try {
+      const { data } = await api.post("/reviews", {
+        tutorProfileId: tutor.id,
+        rating: Number(newRating),
+        comment: newComment,
+      });
+      if (data.success) {
+        setReviewSuccessMsg("Review posted successfully!");
+        setNewComment("");
+        setNewRating(5);
+        fetchReviews();
+        // Refresh tutor details
+        const { data: updatedTutor } = await api.get(`/tutors/${params.id}`);
+        if (updatedTutor.success) {
+          setTutor(updatedTutor.data);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to submit review:", err);
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
 
   useEffect(() => {
     const fetchTutor = async () => {
@@ -30,6 +111,11 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
     };
     fetchTutor();
   }, [params.id]);
+
+  useEffect(() => {
+    fetchWishlistStatus();
+    fetchReviews();
+  }, [isAuthenticated, user, params.id]);
 
   if (loading) {
     return (
@@ -337,26 +423,168 @@ export default function TutorProfilePage({ params }: { params: { id: string } })
               )}
 
               {activeTab === "reviews" && (
-                <div className="card p-6 md:p-8">
-                  <p className="text-xs text-slate-500">Reviews and ratings list loading...</p>
+                <div className="space-y-6">
+                  {/* Write a review section - Only visible to logged in STUDENTs */}
+                  {isAuthenticated && user?.role === "STUDENT" && (
+                    <form onSubmit={handlePostReview} className="card p-6 md:p-8 space-y-4 border border-primary-100 dark:border-primary-950 bg-gradient-to-br from-white to-primary-50/10 dark:from-slate-900 dark:to-primary-950/10 shadow-sm">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+                        ⭐ Leave a Review & Rating
+                      </h3>
+                      {reviewSuccessMsg && <div className="p-3 bg-green-50 text-green-700 text-xs font-semibold rounded-lg border border-green-200">{reviewSuccessMsg}</div>}
+                      
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-400 block">Select Rating</label>
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setNewRating(star)}
+                              className={`p-1.5 rounded-lg text-lg transition-all ${
+                                star <= newRating 
+                                  ? "text-yellow-500 bg-yellow-50 dark:bg-yellow-950/20" 
+                                  : "text-slate-300 hover:text-yellow-400"
+                              }`}
+                            >
+                              ★
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-400 block">Your Review</label>
+                        <textarea
+                          rows={3}
+                          value={newComment}
+                          onChange={(e) => setNewComment(e.target.value)}
+                          placeholder="Share your learning experience with this tutor..."
+                          className="input-field"
+                          required
+                        />
+                      </div>
+
+                      <button type="submit" disabled={submittingReview} className="btn-primary py-2.5 px-6 text-xs font-bold rounded-xl">
+                        {submittingReview ? "Submitting..." : "Submit Review"}
+                      </button>
+                    </form>
+                  )}
+
+                  {/* Reviews list */}
+                  <div className="card p-6 md:p-8 space-y-6">
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                      👥 Reviews History
+                    </h3>
+
+                    {reviews.length === 0 ? (
+                      <p className="text-xs text-slate-500">No reviews yet for this tutor.</p>
+                    ) : (
+                      <div className="space-y-5 divide-y divide-slate-100 dark:divide-slate-800">
+                        {reviews.map((rev, idx) => (
+                          <div key={rev.id} className={`pt-5 ${idx === 0 ? "pt-0" : ""} space-y-3`}>
+                            <div className="flex justify-between items-start">
+                              <div className="flex gap-3">
+                                <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-500 overflow-hidden">
+                                  {rev.student?.avatarUrl ? (
+                                    <img src={rev.student.avatarUrl} alt={rev.student.name} className="w-full h-full object-cover" />
+                                  ) : (
+                                    rev.student?.name?.[0] || "S"
+                                  )}
+                                </div>
+                                <div>
+                                  <h4 className="font-extrabold text-slate-900 dark:text-white text-xs">{rev.student?.name || "Student"}</h4>
+                                  <p className="text-[9px] text-slate-400 font-semibold mt-0.5">Verified Student</p>
+                                </div>
+                              </div>
+
+                              <div className="text-right">
+                                <div className="flex items-center gap-0.5 text-yellow-500 text-xs">
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <span key={i}>{i < rev.rating ? "★" : "☆"}</span>
+                                  ))}
+                                  <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{rev.rating.toFixed(1)}</span>
+                                </div>
+                                <span className="text-[9px] text-slate-400 font-semibold block mt-1">
+                                  {new Date(rev.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                                </span>
+                              </div>
+                            </div>
+
+                            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                              {rev.comment}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
               {activeTab === "teaching" && (
-                <div className="card p-6 md:p-8">
-                  <p className="text-xs text-slate-500">Teaching curriculum details loading...</p>
+                <div className="card p-6 md:p-8 space-y-6">
+                  <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
+                    📚 Teaching Information
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-xs text-slate-400 font-bold uppercase mb-2">Subjects</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {subjects.map((s: string) => <span key={s} className="text-xs bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-1 rounded-lg border border-slate-100 dark:border-slate-800 font-semibold">{s}</span>)}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-xs text-slate-400 font-bold uppercase mb-2">Classes</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {tutor.classes?.map((c: string) => <span key={c} className="text-xs bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-1 rounded-lg border border-slate-100 dark:border-slate-800 font-semibold">{c}</span>) || <span className="text-xs text-slate-500">N/A</span>}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-xs text-slate-400 font-bold uppercase mb-2">Mediums</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {tutor.mediums?.map((m: string) => <span key={m} className="text-xs bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-1 rounded-lg border border-slate-100 dark:border-slate-800 font-semibold">{m}</span>) || <span className="text-xs text-slate-500">N/A</span>}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {activeTab === "availability" && (
-                <div className="card p-6 md:p-8">
-                  <p className="text-xs text-slate-500">Detailed calendar schedule loading...</p>
+                <div className="card p-6 md:p-8 space-y-6">
+                  <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
+                    📅 Availability Schedule
+                  </h3>
+                  {tutor.availableSlots && tutor.availableSlots.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {tutor.availableSlots.map((slot: string) => (
+                        <div key={slot} className="px-4 py-3 bg-primary-50 dark:bg-primary-950/30 border border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300 rounded-xl text-xs font-bold text-center">
+                          {slot}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-500">No specific availability slots listed.</p>
+                  )}
                 </div>
               )}
 
               {activeTab === "faqs" && (
-                <div className="card p-6 md:p-8">
-                  <p className="text-xs text-slate-500">Frequently Asked Questions loading...</p>
+                <div className="card p-6 md:p-8 space-y-6">
+                  <h3 className="text-sm uppercase tracking-wider text-slate-900 dark:text-white font-bold flex items-center gap-2">
+                    ❓ Frequently Asked Questions
+                  </h3>
+                  {tutor.faqs && (tutor.faqs as any[]).length > 0 ? (
+                    <div className="space-y-4">
+                      {(tutor.faqs as any[]).map((faq, idx) => (
+                        <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-100 dark:border-slate-800 space-y-2">
+                          <h4 className="font-bold text-slate-900 dark:text-white text-xs">Q: {faq.question}</h4>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">A: {faq.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-500">No FAQs provided by the tutor yet.</p>
+                  )}
                 </div>
               )}
 
