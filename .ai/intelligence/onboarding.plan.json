@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-09-19T09:43:18.488Z",
+  "target_path": "D:\\pg\\web_app\\tutor lagbe",
+  "project_analysis": {
+    "package_manager": "npm",
+    "framework": "Node.js",
+    "language": "TS",
+    "repo_type": "app",
+    "has_existing_ai_config": false,
+    "risk_markers": []
+  },
+  "recommendation": {
+    "template": "general-app",
+    "confidence": 0.5,
+    "suggested_adapters": [
+      "cursor",
+      "claude",
+      "gemini",
+      "vscode",
+      "antigravity"
+    ],
+    "reasons": [
+      "Detected dominant language TS",
+      "Detected framework Node.js"
+    ]
+  },
+  "planned_files": [
+    {
+      "action": "CREATE",
+      "path": "AGENTS.md",
+      "source_template": "examples/general-app/AGENTS.md"
+    },
+    {
+      "action": "CREATE",
+      "path": "MEMORY.md",
+      "source_template": "examples/general-app/MEMORY.md"
+    },
+    {
+      "action": "CREATE",
+      "path": "TASKS.md",
+      "source_template": "examples/general-app/TASKS.md"
+    },
+    {
+      "action": "CREATE",
+      "path": "RUNBOOK.md",
+      "source_template": "RUNBOOK.md"
+    },
+    {
+      "action": "CREATE",
+      "path": ".ai/config.yaml",
+      "source_template": "examples/general-app/.ai/config.yaml"
+    }
+  ]
+}

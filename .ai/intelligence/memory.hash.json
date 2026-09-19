@@ -1,0 +1,1035 @@
+{
+  "generated_at": "2026-09-19T09:44:57.773Z",
+  "project_root": "D:/pg/web_app/tutor lagbe",
+  "file_count": 201,
+  "ignored_count": 13,
+  "file_fingerprints": {
+    ".ai/agents/coder.md": {
+      "hash": "1ce60ab517a3bf003d72b7b5efdc06f020011e44af9bca44dab7d0d56626ebdb",
+      "size": 424,
+      "last_modified": "2026-09-19T09:43:36.601Z"
+    },
+    ".ai/agents/devops.md": {
+      "hash": "bcde2a1a6ac556245707b1877b97aeecc9825e6125f5de550b3c0390c2cf7109",
+      "size": 337,
+      "last_modified": "2026-09-19T09:43:36.601Z"
+    },
+    ".ai/agents/multimodel-orchestrator.md": {
+      "hash": "a1ea4ec23658ae7e3d8cb8e227fc6ee0fc8c6364c3a3ed5c93bdbecb2239b41c",
+      "size": 2814,
+      "last_modified": "2026-09-19T09:43:36.602Z"
+    },
+    ".ai/agents/planner.md": {
+      "hash": "cb9fb593705ce3ed1a329b78883daa82971b4e5aabfd16e371a3c45d3ebc74a8",
+      "size": 373,
+      "last_modified": "2026-09-19T09:43:36.602Z"
+    },
+    ".ai/agents/qa-tester.md": {
+      "hash": "d16aa0bfb92674a7df802fcba947c1b30c9731caa2cf0d9a01d2dcf6f796956d",
+      "size": 275,
+      "last_modified": "2026-09-19T09:43:36.603Z"
+    },
+    ".ai/agents/README.md": {
+      "hash": "1b0af0bf6d7cb455ae246cc527980b10991c29a14e5adc5e655a6db03af71454",
+      "size": 546,
+      "last_modified": "2026-09-19T09:43:36.603Z"
+    },
+    ".ai/agents/reviewer.md": {
+      "hash": "977d3191c67ce16ffafb8369b276c9d939b4171636eb85f84129808088c805c5",
+      "size": 367,
+      "last_modified": "2026-09-19T09:43:36.604Z"
+    },
+    ".ai/agents/security-auditor.md": {
+      "hash": "38bd386531b3ef46c2326a3b305ec7995191703af1df29419df1c58110ace4fa",
+      "size": 366,
+      "last_modified": "2026-09-19T09:43:36.604Z"
+    },
+    ".ai/agents/seo-auditor.md": {
+      "hash": "37ba7ad26326c8bac77bcd36f5c95bac18c0fde6fb89d4abd248fdfecd5dc446",
+      "size": 344,
+      "last_modified": "2026-09-19T09:43:36.605Z"
+    },
+    ".ai/checks/context-budget.md": {
+      "hash": "da0d1f229e244f73a1764ad875a0a27b33c93477fe3f9a18d743674d32efd514",
+      "size": 239,
+      "last_modified": "2026-09-19T09:43:36.628Z"
+    },
+    ".ai/checks/ops-write-safety.md": {
+      "hash": "e4235bab8446ebdbcd86a506029af5e266aef05b429b457a949cfd1bc4ccf3b9",
+      "size": 267,
+      "last_modified": "2026-09-19T09:43:36.629Z"
+    },
+    ".ai/checks/post-change-validation.md": {
+      "hash": "2606b0cbfe70f4d5c499108cd8f8b43a125f8c8497d88f0b097e0b4418d84dac",
+      "size": 287,
+      "last_modified": "2026-09-19T09:43:36.629Z"
+    },
+    ".ai/checks/pre-commit.md": {
+      "hash": "d4ba49431f70209da4a45085710c2b04974426cdd307e5d47872f90988ee532a",
+      "size": 221,
+      "last_modified": "2026-09-19T09:43:36.630Z"
+    },
+    ".ai/checks/pre-deploy.md": {
+      "hash": "44363872f34775f7c408ac34a0a6c22e3a7710c5ebe02414e8beaa2faf9c5d63",
+      "size": 260,
+      "last_modified": "2026-09-19T09:43:36.631Z"
+    },
+    ".ai/checks/pre-external-write.md": {
+      "hash": "d517a79b4634cbfcee8b2edbd3ac8137f8cf0ead0cd82bdc3711012ddcc86105",
+      "size": 305,
+      "last_modified": "2026-09-19T09:43:36.631Z"
+    },
+    ".ai/checks/pre-implementation.md": {
+      "hash": "42de2caaa9396533ed0138425620041b2bda1a2b3c99374632cdf8280c391c7f",
+      "size": 214,
+      "last_modified": "2026-09-19T09:43:36.632Z"
+    },
+    ".ai/checks/pre-tool.md": {
+      "hash": "47b601f145559eaf95b34a39c74367abcba06f2726aac536048d319fc172d5f5",
+      "size": 266,
+      "last_modified": "2026-09-19T09:43:36.632Z"
+    },
+    ".ai/checks/pre-write.md": {
+      "hash": "fa6b49f22a7383f5a6c017649342c7f30bcc6260e118c0833a551f96f2619895",
+      "size": 273,
+      "last_modified": "2026-09-19T09:43:36.633Z"
+    },
+    ".ai/checks/README.md": {
+      "hash": "2ba613f1978a9cf4fee02f073874ec1008c97060fbc8337fd3521390212de2f9",
+      "size": 796,
+      "last_modified": "2026-09-19T09:43:36.634Z"
+    },
+    ".ai/checks/regression-checklist.md": {
+      "hash": "6df74df62a51f5901945324688f04558b20fc5459396458649c3d701b18e4a2e",
+      "size": 280,
+      "last_modified": "2026-09-19T09:43:36.634Z"
+    },
+    ".ai/checks/session-summary.md": {
+      "hash": "8371d34a6bae65fdb29469278e1b20664ad702d136befce343b1a1406ee13887",
+      "size": 287,
+      "last_modified": "2026-09-19T09:43:36.635Z"
+    },
+    ".ai/config.yaml": {
+      "hash": "5d1ea3756057d72cad1dfe7fc024604d040b07d19d84df90419de3cf15a9341b",
+      "size": 105,
+      "last_modified": "2026-09-19T09:43:36.594Z"
+    },
+    ".ai/context/architecture.md": {
+      "hash": "665356b3826583af5fda94a20150e0105296237e62c3929b7c175d8e8e64bfe6",
+      "size": 416,
+      "last_modified": "2026-09-19T09:43:36.594Z"
+    },
+    ".ai/context/business-rules.md": {
+      "hash": "760625f3ca1223b598fa0b0631d2e22fa33bc0d8af97a7782cfaa341b6e6235f",
+      "size": 258,
+      "last_modified": "2026-09-19T09:43:36.597Z"
+    },
+    ".ai/context/context-budget.md": {
+      "hash": "104ec41b9a68284933bbce346bd1a45fcdd25e0fbff680882d1a07ca021d6d60",
+      "size": 260,
+      "last_modified": "2026-09-19T09:43:36.595Z"
+    },
+    ".ai/context/deployment-rules.md": {
+      "hash": "54f1429cc0695a886ec9ff63fee458833ff282663c32a9b43596e876bf2e9a53",
+      "size": 382,
+      "last_modified": "2026-09-19T09:43:36.598Z"
+    },
+    ".ai/context/model-map.md": {
+      "hash": "ebc6e52477e0e025f7c851282bf041e8e20345a0d9134ccda389bfd412acaf39",
+      "size": 339,
+      "last_modified": "2026-09-19T09:43:36.596Z"
+    },
+    ".ai/context/project-brief.md": {
+      "hash": "a2224ea0f5b070e7cd5652e2c6abbca25de123c85e9e2dddd4bac810f9ff7bd4",
+      "size": 302,
+      "last_modified": "2026-09-19T09:43:36.596Z"
+    },
+    ".ai/context/README.md": {
+      "hash": "8f4a300a3bb0341a6d2696e51a81d1609de9cf2487672a065a2c53f4a088b2ee",
+      "size": 517,
+      "last_modified": "2026-09-19T09:43:36.599Z"
+    },
+    ".ai/context/seo-rules.md": {
+      "hash": "27eaffd72d6c6465532fcb75f684a494c3cd74217da78115186a04f38db774c8",
+      "size": 538,
+      "last_modified": "2026-09-19T09:43:36.599Z"
+    },
+    ".ai/intelligence/apply-log.schema.json": {
+      "hash": "1a6973212074a59e5aee3e40f5cbeb59c044aabe2fd014a5ce296e359b39beec",
+      "size": 1853,
+      "last_modified": "2026-09-19T09:43:36.651Z"
+    },
+    ".ai/intelligence/feedback-log.example.jsonl": {
+      "hash": "c5957e2b2adb2e8c1ca2f54ea160f60a4fec777ed3422412919750a3da00b1f2",
+      "size": 693,
+      "last_modified": "2026-09-19T09:43:36.651Z"
+    },
+    ".ai/intelligence/feedback.schema.json": {
+      "hash": "63f21e2d2596632a12efb1f2c37786c599da70fa777173bc9c87268e37305470",
+      "size": 1588,
+      "last_modified": "2026-09-19T09:43:36.652Z"
+    },
+    ".ai/intelligence/improvement-proposal.schema.json": {
+      "hash": "4943b7eabbbaa0e5e9f8c1a18b2ff893d33d29f2a832a4e22c09c805b533b612",
+      "size": 2073,
+      "last_modified": "2026-09-19T09:43:36.653Z"
+    },
+    ".ai/intelligence/learning-rules.example.md": {
+      "hash": "4e91331d93b31b4dbf288d1a1ff24b17134b3d399b3a478886a10f738a77eaa4",
+      "size": 638,
+      "last_modified": "2026-09-19T09:43:36.654Z"
+    },
+    ".ai/intelligence/memory.schema.json": {
+      "hash": "b15eaa9d7a4ab908b2245c7dc7c00afbaff806084ffa93c0afdf8e27d04cd7c9",
+      "size": 2886,
+      "last_modified": "2026-09-19T09:43:36.654Z"
+    },
+    ".ai/intelligence/onboarding.plan.json": {
+      "hash": "8a61477f7e8adc1d13057af79f987f2d0b016a664099d1ae6c22f19c07251758",
+      "size": 1223,
+      "last_modified": "2026-09-19T09:43:18.490Z"
+    },
+    ".ai/intelligence/onboarding.report.md": {
+      "hash": "890ea721fd34a206644cba71541e709ee0fa912d3bd79e41cb304e80a9599009",
+      "size": 892,
+      "last_modified": "2026-09-19T09:43:18.490Z"
+    },
+    ".ai/intelligence/README.md": {
+      "hash": "7bfefed937f6ad2da80f51bed985ffbf25d32bc70743bfa9ce2e257dd6063fda",
+      "size": 749,
+      "last_modified": "2026-09-19T09:43:36.655Z"
+    },
+    ".ai/prompts/compress-context.md": {
+      "hash": "f4eb614b608e19484993d385202b0670becb406998b1aacd806971ada4dc8436",
+      "size": 441,
+      "last_modified": "2026-09-19T09:43:36.618Z"
+    },
+    ".ai/prompts/generate-tests.md": {
+      "hash": "93571d4d3113487e0676c030028bbd34c76aff0082b0d2912502cfcef1821afa",
+      "size": 253,
+      "last_modified": "2026-09-19T09:43:36.619Z"
+    },
+    ".ai/prompts/handoff-to-next-model.md": {
+      "hash": "00d9facc3df5b72dd9b926a46122191893ddbbd7bf39aeaf03832393513f21aa",
+      "size": 258,
+      "last_modified": "2026-09-19T09:43:36.619Z"
+    },
+    ".ai/prompts/implement-safely.md": {
+      "hash": "547d9c6c2bc0d89a360a39d749be65681fe6b799774f95c347a25eea71430868",
+      "size": 275,
+      "last_modified": "2026-09-19T09:43:36.620Z"
+    },
+    ".ai/prompts/operator-content-brief.md": {
+      "hash": "49ce655246b8d0f44b953a235d2b410f01222d80b634da0fb4f2e628051915c6",
+      "size": 884,
+      "last_modified": "2026-09-19T09:43:36.620Z"
+    },
+    ".ai/prompts/operator-creative-intelligence.md": {
+      "hash": "93db27a81d98bbc79d78e599ce2cc57bcdef96d3c51f49ef431d1f9001579780",
+      "size": 878,
+      "last_modified": "2026-09-19T09:43:36.621Z"
+    },
+    ".ai/prompts/operator-inbox-triage.md": {
+      "hash": "67ac46fcd1af65efa0e620acb2692c2cd363ac1b46f224cd0c30b38d65c6fe50",
+      "size": 900,
+      "last_modified": "2026-09-19T09:43:36.621Z"
+    },
+    ".ai/prompts/operator-kpi-snapshot.md": {
+      "hash": "f21cf016207330627cea86620401ceb9f1bf41c796689edd3459f34ca3df4014",
+      "size": 834,
+      "last_modified": "2026-09-19T09:43:36.623Z"
+    },
+    ".ai/prompts/operator-meeting-recap.md": {
+      "hash": "922b4973ad8f8b7f12a950b696033668069210bae39b7375bcc1e8c8b6fb2ece",
+      "size": 803,
+      "last_modified": "2026-09-19T09:43:36.623Z"
+    },
+    ".ai/prompts/operator-project-pulse.md": {
+      "hash": "7323dd5c4ed8f4bc287020e6e9aa947120e3e9e7f00bb2af8782b712dba1714e",
+      "size": 840,
+      "last_modified": "2026-09-19T09:43:36.624Z"
+    },
+    ".ai/prompts/operator-sop-builder.md": {
+      "hash": "962257d84c0cf4691dc9133e167778f04d70ebb17d2377e3aaba3fd77381b2ad",
+      "size": 836,
+      "last_modified": "2026-09-19T09:43:36.624Z"
+    },
+    ".ai/prompts/operator-weekly-review.md": {
+      "hash": "4e6728b92f8217c5058a02a0bdf216dd1dd5040f41924e95b59b25aacc0353be",
+      "size": 824,
+      "last_modified": "2026-09-19T09:43:36.625Z"
+    },
+    ".ai/prompts/plan-first.md": {
+      "hash": "f1956155fb527abbfb77aaf3a8e8c0e9ed8601a81f0cd3ce67b507dc7489bd76",
+      "size": 303,
+      "last_modified": "2026-09-19T09:43:36.626Z"
+    },
+    ".ai/prompts/race-plus.md": {
+      "hash": "3ce2c586173faf6d5ce69a69e65985a658e7e0e7792ec9bd37db8c03433090bb",
+      "size": 1245,
+      "last_modified": "2026-09-19T09:43:36.626Z"
+    },
+    ".ai/prompts/README.md": {
+      "hash": "cbbc02700cdd5fba23ff80ab881678a0e3a2b9dff7f4994d11f77d0d3c256fbc",
+      "size": 681,
+      "last_modified": "2026-09-19T09:43:36.627Z"
+    },
+    ".ai/prompts/review-diff.md": {
+      "hash": "135438f54be68fd866d9d81ff90085f882b2b8a77c5c5b2a0bfc4927daeab490",
+      "size": 254,
+      "last_modified": "2026-09-19T09:43:36.627Z"
+    },
+    ".ai/prompts/summarize-session.md": {
+      "hash": "bbd1a39cc9061b18f3140172bf3c92f1a4d55099c8372bb1d0daaa54e31181b2",
+      "size": 252,
+      "last_modified": "2026-09-19T09:43:36.628Z"
+    },
+    ".ai/registries/agent-clusters.yaml": {
+      "hash": "4aaf5def40728a98e413e1a66c359e21d861b529b49c1dd79dc58fc74d550948",
+      "size": 5087,
+      "last_modified": "2026-09-19T09:43:36.643Z"
+    },
+    ".ai/registries/capabilities.yaml": {
+      "hash": "6ca702d76e8ee7826790b7da71d131f14949996992bb840bec7fbb520de91cb4",
+      "size": 1640,
+      "last_modified": "2026-09-19T09:43:36.644Z"
+    },
+    ".ai/registries/gateway-clients.yaml": {
+      "hash": "760824d351b74d9cea7781aaa646832fd929ed2b8cdcacdd8340e50d834ec22c",
+      "size": 7833,
+      "last_modified": "2026-09-19T09:43:36.644Z"
+    },
+    ".ai/registries/guardrails.yaml": {
+      "hash": "14c05a03bd96b6839e86648dee130d402349c22f7f11ff81d4d5eac3dc01851e",
+      "size": 2588,
+      "last_modified": "2026-09-19T09:43:36.645Z"
+    },
+    ".ai/registries/prompt-templates.yaml": {
+      "hash": "6545e3ad9b68bbf75cb0fb27f7fea032db1a08f7d1b9bcede44cd08a822050d6",
+      "size": 14423,
+      "last_modified": "2026-09-19T09:43:36.645Z"
+    },
+    ".ai/registries/skills.yaml": {
+      "hash": "825447050e07c2239401397f46d3a667123bf3d12f7b70cf0a7c1017d7f353ec",
+      "size": 14623,
+      "last_modified": "2026-09-19T09:43:36.646Z"
+    },
+    ".ai/registries/sources.yaml": {
+      "hash": "19a63f9535bf7214c5af0883e1becfa12ed0ad69cac37b318a7e2f5cb1adf957",
+      "size": 519,
+      "last_modified": "2026-09-19T09:43:36.646Z"
+    },
+    ".ai/registries/tool-permissions.yaml": {
+      "hash": "933ee032f37c1a0fbaadae9dec2787c18bf004f276af1d70e6888808a0f4e2c4",
+      "size": 5184,
+      "last_modified": "2026-09-19T09:43:36.647Z"
+    },
+    ".ai/registries/tools.yaml": {
+      "hash": "bc64d06aa82e4feed04645c07d6e08d337a6245350a4c6d7b91946c18540366c",
+      "size": 1653,
+      "last_modified": "2026-09-19T09:43:36.648Z"
+    },
+    ".ai/registries/trusted-keys.yaml": {
+      "hash": "4bbbb15ad42ff45c2e48d80b5b4d94266cc4e0441f971c33d3df93fa4f466a36",
+      "size": 521,
+      "last_modified": "2026-09-19T09:43:36.648Z"
+    },
+    ".ai/registries/workflows.yaml": {
+      "hash": "06c89e43afa61b9103202990e5558e58a4512458cce95736b62adee7e216918c",
+      "size": 11480,
+      "last_modified": "2026-09-19T09:43:36.649Z"
+    },
+    ".ai/session-logs/README.md": {
+      "hash": "61d646844bc4c202a45da55323ca3407d818aba0195a1c33bd9589c9c1ed8c9d",
+      "size": 909,
+      "last_modified": "2026-09-19T09:43:36.642Z"
+    },
+    ".ai/skills/bug-fix.md": {
+      "hash": "304e3b03a68517fa1f8a0a4e7da42e1b1f587d953ec560959d84b990149efc1f",
+      "size": 353,
+      "last_modified": "2026-09-19T09:43:36.606Z"
+    },
+    ".ai/skills/caveman-bug-fix.md": {
+      "hash": "240b1b63f98ddaf55ea4dba1937180cb1fa9d1fc7559587b38d6656d76e444fa",
+      "size": 61,
+      "last_modified": "2026-09-19T09:43:36.607Z"
+    },
+    ".ai/skills/caveman-context-handoff.md": {
+      "hash": "26c248f2cc9da046a2a893560293c31e3496d12132bb0695b60a4d3dbfc5395b",
+      "size": 63,
+      "last_modified": "2026-09-19T09:43:36.607Z"
+    },
+    ".ai/skills/caveman-feature-build.md": {
+      "hash": "aa545ccd50ee32f8c8603a4c012a586d67ca1eb4bf39a5662235a34a1b00a7ad",
+      "size": 74,
+      "last_modified": "2026-09-19T09:43:36.608Z"
+    },
+    ".ai/skills/context-routing.md": {
+      "hash": "8ae3a78d62f6f087481f81914c0b495973ae649086fada84073c501f2a8eef36",
+      "size": 353,
+      "last_modified": "2026-09-19T09:43:36.609Z"
+    },
+    ".ai/skills/cpanel-deploy.md": {
+      "hash": "f9215aa873a4d0cf93142f6298bba7f33a81a01f74cee27c2532f5573aca5e9c",
+      "size": 348,
+      "last_modified": "2026-09-19T09:43:36.609Z"
+    },
+    ".ai/skills/custom-skill.example.md": {
+      "hash": "3f0077c4b8b1aff42a9fb1258d0e489e5027c06f5d7e94b7db036416990054a7",
+      "size": 391,
+      "last_modified": "2026-09-19T09:43:36.610Z"
+    },
+    ".ai/skills/example-skill.md": {
+      "hash": "df877b6a28022baa58e6a33974863c4f3cd3e6a3b4f6549843f7a2dce67bccaa",
+      "size": 582,
+      "last_modified": "2026-09-19T09:43:36.597Z"
+    },
+    ".ai/skills/landing-page-optimization.md": {
+      "hash": "cb3705d951dde27f123fbfb2b4dd24432e7cbf8bf9f1920f4fd61ebf0b19008a",
+      "size": 310,
+      "last_modified": "2026-09-19T09:43:36.611Z"
+    },
+    ".ai/skills/model-routing.md": {
+      "hash": "4a6e3f36f9a4cf54a443afe2ed4eb66da71d39e7b36fbf168c5647e0a8334b7f",
+      "size": 304,
+      "last_modified": "2026-09-19T09:43:36.611Z"
+    },
+    ".ai/skills/nextjs-feature-build.md": {
+      "hash": "dd7d7bcad73a03da2319e65d4a6e7eba6b4a785f3a10c45cf40653e1a0981920",
+      "size": 327,
+      "last_modified": "2026-09-19T09:43:36.612Z"
+    },
+    ".ai/skills/operator-content-brief.md": {
+      "hash": "d520f68cb97a6f8484ac42cb13c933a296e29f202ab21e6054ae4da6269ac293",
+      "size": 1004,
+      "last_modified": "2026-09-19T09:43:36.613Z"
+    },
+    ".ai/skills/operator-creative-intelligence.md": {
+      "hash": "d80f4611732898153c24643829f10087ea7001ec100e87326f83bf69ddb768e5",
+      "size": 1074,
+      "last_modified": "2026-09-19T09:43:36.613Z"
+    },
+    ".ai/skills/operator-inbox-triage.md": {
+      "hash": "c92f82374c1feec2b5ed1bca92071b21c2cdfad3ef1a2be005000cb15ba27720",
+      "size": 1148,
+      "last_modified": "2026-09-19T09:43:36.614Z"
+    },
+    ".ai/skills/operator-kpi-snapshot.md": {
+      "hash": "152ef92b9ee8e5dd3257cc9b4dca8470732d192efd92d71f56046a262ea7d8dc",
+      "size": 1092,
+      "last_modified": "2026-09-19T09:43:36.614Z"
+    },
+    ".ai/skills/operator-meeting-recap.md": {
+      "hash": "824000ed1699e2589a8c59c7d26643c092d23049084ce67d2fa9d33c00f3012b",
+      "size": 1066,
+      "last_modified": "2026-09-19T09:43:36.615Z"
+    },
+    ".ai/skills/operator-project-pulse.md": {
+      "hash": "4895182f0741b395de848379697e4037b84dafa973f17ca0e76cf9c1d2b58d8e",
+      "size": 1057,
+      "last_modified": "2026-09-19T09:43:36.615Z"
+    },
+    ".ai/skills/operator-sop-builder.md": {
+      "hash": "91b79b9d9f7a37ee2a9c7aff3e276826df8df0e0066220900be30d2189536230",
+      "size": 1003,
+      "last_modified": "2026-09-19T09:43:36.615Z"
+    },
+    ".ai/skills/operator-weekly-review.md": {
+      "hash": "cb6709e16018e73e855ee7352d7e0e830b164d29ed05ff3442581b5a497bb845",
+      "size": 1036,
+      "last_modified": "2026-09-19T09:43:36.616Z"
+    },
+    ".ai/skills/README.md": {
+      "hash": "5a6a8143e7558860f2861695660679c1b9ffc9e98eb655a5fe628beffcff3461",
+      "size": 986,
+      "last_modified": "2026-09-19T09:43:36.616Z"
+    },
+    ".ai/skills/refactor.md": {
+      "hash": "cea69b525fc8ea103f9c62e44705c981bc7e92dbc8f6edcf6e5884788fae17b8",
+      "size": 310,
+      "last_modified": "2026-09-19T09:43:36.616Z"
+    },
+    ".ai/skills/seo-implementation.md": {
+      "hash": "36a6d02cce13bc09833d51a682e5f1456f3fed64fd86f7570d0502efd6f9814c",
+      "size": 327,
+      "last_modified": "2026-09-19T09:43:36.616Z"
+    },
+    ".ai/templates/AGENTS.caveman.md": {
+      "hash": "61853d35d55566f95002737b7013863816638e00c19f80d2a9a98d4569fca7a5",
+      "size": 217,
+      "last_modified": "2026-09-19T09:43:36.635Z"
+    },
+    ".ai/templates/bug-report-template.md": {
+      "hash": "744e4261a0ef4c263b4a6f378063c5be0b2cee432be4977aa57bce9d03863ee3",
+      "size": 233,
+      "last_modified": "2026-09-19T09:43:36.636Z"
+    },
+    ".ai/templates/custom-template.example.yaml": {
+      "hash": "7dcb7381b3ab03fb1cf5c77876f37e04ef091a3c9b06e46d8aab3e570c85dc4b",
+      "size": 580,
+      "last_modified": "2026-09-19T09:43:36.637Z"
+    },
+    ".ai/templates/feature-spec-template.md": {
+      "hash": "fbebdfcb73c76a0b6aaf02992b1bf35b079062729769207bccd1e600b9e47b98",
+      "size": 251,
+      "last_modified": "2026-09-19T09:43:36.637Z"
+    },
+    ".ai/templates/MEMORY.caveman.md": {
+      "hash": "3be224581dcea4c28a2eb4a006e1bd5d3512d6f31a6c08d446e644ea69ca90d9",
+      "size": 231,
+      "last_modified": "2026-09-19T09:43:36.638Z"
+    },
+    ".ai/templates/project-memory-template.md": {
+      "hash": "d35fe3076046aabcf85f04396d2716b33fe1f391fe8fdeae05f4301b26e0302f",
+      "size": 204,
+      "last_modified": "2026-09-19T09:43:36.638Z"
+    },
+    ".ai/templates/registry.yaml": {
+      "hash": "3b8730cfb1515af031340f470b0a122254639b121b99e76b3e2e363dfa45ef7a",
+      "size": 18870,
+      "last_modified": "2026-09-19T09:43:36.639Z"
+    },
+    ".ai/templates/RUNBOOK.caveman.md": {
+      "hash": "8d5b56a3f7b58fd04d902afcfdcc375dceff44729f440ec17b4dca44e093f8fc",
+      "size": 320,
+      "last_modified": "2026-09-19T09:43:36.640Z"
+    },
+    ".ai/templates/session-log-template.md": {
+      "hash": "3b050c99a9d89cfb3382a7227a5b0ef48c6ab3466294c3b27512c88da205d2b1",
+      "size": 233,
+      "last_modified": "2026-09-19T09:43:36.640Z"
+    },
+    ".ai/templates/task-template.md": {
+      "hash": "aeeed8675a28eb69439eb67444f072861b8cbefe1f65af7640c781534f7f5472",
+      "size": 237,
+      "last_modified": "2026-09-19T09:43:36.641Z"
+    },
+    ".ai/templates/TASKS.caveman.md": {
+      "hash": "4dadc01a6ee4d8961fa66c8dc645e2f5b0881d17d64e9eaf217a18c0c56a8bc0",
+      "size": 64,
+      "last_modified": "2026-09-19T09:43:36.641Z"
+    },
+    ".gitignore": {
+      "hash": "06f5eea3896bfbe9355ff61bff5d9235f166c1432cb998b010c457ecaf4b432e",
+      "size": 402,
+      "last_modified": "2026-09-19T09:39:33.667Z"
+    },
+    "AGENTS.md": {
+      "hash": "64cd05c383a1d255190f4237cfe37b8515f95c3d6c3ce471b73f23e91a7f27b9",
+      "size": 1818,
+      "last_modified": "2026-09-19T09:44:46.301Z"
+    },
+    "backend/.gitignore": {
+      "hash": "891127240ae57c0222ec61f9d8b42fc36517d6ad4d1291872cd9402df7800f12",
+      "size": 62,
+      "last_modified": "2026-09-19T09:39:11.655Z"
+    },
+    "backend/.vercel/project.json": {
+      "hash": "f45c64b4e38986f6a149f702c0e3e482bb96cba037846aade5086555e95b4c23",
+      "size": 124,
+      "last_modified": "2026-07-16T19:20:39.799Z"
+    },
+    "backend/.vercel/README.txt": {
+      "hash": "f5d1ed0f5032ae128931f46459b5faa1af6319fc2dfb3e7a5fe54a84bf93dbd6",
+      "size": 520,
+      "last_modified": "2026-07-16T19:20:39.799Z"
+    },
+    "backend/package.json": {
+      "hash": "5a8950ae4af89e23418f634505b31651981924c7245714c51b0375801ca9c64d",
+      "size": 1097,
+      "last_modified": "2026-07-20T15:59:30.809Z"
+    },
+    "backend/prisma/migrations/20260716022442_init/migration.sql": {
+      "hash": "2bb67f653d0175e75f81908741031d7e0ec8af1b7c8fc0ef23ba38059b9cce6b",
+      "size": 5111,
+      "last_modified": "2026-07-16T02:24:42.258Z"
+    },
+    "backend/prisma/migrations/migration_lock.toml": {
+      "hash": "693566b52c49db47a2b0901d12400aa3d710d13a49f4a2a154b80c0505ed737c",
+      "size": 126,
+      "last_modified": "2026-07-16T02:24:42.258Z"
+    },
+    "backend/prisma/schema.prisma": {
+      "hash": "9ae768aba729080fc25192b6d546e523eea8494d2e0b2ddff35a072da94a7dfb",
+      "size": 7542,
+      "last_modified": "2026-07-20T15:28:37.414Z"
+    },
+    "backend/prisma/seed.ts": {
+      "hash": "93d90fc208ae21edbc92ae52b3e6fd56f5800a217af06677a1a4f66cd9281059",
+      "size": 7702,
+      "last_modified": "2026-07-16T03:12:46.957Z"
+    },
+    "backend/scratch/create-test-users.ts": {
+      "hash": "b1d6f4dd2c7fb2df746f141874057d3202df9bd062e39500f3b5488531784f2f",
+      "size": 3109,
+      "last_modified": "2026-07-20T15:34:40.205Z"
+    },
+    "backend/scratch/seed-tuitions.ts": {
+      "hash": "8de12450cc9d9ddd7ae962f0a5a5690b5f8c30abce20a021b4f9d1e2590784b1",
+      "size": 5295,
+      "last_modified": "2026-07-20T15:32:39.190Z"
+    },
+    "backend/scratch/test-db.ts": {
+      "hash": "5614dd42b572ea7685935c43ec6675f551f321297299afc365c2592d522c6e36",
+      "size": 493,
+      "last_modified": "2026-07-16T19:32:55.250Z"
+    },
+    "backend/scratch/test-net.ts": {
+      "hash": "e5ff1ecfc6d4b49ee70c966ede6b883e7b561ccab86876adb7e3b3ea20ed2178",
+      "size": 492,
+      "last_modified": "2026-07-16T19:33:10.228Z"
+    },
+    "backend/src/index.ts": {
+      "hash": "4c45c9c9bb1de23630c76cd3d053b95a8a5294600290311dc0d6c7760fb2e3e5",
+      "size": 3212,
+      "last_modified": "2026-07-20T15:59:52.869Z"
+    },
+    "backend/src/lib/prisma.ts": {
+      "hash": "7a79c1fb8f36b3b590f4cc815cace94b9a169c6fb83180420ae842a5852f6b77",
+      "size": 308,
+      "last_modified": "2026-07-16T01:53:51.556Z"
+    },
+    "backend/src/middleware/auth.ts": {
+      "hash": "5e089f9873f50a905f912314cf2dc681e620ce43cf6d3c1dc312b7736f947b3c",
+      "size": 1987,
+      "last_modified": "2026-07-20T16:00:14.905Z"
+    },
+    "backend/src/middleware/rateLimit.ts": {
+      "hash": "f1a375c0eb3c921c968ec2bba15849e18f1c3a5302e8a923932aac61e6367a42",
+      "size": 1294,
+      "last_modified": "2026-07-20T15:59:36.359Z"
+    },
+    "backend/src/middleware/validate.ts": {
+      "hash": "13dbc58f77540b0cac31b506f5b0589496396deea0f80bb94801baf983277e80",
+      "size": 1014,
+      "last_modified": "2026-07-20T15:59:43.862Z"
+    },
+    "backend/src/routes/admin.routes.ts": {
+      "hash": "e46b4df3815e13eed106951bee1f6ca4108ca85c9d97b833c72568705d099272",
+      "size": 16983,
+      "last_modified": "2026-07-16T19:14:03.344Z"
+    },
+    "backend/src/routes/auth.routes.ts": {
+      "hash": "e5dee51f585b1378d93c2faedaf9b688fc410f3735d043e05349d8365dfae8a5",
+      "size": 5236,
+      "last_modified": "2026-07-20T16:00:07.447Z"
+    },
+    "backend/src/routes/booking.routes.ts": {
+      "hash": "bce6d6c931be25318363a1d95996df3c5c064eb5516b3a4838afcc9a4afa44a1",
+      "size": 4629,
+      "last_modified": "2026-07-16T19:13:59.199Z"
+    },
+    "backend/src/routes/message.routes.ts": {
+      "hash": "154370625da03dcf6d6f38de6d40cba61711c953e0d1d7ca6c026dfc53e7b1d2",
+      "size": 1827,
+      "last_modified": "2026-07-16T19:14:07.317Z"
+    },
+    "backend/src/routes/notification.routes.ts": {
+      "hash": "4e9b7d2603d63ceeb5fc515723109a0b05953850a141695064869e33577e4976",
+      "size": 1476,
+      "last_modified": "2026-07-16T19:12:23.630Z"
+    },
+    "backend/src/routes/payment.routes.ts": {
+      "hash": "cd62fd62af6c30d34e8904afd0538ec9ea4fb22bb9072ee984f3677fe29e7cc9",
+      "size": 8685,
+      "last_modified": "2026-07-16T19:14:11.518Z"
+    },
+    "backend/src/routes/review.routes.ts": {
+      "hash": "c22e51c4b4267f792390838e668754165b77a5b25967b183143c7da9bcbec136",
+      "size": 2834,
+      "last_modified": "2026-07-16T19:06:41.177Z"
+    },
+    "backend/src/routes/tuition.routes.ts": {
+      "hash": "ce3857b55e0d0ab4943a214b820c94deddab3b72bed3612662b6a8a4f13d0a72",
+      "size": 16691,
+      "last_modified": "2026-07-20T16:00:45.790Z"
+    },
+    "backend/src/routes/tutor.routes.ts": {
+      "hash": "642e878a77c5d3a49bf8b37cd76fe477c9331dc569265e59960ba32fbb703b1e",
+      "size": 6416,
+      "last_modified": "2026-07-16T18:46:34.217Z"
+    },
+    "backend/src/routes/upload.routes.ts": {
+      "hash": "28be9e31bc8214329f52b18d180aafce70a6a9e303b9fab87c153e4fd0d2edea",
+      "size": 1947,
+      "last_modified": "2026-07-20T16:00:23.710Z"
+    },
+    "backend/src/routes/wishlist.routes.ts": {
+      "hash": "1648a330e32abc60b8e2a1e02b69697c0c23983fafacd278fbd3b79c8b7ddb71",
+      "size": 2522,
+      "last_modified": "2026-07-16T04:29:02.569Z"
+    },
+    "backend/src/routes/withdrawal.routes.ts": {
+      "hash": "c8a6ff38e53a2eedbea3adc8a5bb4074f0641bf6dedfc3d999431f809b3f3ed6",
+      "size": 4677,
+      "last_modified": "2026-07-16T18:46:39.870Z"
+    },
+    "backend/tsconfig.json": {
+      "hash": "6f29b2a344dcb25134b13d3a6490c4abd4fa97e957d781711b8bc52cd8e4defc",
+      "size": 502,
+      "last_modified": "2026-07-16T01:52:54.758Z"
+    },
+    "backend/uploads/1784176133657-319022199.jpg": {
+      "hash": "e721646ac717781a98535459da880d71c2a47ff49247ec185d9bc519dc8eae15",
+      "size": 86006,
+      "last_modified": "2026-07-16T04:28:53.659Z"
+    },
+    "backend/uploads/1784221239746-306200479.jpg": {
+      "hash": "86a15d616aadc32fe7c677187b7b51619e434a268539e6c21d03f14333d79b15",
+      "size": 34999,
+      "last_modified": "2026-07-16T17:00:39.748Z"
+    },
+    "backend/uploads/1784221308303-802191945.jpg": {
+      "hash": "86a15d616aadc32fe7c677187b7b51619e434a268539e6c21d03f14333d79b15",
+      "size": 34999,
+      "last_modified": "2026-07-16T17:01:48.304Z"
+    },
+    "backend/uploads/1784221502311-669185180.jpg": {
+      "hash": "476538c947718ab9cb1d461b6117431731e87ec0cba03e775dc8e65fb68ec6b9",
+      "size": 44277,
+      "last_modified": "2026-07-16T17:05:02.312Z"
+    },
+    "backend/vercel.json": {
+      "hash": "cb89fcd9239709d0b1e61b0fccd270ce7f8ff5e1a382f9f53b9d0febe79a899f",
+      "size": 189,
+      "last_modified": "2026-07-16T19:20:28.064Z"
+    },
+    "docs/images/28ff8b8d-5383-4d4c-b2cc-2b9f65f6dd53.jpg": {
+      "hash": "03a06fd08b31f16bcd32330103347f29839e617b581b178a8e489bcff0299647",
+      "size": 78717,
+      "last_modified": "2026-07-16T00:55:02.171Z"
+    },
+    "docs/images/5f100bdb-677c-4e76-9b84-ddea2db9ef0f.jpg": {
+      "hash": "95b6c7efc8687281bfe87d7c39e4221655fba774fa5069f1bb0a0f1441ce91ef",
+      "size": 88004,
+      "last_modified": "2026-07-16T00:54:54.787Z"
+    },
+    "docs/images/7f2ecff1-0f54-4e4e-b5f4-d7ea9139fdb1.jpg": {
+      "hash": "c018e1b2611b8525742fe9ee1e42714e59b3477cdbad86c996cbbeb8cf6e6a9e",
+      "size": 74121,
+      "last_modified": "2026-07-16T00:54:52.718Z"
+    },
+    "docs/images/9713dead-f257-481c-b18b-72224efe5b96.jpg": {
+      "hash": "af0b5212113b23b311d1d8f5e890cad32638a7b5315f911b0d8405c156997919",
+      "size": 79926,
+      "last_modified": "2026-07-16T00:55:04.981Z"
+    },
+    "docs/images/a9e90bf4-6c0c-46ce-9c86-b1c5c8bee199.jpg": {
+      "hash": "e169a8526db1ab08077a2467a42328b689aee1b56df8fed269083a6f168d9c88",
+      "size": 80091,
+      "last_modified": "2026-07-16T00:54:56.701Z"
+    },
+    "docs/images/e73556a6-cf59-4257-9e85-bd7b060337e7.jpg": {
+      "hash": "7d14eb3d674d7fb85da7afa0f1fa7c141b9cff7eede67f7509cba7fc40882147",
+      "size": 88938,
+      "last_modified": "2026-07-16T00:54:59.311Z"
+    },
+    "docs/PRD_and_Architecture.md": {
+      "hash": "f013ab5d1d509e9287b0e82538174c22434c4c1157524a5e8086f92a87b53049",
+      "size": 12350,
+      "last_modified": "2026-07-16T01:49:43.203Z"
+    },
+    "docs/requirement..md": {
+      "hash": "19553af6824366d9033be6532933a399a8297517e27ed4312ed683ebbcf732b0",
+      "size": 1856,
+      "last_modified": "2026-07-16T01:00:33.728Z"
+    },
+    "frontend/next-env.d.ts": {
+      "hash": "e462a655754db9df18b4a657454a7b6a88717ffded4e89403b2b3a47c6603fc3",
+      "size": 233,
+      "last_modified": "2026-07-16T02:06:53.815Z"
+    },
+    "frontend/next.config.js": {
+      "hash": "97dd30b40b83e5791af739f12ae0437ff3eacfb67416f081e0a266582257b248",
+      "size": 360,
+      "last_modified": "2026-07-16T01:52:54.762Z"
+    },
+    "frontend/package.json": {
+      "hash": "89f2a4f43ba19c13c0264eefc7fbd4b6cd10d30278ea197d33c486969782ab57",
+      "size": 726,
+      "last_modified": "2026-07-16T01:51:59.503Z"
+    },
+    "frontend/postcss.config.js": {
+      "hash": "fa650b380adfabb151a0b352f7135e107e6352345f899060f1c5c231228f94bf",
+      "size": 83,
+      "last_modified": "2026-07-16T01:52:54.760Z"
+    },
+    "frontend/src/app/about/page.tsx": {
+      "hash": "37ffa3415c370274790dc273788ea6dcb5c67f3ee7b40b8797430265ea06b0f0",
+      "size": 5084,
+      "last_modified": "2026-07-16T02:01:07.816Z"
+    },
+    "frontend/src/app/admin/page.tsx": {
+      "hash": "3f8c7dc02907ee617118a6cd4b8df8afa45e2758fe571d07098a20bd2c2c7be0",
+      "size": 22235,
+      "last_modified": "2026-07-16T18:57:58.431Z"
+    },
+    "frontend/src/app/admin/[page]/page.tsx": {
+      "hash": "d0f2cc24eb7670c255bccc9ad4395a1c8a9cd617fa88488129206c25ec668426",
+      "size": 49742,
+      "last_modified": "2026-07-16T19:13:05.098Z"
+    },
+    "frontend/src/app/booking/page.tsx": {
+      "hash": "e7514a3439a01008e56584848ad194b5de1775f9ccd20552153204b9b9ab5ce2",
+      "size": 28644,
+      "last_modified": "2026-07-16T18:36:03.760Z"
+    },
+    "frontend/src/app/contact/page.tsx": {
+      "hash": "725ce4c8930168654750bfedf4cfe4c2bce0633528f5d793f88a973a181c49b0",
+      "size": 7564,
+      "last_modified": "2026-07-16T02:01:19.414Z"
+    },
+    "frontend/src/app/dashboard/student/bookings/page.tsx": {
+      "hash": "8980b72a0563efa90d0733d7bbe25c0e563da089c84e714ccb1df8f608e48845",
+      "size": 2452,
+      "last_modified": "2026-07-16T02:02:05.439Z"
+    },
+    "frontend/src/app/dashboard/student/page.tsx": {
+      "hash": "eb0222dd9dbf1f8ef3801352148faa2b3925773927fe4756b21a8b5de385ae7e",
+      "size": 7990,
+      "last_modified": "2026-07-16T02:54:16.664Z"
+    },
+    "frontend/src/app/dashboard/student/tuitions/new/page.tsx": {
+      "hash": "7f6cfb0d09ce3635419598e06958d68ba659756c2a79586413b3fae139d73640",
+      "size": 12801,
+      "last_modified": "2026-07-20T15:30:05.768Z"
+    },
+    "frontend/src/app/dashboard/student/tuitions/page.tsx": {
+      "hash": "21ac90916131cf6373db2fa025ba53524dbf92562aa7b08142cf217a17799b0d",
+      "size": 8102,
+      "last_modified": "2026-07-20T15:29:58.726Z"
+    },
+    "frontend/src/app/dashboard/student/tuitions/[id]/page.tsx": {
+      "hash": "bcab7960f6dbf8d22dc09b647d8c9585d06f824fae0f6df1bb1067a230630029",
+      "size": 12051,
+      "last_modified": "2026-07-20T15:30:12.664Z"
+    },
+    "frontend/src/app/dashboard/tutor/analytics/page.tsx": {
+      "hash": "8cb73d5db84d53759b9bc0138ff9b5ed80203851b9e473359d26fc5fad76a11b",
+      "size": 4258,
+      "last_modified": "2026-07-16T02:02:05.441Z"
+    },
+    "frontend/src/app/dashboard/tutor/applications/page.tsx": {
+      "hash": "7934bdbbdb6b1b55c7e340770852e158b510fb17cd8bf57d922fcb67f79d8a9a",
+      "size": 7145,
+      "last_modified": "2026-07-20T15:30:20.032Z"
+    },
+    "frontend/src/app/dashboard/tutor/earnings/page.tsx": {
+      "hash": "629e88bddc10d1287d34fcdaae8233d69f8c8eea7900a387aa4c81bca5e067e0",
+      "size": 12691,
+      "last_modified": "2026-07-16T18:47:17.675Z"
+    },
+    "frontend/src/app/dashboard/tutor/page.tsx": {
+      "hash": "66e072d57918fdf250e36620c01058e7f9e5ad3280720da168793edb1c66cc1d",
+      "size": 8331,
+      "last_modified": "2026-07-16T02:55:47.613Z"
+    },
+    "frontend/src/app/dashboard/tutor/requests/page.tsx": {
+      "hash": "ddc3312c4fae58ec2e5b3d9b1885fef89ee15860483e3e3178eb751d103832fb",
+      "size": 5369,
+      "last_modified": "2026-07-16T16:53:45.231Z"
+    },
+    "frontend/src/app/error.tsx": {
+      "hash": "07105231f4ba84647af316762450c2dabb0dc890462033bf64cae8fe21aada11",
+      "size": 1835,
+      "last_modified": "2026-07-20T16:01:03.449Z"
+    },
+    "frontend/src/app/find-tutor/page.tsx": {
+      "hash": "3129969ba671182afa71786861fad975d5b572f268d1e92f8532e2bf23d23698",
+      "size": 25892,
+      "last_modified": "2026-07-16T18:35:35.894Z"
+    },
+    "frontend/src/app/forgot-password/page.tsx": {
+      "hash": "73137c456d04a149b30c2104d01c28d556041a56c357a82fd7af74f22171ea32",
+      "size": 2051,
+      "last_modified": "2026-07-16T02:04:07.091Z"
+    },
+    "frontend/src/app/globals.css": {
+      "hash": "3578d00fc598b701ac4f37c09a08a228f507c0e8d457a246c4ac0549ac6e7ac8",
+      "size": 3331,
+      "last_modified": "2026-07-16T01:54:28.735Z"
+    },
+    "frontend/src/app/layout.tsx": {
+      "hash": "bf4616be30c3e12b0c71203e6dc4af7070ca43f8a9427cb0f043087be244fb5e",
+      "size": 910,
+      "last_modified": "2026-07-20T16:01:12.007Z"
+    },
+    "frontend/src/app/loading.tsx": {
+      "hash": "96b1fc6da0c24d448f23fa3eab098cd083e63e96d168822e67644f3ae77f930b",
+      "size": 446,
+      "last_modified": "2026-07-16T02:04:07.113Z"
+    },
+    "frontend/src/app/login/page.tsx": {
+      "hash": "6227520ae6b0edf6c579c5874a36e5b4b976d077db2bf4264baa57579892f013",
+      "size": 7182,
+      "last_modified": "2026-07-16T02:19:01.901Z"
+    },
+    "frontend/src/app/messages/page.tsx": {
+      "hash": "665e949852a54c81f2c099f92aeb6d9cfb3354bca85848e78f9fc7d51e398331",
+      "size": 9383,
+      "last_modified": "2026-07-16T02:01:07.807Z"
+    },
+    "frontend/src/app/not-found.tsx": {
+      "hash": "c179789ab0aa217dd2f46d93fca50466f259f9c8ca213ffe66539ac04aeb858b",
+      "size": 585,
+      "last_modified": "2026-07-16T02:04:07.111Z"
+    },
+    "frontend/src/app/notifications/page.tsx": {
+      "hash": "469b3226c6ce831c1f02d60f5cf1a8445bdee1207f82af9f4f4433526d231777",
+      "size": 6246,
+      "last_modified": "2026-07-16T19:14:17.525Z"
+    },
+    "frontend/src/app/page.tsx": {
+      "hash": "022cc0d9203e953a85e530403eff5a4b913c25a25a0457dd98b26e5bd7abee03",
+      "size": 13534,
+      "last_modified": "2026-07-16T02:52:37.511Z"
+    },
+    "frontend/src/app/payments/page.tsx": {
+      "hash": "f36daa4e9a915ead4232bae07b520e8456cd18803fc66aeb0188b1765495ac8d",
+      "size": 12435,
+      "last_modified": "2026-07-16T17:15:59.110Z"
+    },
+    "frontend/src/app/register/page.tsx": {
+      "hash": "ea54bcbc23322e912574e01c65c95a9eea4d71d7c39f8b89a29677040fe51f66",
+      "size": 7583,
+      "last_modified": "2026-07-16T02:19:06.208Z"
+    },
+    "frontend/src/app/reviews/page.tsx": {
+      "hash": "c8424ce2421c26d43f4f27f56aefd11bb1ab98ce151bb1cbe5058ff36295795a",
+      "size": 11793,
+      "last_modified": "2026-07-16T16:56:13.107Z"
+    },
+    "frontend/src/app/schedule/page.tsx": {
+      "hash": "470572171a955baaf7f8a8e6c03e50f2d6f1c572c6552f5d87e186733c1eb8a7",
+      "size": 17150,
+      "last_modified": "2026-07-16T16:52:22.682Z"
+    },
+    "frontend/src/app/settings/page.tsx": {
+      "hash": "c1684de2d1fd9c6f7f21faf60a870e3c1676f67e8682471744b08a8d466b1121",
+      "size": 44980,
+      "last_modified": "2026-07-16T17:06:33.855Z"
+    },
+    "frontend/src/app/tuitions/page.tsx": {
+      "hash": "cc9cb1eeea01d0717a368aa711065c6acb8b6e3b39ae79ba9b78e9973f07b5eb",
+      "size": 25529,
+      "last_modified": "2026-07-20T15:38:16.677Z"
+    },
+    "frontend/src/app/tutors/[id]/page.tsx": {
+      "hash": "920aa01913423734ba8fc409e29a58d6cdcaf38338d2a98df505fab5c41649f1",
+      "size": 36536,
+      "last_modified": "2026-07-16T18:35:54.980Z"
+    },
+    "frontend/src/app/wishlist/page.tsx": {
+      "hash": "e6f74d1ba4a5e5bb8679c46ebf5d93314c8df84f48c9dd4b334341cc9f7f5c11",
+      "size": 8427,
+      "last_modified": "2026-07-16T18:35:42.183Z"
+    },
+    "frontend/src/components/DashboardSidebar.tsx": {
+      "hash": "fe0f9dd0bb0430ded06ea053659ef6f6f121ba28151c7c1a063fc8371337fdc5",
+      "size": 4024,
+      "last_modified": "2026-07-20T15:29:38.189Z"
+    },
+    "frontend/src/components/Footer.tsx": {
+      "hash": "f1110191925543edd17e3d3e9d9a5a2ff6d5c8c7a66580178dc8b89d9608e5e3",
+      "size": 4302,
+      "last_modified": "2026-07-16T01:55:11.263Z"
+    },
+    "frontend/src/components/Navbar.tsx": {
+      "hash": "0fb459db2a67b07dcd578e0d20a8341405ff09d62c690db1e92686fa665c8ca8",
+      "size": 7327,
+      "last_modified": "2026-07-20T15:29:33.256Z"
+    },
+    "frontend/src/lib/api.ts": {
+      "hash": "dff37fbb0b95f8698b94d76e7bed323a9991d698a5a6a6605bae752861c2d161",
+      "size": 1780,
+      "last_modified": "2026-07-20T16:01:29.073Z"
+    },
+    "frontend/src/lib/utils.ts": {
+      "hash": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+      "size": 169,
+      "last_modified": "2026-07-16T01:55:11.260Z"
+    },
+    "frontend/src/store/auth.store.ts": {
+      "hash": "31e3c89da1be2f61d099878e4b08dc1af13f555161509d9115f171253c79ccaf",
+      "size": 1080,
+      "last_modified": "2026-07-16T01:55:11.249Z"
+    },
+    "frontend/src/store/filter.store.ts": {
+      "hash": "731d8eb2a4f6ebcc33c29e1a4ccaee8d396af495f965f0da9c430a2b73a605d2",
+      "size": 606,
+      "last_modified": "2026-07-16T01:55:11.258Z"
+    },
+    "frontend/tailwind.config.ts": {
+      "hash": "2b5614059bcb5b48d884aefc12a57214129e94c0454839b402b3ecc84f3f856c",
+      "size": 1799,
+      "last_modified": "2026-07-16T01:52:54.759Z"
+    },
+    "frontend/tsconfig.json": {
+      "hash": "09e1c21df3ad3e7b70de6666dc6464501bacdce7b5fbbee0712cc5de061646e2",
+      "size": 612,
+      "last_modified": "2026-07-16T01:52:54.748Z"
+    },
+    "frontend/tsconfig.tsbuildinfo": {
+      "hash": "38294398a34a628fea23de967556f9b9b046a945f3995c9b1e6524fa361825f7",
+      "size": 93617,
+      "last_modified": "2026-07-16T19:05:05.827Z"
+    },
+    "MEMORY.md": {
+      "hash": "1773b93e2b7cf5866bf59ac7e5910a823862a2f99b10a22d18365da7002c24da",
+      "size": 1101,
+      "last_modified": "2026-09-19T09:43:36.592Z"
+    },
+    "package-lock.json": {
+      "hash": "90cdd2026b455975f3593aaa35262e70c809505748accaa8dfaf492fece29ee1",
+      "size": 146968,
+      "last_modified": "2026-07-20T15:59:30.867Z"
+    },
+    "package.json": {
+      "hash": "e97beaca617bd49a31ee340b12d6c240386117b93a8f8718b1be231173072c20",
+      "size": 846,
+      "last_modified": "2026-07-20T15:25:44.736Z"
+    },
+    "RUNBOOK.md": {
+      "hash": "2d2889ada13762681e432d222abf025e981e999168fa54b8ca859346221ee44b",
+      "size": 1456,
+      "last_modified": "2026-09-19T09:43:36.593Z"
+    },
+    "shared/package.json": {
+      "hash": "0d87b283c2db777c090e107b80f053c882a8e30d38aa67e0cc78554f6a5c8eae",
+      "size": 126,
+      "last_modified": "2026-07-16T01:51:59.507Z"
+    },
+    "shared/types.ts": {
+      "hash": "3164d5028bee3613c57816415d6bc7083cabdcce91563b7d5170d8208c327875",
+      "size": 7589,
+      "last_modified": "2026-07-20T15:29:08.956Z"
+    },
+    "TASKS.md": {
+      "hash": "382c15c0b9cd7086224c891a5508d8f69b3169b1b6b6050a464e59a4378569f7",
+      "size": 257,
+      "last_modified": "2026-09-19T09:43:36.592Z"
+    }
+  },
+  "framework_signals": [
+    "Node.js"
+  ],
+  "dependency_signals": [
+    "npm"
+  ],
+  "ai_dev_os_signals": [
+    "AGENTS.md",
+    "MEMORY.md",
+    "TASKS.md",
+    "RUNBOOK.md",
+    ".ai/config.yaml",
+    "Templates Registry",
+    "Skills Registry",
+    "Intelligence Layer",
+    "Registry Layer"
+  ],
+  "risks": [],
+  "recommended_next_steps": [
+    "Use validate or doctor to check structural integrity.",
+    "Commit the .ai/ intelligence policies to share constraints across AI agents."
+  ]
+}
