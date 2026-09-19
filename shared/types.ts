@@ -261,3 +261,69 @@ export const TUITION_TYPE_LABELS: Record<TuitionType, string> = {
   [TuitionType.ONLINE]: "Online",
   [TuitionType.OFFLINE]: "Offline (Home Tuition)",
 };
+
+// ─── Tuition Post & Application Types ───────────────────────
+export enum TuitionPostStatus {
+  OPEN = "OPEN",
+  CLOSED = "CLOSED",
+}
+
+export enum ApplicationStatus {
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+}
+
+export interface TuitionPost {
+  id: string;
+  studentId: string;
+  student?: User;
+  title: string;
+  description: string;
+  subject: string;
+  class: string;
+  medium: string;
+  locationDistrict: string;
+  locationArea: string;
+  salary: number;
+  daysPerWeek: number;
+  genderPreference: string;
+  tuitionType: TuitionType;
+  status: TuitionPostStatus;
+  createdAt: string;
+  updatedAt: string;
+  applications?: TuitionApplication[];
+}
+
+export interface TuitionApplication {
+  id: string;
+  tuitionPostId: string;
+  tuitionPost?: TuitionPost;
+  tutorProfileId: string;
+  tutorProfile?: TutorProfile;
+  coverLetter: string;
+  expectedSalary: number;
+  status: ApplicationStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateTuitionPostPayload {
+  title: string;
+  description: string;
+  subject: string;
+  class: string;
+  medium: string;
+  locationDistrict: string;
+  locationArea: string;
+  salary: number;
+  daysPerWeek: number;
+  genderPreference?: string;
+  tuitionType: TuitionType;
+}
+
+export interface ApplyTuitionPayload {
+  coverLetter: string;
+  expectedSalary: number;
+}
+

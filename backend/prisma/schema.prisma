@@ -55,6 +55,7 @@ model User {
   receivedMessages  Message[]     @relation("ReceiverMessages")
   notifications     Notification[]
   wishlist          WishlistItem[] @relation("StudentWishlist")
+  tuitionPosts      TuitionPost[]
 
   @@map("users")
 }
@@ -101,6 +102,7 @@ model TutorProfile {
   reviews            Review[]
   wishlistedBy       WishlistItem[]
   withdrawalRequests WithdrawalRequest[]
+  tuitionApplications TuitionApplication[]
 
   @@map("tutor_profiles")
 }
@@ -206,4 +208,55 @@ model WithdrawalRequest {
   updatedAt      DateTime     @updatedAt
 
   @@map("withdrawal_requests")
+}
+
+enum TuitionPostStatus {
+  OPEN
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model TuitionPost {
+  id               String            @id @default(uuid())
+  studentId        String
+  student          User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  title            String
+  description      String
+  subject          String
+  class            String
+  medium           String
+  locationDistrict String
+  locationArea     String
+  salary           Float
+  daysPerWeek      Int
+  genderPreference String            @default("ANY") // MALE, FEMALE, ANY
+  tuitionType      TuitionType       @default(OFFLINE)
+  status           TuitionPostStatus @default(OPEN)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  applications     TuitionApplication[]
+
+  @@map("tuition_posts")
+}
+
+model TuitionApplication {
+  id             String            @id @default(uuid())
+  tuitionPostId  String
+  tuitionPost    TuitionPost       @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
+  tutorProfileId String
+  tutorProfile   TutorProfile      @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
+  coverLetter    String
+  expectedSalary Float
+  status         ApplicationStatus @default(PENDING)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@unique([tuitionPostId, tutorProfileId])
+  @@map("tuition_applications")
 }

@@ -5,6 +5,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import { apiLimiter, authLimiter, uploadLimiter } from "./middleware/rateLimit";
 
 import authRoutes from "./routes/auth.routes";
 import tutorRoutes from "./routes/tutor.routes";
@@ -17,11 +19,21 @@ import paymentRoutes from "./routes/payment.routes";
 import uploadRoutes from "./routes/upload.routes";
 import wishlistRoutes from "./routes/wishlist.routes";
 import withdrawalRoutes from "./routes/withdrawal.routes";
+import tuitionRoutes from "./routes/tuition.routes";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Security headers
+app.use(helmet());
+
+// Rate Limiting
+app.use("/api", apiLimiter);
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
+app.use("/api/upload", uploadLimiter);
 
 // Middleware
 app.use(
@@ -62,17 +74,28 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/withdrawals", withdrawalRoutes);
+app.use("/api/tuitions", tuitionRoutes);
 
 // Global error handler
 app.use(
   (
-    err: Error,
+    err: any,
     _req: express.Request,
     res: express.Response,
     _next: express.NextFunction
   ) => {
-    console.error("Error:", err.message);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    // Log the error securely
+    console.error(`[Error] ${err.name || "Error"}: ${err.message}`);
+    if (process.env.NODE_ENV !== "production" && err.stack) {
+      console.error(err.stack);
+    }
+    
+    const statusCode = err.status || err.statusCode || 500;
+    const errorMessage = process.env.NODE_ENV === "production" && statusCode === 500
+      ? "Internal server error"
+      : err.message || "Internal server error";
+
+    res.status(statusCode).json({ success: false, error: errorMessage });
   }
 );
 

@@ -12,6 +12,7 @@ import {
   HiOutlineBell,
   HiOutlineUser,
   HiOutlineCog,
+  HiOutlineClipboardList,
 } from "react-icons/hi";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useAuthStore } from "@/store/auth.store";
@@ -19,6 +20,7 @@ import { useAuthStore } from "@/store/auth.store";
 const navLinks = [
   { href: "/", label: "Home", icon: HiOutlineHome },
   { href: "/find-tutor", label: "Find Tutor", icon: HiOutlineSearch },
+  { href: "/tuitions", label: "Tuition Jobs", icon: HiOutlineClipboardList },
   { href: "/schedule", label: "Schedule", icon: HiOutlineCalendar },
   { href: "/messages", label: "Messages", icon: HiOutlineChat },
   { href: "/notifications", label: "Notifications", icon: HiOutlineBell },

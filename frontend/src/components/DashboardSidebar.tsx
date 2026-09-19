@@ -27,6 +27,7 @@ interface SidebarProps {
 const studentLinks = [
   { href: "/dashboard/student", label: "Dashboard", icon: HiOutlineHome },
   { href: "/dashboard/student/bookings", label: "My Bookings", icon: HiOutlineBookOpen },
+  { href: "/dashboard/student/tuitions", label: "My Tuition Posts", icon: HiOutlineClipboardList },
   { href: "/wishlist", label: "My Wishlist", icon: HiOutlineHeart },
   { href: "/schedule", label: "Schedule", icon: HiOutlineCalendar },
   { href: "/messages", label: "Messages", icon: HiOutlineChat },
@@ -40,6 +41,7 @@ const tutorLinks = [
   { href: "/dashboard/tutor/analytics", label: "Analytics", icon: HiOutlineChartBar },
   { href: "/dashboard/tutor/earnings", label: "Earnings", icon: HiOutlineCurrencyDollar },
   { href: "/dashboard/tutor/requests", label: "Requests", icon: HiOutlineClipboardList },
+  { href: "/dashboard/tutor/applications", label: "Applied Jobs", icon: HiOutlineClipboardList },
   { href: "/schedule", label: "Schedule", icon: HiOutlineCalendar },
   { href: "/messages", label: "Messages", icon: HiOutlineChat },
   { href: "/settings", label: "Settings", icon: HiOutlineCog },

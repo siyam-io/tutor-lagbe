@@ -1,12 +1,29 @@
 import { Router, Response } from "express";
 import bcrypt from "bcryptjs";
+import { z } from "zod";
 import { generateToken, authenticate, AuthRequest } from "../middleware/auth";
+import { validate } from "../middleware/validate";
 import prisma from "../lib/prisma";
 
 const router = Router();
 
+// Validation Schemas
+const registerSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().optional().nullable(),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+  confirmPassword: z.string().min(8, "Confirm password must be at least 8 characters long"),
+  role: z.enum(["STUDENT", "TUTOR"]),
+});
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+
 // POST /api/auth/register
-router.post("/register", async (req: AuthRequest, res: Response) => {
+router.post("/register", validate(registerSchema), async (req: AuthRequest, res: Response) => {
   try {
     const { name, email, phone, password, confirmPassword, role } = req.body;
 
@@ -60,7 +77,7 @@ router.post("/register", async (req: AuthRequest, res: Response) => {
 });
 
 // POST /api/auth/login
-router.post("/login", async (req: AuthRequest, res: Response) => {
+router.post("/login", validate(loginSchema), async (req: AuthRequest, res: Response) => {
   try {
     const { email, password } = req.body;
 

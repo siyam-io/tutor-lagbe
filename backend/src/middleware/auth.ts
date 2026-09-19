@@ -2,7 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma";
 
-const getJwtSecret = () => process.env.JWT_SECRET || "tutor-lagbe-secret-key-dev";
+const getJwtSecret = (): string => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("FATAL: JWT_SECRET environment variable is not set in production mode.");
+    }
+    return "tutor-lagbe-secret-key-dev";
+  }
+  return secret;
+};
 
 export interface AuthRequest extends Request {
   userId?: string;
@@ -31,7 +40,11 @@ export const authenticate = async (
       select: { isBanned: true },
     });
 
-    if (!user || user.isBanned) {
+    if (!user) {
+      return res.status(401).json({ success: false, error: "User session expired or not found" });
+    }
+
+    if (user.isBanned) {
       return res.status(403).json({ success: false, error: "Your account has been suspended by the administrator." });
     }
 
