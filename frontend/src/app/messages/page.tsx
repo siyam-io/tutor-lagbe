@@ -146,15 +146,15 @@ export default function MessagesPage() {
   );
 
   return (
-    <div className="flex flex-col h-screen bg-canvas overflow-hidden">
+    <div className="flex flex-col h-[100dvh] bg-canvas overflow-hidden">
       <Navbar />
 
       {/* Main Chat App Area */}
-      <div className="flex-1 flex overflow-hidden w-full max-w-7xl mx-auto px-2 sm:px-6 py-2 sm:py-4">
-        <div className="flex-1 flex bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
+      <div className="flex-1 min-h-0 flex overflow-hidden w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-3">
+        <div className="flex-1 min-h-0 flex bg-white rounded-2xl border border-stone-200/90 shadow-sm overflow-hidden">
           {/* Conversation Sidebar */}
           <aside
-            className={`w-full sm:w-80 lg:w-96 border-r border-stone-200/80 flex flex-col bg-slate-50/50 ${
+            className={`w-full sm:w-80 lg:w-96 border-r border-stone-200/80 flex flex-col bg-slate-50/50 flex-shrink-0 ${
               activeChatId ? "hidden sm:flex" : "flex"
             }`}
           >
@@ -241,7 +241,7 @@ export default function MessagesPage() {
 
           {/* Active Chat Conversation Area */}
           <main
-            className={`flex-1 flex flex-col bg-slate-50/30 ${
+            className={`flex-1 min-w-0 min-h-0 flex flex-col bg-slate-50/30 ${
               activeChatId ? "flex" : "hidden sm:flex"
             }`}
           >
@@ -354,7 +354,7 @@ export default function MessagesPage() {
                 </div>
 
                 {/* Quick Inquiry Chips */}
-                <div className="px-4 py-2.5 bg-white border-t border-stone-200/80 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="px-4 py-2.5 bg-white border-t border-stone-200/80 flex items-center gap-2 overflow-x-auto no-scrollbar">
                   <span className="text-[11px] font-bold text-ink-muted flex-shrink-0 font-bangla">
                     দ্রুত প্রশ্ন:
                   </span>
