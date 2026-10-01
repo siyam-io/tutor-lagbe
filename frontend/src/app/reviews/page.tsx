@@ -108,15 +108,22 @@ export default function ReviewsPage() {
 
   const mainContent = (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">My Reviews</h1>
-      <p className="text-slate-500 dark:text-slate-400 mb-8">
+      <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+        রিভিউ ও রেটিং
+      </span>
+      <h1 className="font-display text-4xl font-semibold text-ink mb-3">My Reviews</h1>
+      <p className="text-ink-muted mb-12">
         See the reviews you have written and review your active tutors.
       </p>
 
-      {error && <div className="p-4 bg-red-50 text-red-600 rounded-lg text-center mb-6">{error}</div>}
+      {error && (
+        <div className="p-4 bg-terracotta/10 border border-terracotta/30 text-terracotta-800 rounded-card text-center mb-8">
+          {error}
+        </div>
+      )}
       {successMsg && (
-        <div className="p-4 bg-green-50 text-green-700 rounded-lg flex items-center gap-2 mb-6">
-          <HiOutlineCheckCircle className="w-5 h-5 text-green-600" />
+        <div className="p-4 bg-sage/15 border border-sage/40 text-sage-800 rounded-card flex items-center gap-2 mb-8">
+          <HiOutlineCheckCircle className="w-5 h-5 text-sage-700" />
           <span>{successMsg}</span>
         </div>
       )}
@@ -126,8 +133,8 @@ export default function ReviewsPage() {
         <div className="md:col-span-1">
           <div className="card">
             <div className="text-center mb-6">
-              <p className="text-5xl font-bold text-slate-900 dark:text-white">{averageScore}</p>
-              <div className="flex items-center justify-center gap-0.5 my-2 text-yellow-500">
+              <p className="font-display text-5xl font-semibold text-ink">{averageScore}</p>
+              <div className="flex items-center justify-center gap-0.5 my-3 text-terracotta-700">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <HiOutlineStar
                     key={s}
@@ -135,7 +142,7 @@ export default function ReviewsPage() {
                   />
                 ))}
               </div>
-              <p className="text-sm text-slate-500">{totalReviewsCount} review{totalReviewsCount !== 1 ? "s" : ""} written</p>
+              <p className="text-sm text-ink-muted">{totalReviewsCount} review{totalReviewsCount !== 1 ? "s" : ""} written</p>
             </div>
 
             {/* Rating bars */}
@@ -145,14 +152,14 @@ export default function ReviewsPage() {
                 const pct = getPercent(count);
                 return (
                   <div key={star} className="flex items-center gap-2 text-sm">
-                    <span className="w-8 text-slate-500">{star}★</span>
-                    <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <span className="w-8 text-ink-muted">{star}★</span>
+                    <div className="flex-1 h-2 bg-clay/50 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-yellow-500 rounded-full"
+                        className="h-full bg-terracotta-700 rounded-full"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="w-8 text-right text-slate-500">{pct}%</span>
+                    <span className="w-8 text-right text-ink-muted">{pct}%</span>
                   </div>
                 );
               })}
@@ -164,22 +171,22 @@ export default function ReviewsPage() {
         <div className="md:col-span-2 space-y-6">
           {/* Write Review */}
           <div className="card">
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Write a Review</h3>
+            <h3 className="font-display text-lg font-semibold text-ink mb-6">Write a Review</h3>
 
             {completedBookings.length === 0 ? (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-ink-muted">
                 You can write reviews once you have completed classes with a tutor.
               </p>
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                  <label className="label text-[11px]">
                     Select Tutor
                   </label>
                   <select
                     value={selectedTutorId}
                     onChange={(e) => setSelectedTutorId(e.target.value)}
-                    className="w-full text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 text-slate-700 dark:text-slate-300"
+                    className="input-field text-sm"
                   >
                     <option value="">-- Choose Tutor --</option>
                     {completedBookings.map((b) => (
@@ -202,8 +209,8 @@ export default function ReviewsPage() {
                       <HiOutlineStar
                         className={`w-8 h-8 ${
                           star <= (hoverRating || rating)
-                            ? "text-yellow-500 fill-current"
-                            : "text-slate-300 dark:text-slate-600"
+                            ? "text-terracotta-700 fill-current"
+                            : "text-stone"
                         }`}
                       />
                     </button>
@@ -232,29 +239,29 @@ export default function ReviewsPage() {
           {/* Reviews List */}
           <div className="space-y-4">
             {reviews.length === 0 ? (
-              <div className="card text-center py-8 text-slate-500">
-                <p className="font-medium">No reviews written yet.</p>
+              <div className="card text-center py-12 text-ink-muted hover:translate-y-0">
+                <p className="font-display font-medium">No reviews written yet.</p>
               </div>
             ) : (
               reviews.map((review) => (
-                <div key={review.id} className="card">
+                <div key={review.id} className="card hover:translate-y-0">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold text-sm">
+                      <div className="w-10 h-10 rounded-image bg-clay/40 border border-stone flex items-center justify-center font-display font-semibold text-primary-800 text-sm">
                         {review.tutor?.user?.name
                           ? review.tutor.user.name.split(" ").map((n: string) => n[0]).join("")
                           : "T"}
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900 dark:text-white text-sm">
+                        <p className="font-medium text-ink text-sm">
                           Tutor: {review.tutor?.user?.name || "Tutor"}
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-ink-muted">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-0.5 text-yellow-500 text-sm">
+                    <div className="flex items-center gap-0.5 text-terracotta-700 text-sm">
                       {[1, 2, 3, 4, 5].map((s) => (
                         <HiOutlineStar
                           key={s}
@@ -263,7 +270,7 @@ export default function ReviewsPage() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                  <p className="text-ink-muted text-sm leading-relaxed">
                     {review.comment}
                   </p>
                 </div>
@@ -277,10 +284,10 @@ export default function ReviewsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="text-slate-500 mt-2">Loading reviews...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800 mx-auto"></div>
+          <p className="text-ink-muted mt-4">Loading reviews...</p>
         </div>
       </div>
     );
@@ -290,10 +297,10 @@ export default function ReviewsPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 flex items-center justify-center">
-          <div className="card max-w-md text-center p-8">
-            <h2 className="text-xl font-bold text-slate-950 dark:text-white mb-2">Login Required</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-6 font-medium">Please log in to view and write reviews.</p>
+        <main className="min-h-screen py-8 flex items-center justify-center">
+          <div className="card max-w-md text-center p-10 hover:translate-y-0">
+            <h2 className="font-display text-2xl font-semibold text-ink mb-3">Login Required</h2>
+            <p className="text-ink-muted mb-8">Please log in to view and write reviews.</p>
             <a href="/login" className="btn-primary inline-block">Go to Login</a>
           </div>
         </main>
@@ -303,9 +310,9 @@ export default function ReviewsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen">
       <DashboardSidebar role="STUDENT" />
-      <div className="flex-1 p-6 lg:p-10">{mainContent}</div>
+      <div className="flex-1 p-6 lg:p-12">{mainContent}</div>
     </div>
   );
 }

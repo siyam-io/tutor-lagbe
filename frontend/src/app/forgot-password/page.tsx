@@ -6,33 +6,63 @@ import { HiOutlineMail } from "react-icons/hi";
 export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 to-primary-900 items-center justify-center relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-primary-800 items-center justify-center relative overflow-hidden">
+        <div className="absolute -top-32 -left-24 w-[34rem] h-[34rem] rounded-full border border-sage/20" />
+        <div className="absolute -bottom-40 -right-20 w-[28rem] h-[28rem] rounded-full border border-white/10" />
+
         <div className="relative text-center text-white px-12">
           <span className="text-6xl mb-6 block">🔑</span>
-          <h1 className="text-4xl font-extrabold mb-4">Forgot Password?</h1>
-          <p className="text-lg text-primary-200 max-w-md">Don't worry! Enter your email and we'll send you a reset link.</p>
+          <h1 className="font-display text-4xl font-semibold mb-4">
+            Forgot Password?
+          </h1>
+          <p className="text-lg text-white/60 max-w-md leading-relaxed">
+            Don&apos;t worry! Enter your email and we&apos;ll send you a reset
+            link.
+          </p>
         </div>
       </div>
-      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-white dark:bg-slate-950">
+
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
-          <div className="lg:hidden text-center mb-8">
+          <div className="lg:hidden text-center mb-10">
             <span className="text-4xl">🎓</span>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-2">Tutor Lagbe</h1>
+            <h1 className="font-display text-2xl font-semibold text-ink mt-3">
+              Tutor Lagbe
+            </h1>
           </div>
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Reset Password</h2>
-          <p className="text-slate-500 dark:text-slate-400 mb-8">Enter your registered email address</p>
+
+          <h2 className="font-display text-3xl font-semibold text-ink mb-2">
+            Reset Password
+          </h2>
+          <p className="text-ink-muted mb-8">
+            Enter your registered email address
+          </p>
+
           <form className="space-y-5">
             <div>
               <label className="label">Email Address</label>
               <div className="relative">
-                <HiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input type="email" required placeholder="you@example.com" className="input-field pl-11" />
+                <HiOutlineMail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted" />
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  className="input-field pl-12"
+                />
               </div>
             </div>
-            <button type="submit" className="btn-primary w-full py-3">Send Reset Link</button>
+            <button type="submit" className="btn-primary w-full">
+              Send Reset Link
+            </button>
           </form>
-          <p className="mt-8 text-center text-sm text-slate-500">
-            <Link href="/login" className="text-primary-600 hover:text-primary-700 font-semibold">← Back to Login</Link>
+
+          <p className="mt-8 text-center text-sm text-ink-muted">
+            <Link
+              href="/login"
+              className="text-primary-700 hover:text-primary-800 font-medium transition-colors duration-300"
+            >
+              ← Back to Login
+            </Link>
           </p>
         </div>
       </div>

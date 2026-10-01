@@ -69,19 +69,19 @@ export default function DashboardSidebar({ role }: SidebarProps) {
   const links = linksByRole[role];
 
   return (
-    <aside className="w-64 min-h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden lg:block">
-      <div className="p-5">
+    <aside className="w-64 min-h-screen bg-white/60 border-r border-stone hidden lg:block">
+      <div className="p-6">
         <Link
           href="/"
-          className="flex items-center gap-2 mb-8 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2.5 mb-10 hover:opacity-80 transition-opacity duration-300"
         >
           <span className="text-2xl">🎓</span>
-          <span className="font-bold text-lg text-slate-900 dark:text-white">
+          <span className="font-display font-semibold text-lg text-ink">
             Tutor Lagbe
           </span>
         </Link>
 
-        <nav className="space-y-1">
+        <nav className="space-y-1.5">
           {links.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href;
@@ -98,7 +98,7 @@ export default function DashboardSidebar({ role }: SidebarProps) {
           })}
         </nav>
 
-        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="mt-10 pt-6 border-t border-stone">
           <Link href="/notifications" className="sidebar-link">
             <HiOutlineBell className="w-5 h-5 flex-shrink-0" />
             <span>Notifications</span>

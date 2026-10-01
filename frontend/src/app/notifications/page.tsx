@@ -4,15 +4,36 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import api from "@/lib/api";
-import { HiOutlineBell, HiOutlineCalendar, HiOutlineChat, HiOutlineCreditCard, HiOutlineCheck } from "react-icons/hi";
+import {
+  HiOutlineBell,
+  HiOutlineCalendar,
+  HiOutlineChat,
+  HiOutlineCreditCard,
+  HiOutlineCheck,
+} from "react-icons/hi";
 
 const iconMap = {
-  BOOKING_ACCEPTED: { icon: HiOutlineCheck, color: "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300" },
-  BOOKING_REJECTED: { icon: HiOutlineCheck, color: "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300" },
-  BOOKING_REQUESTED: { icon: HiOutlineCalendar, color: "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300" },
-  SESSION_REMINDER: { icon: HiOutlineCalendar, color: "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300" },
-  PAYMENT_SUCCESS: { icon: HiOutlineCreditCard, color: "bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300" },
-  NEW_MESSAGE: { icon: HiOutlineChat, color: "bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-300" },
+  BOOKING_ACCEPTED: {
+    icon: HiOutlineCheck,
+    tone: "bg-sage/15 text-sage-800",
+  },
+  BOOKING_REJECTED: {
+    icon: HiOutlineCheck,
+    tone: "bg-terracotta/10 text-terracotta-800",
+  },
+  BOOKING_REQUESTED: {
+    icon: HiOutlineCalendar,
+    tone: "bg-clay/40 text-primary-800",
+  },
+  SESSION_REMINDER: {
+    icon: HiOutlineCalendar,
+    tone: "bg-clay/40 text-primary-800",
+  },
+  PAYMENT_SUCCESS: {
+    icon: HiOutlineCreditCard,
+    tone: "bg-primary-50 text-primary-800",
+  },
+  NEW_MESSAGE: { icon: HiOutlineChat, tone: "bg-sage/10 text-sage-700" },
 };
 
 export default function NotificationsPage() {
@@ -66,19 +87,28 @@ export default function NotificationsPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
+      <main className="py-12 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-end justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Notifications</h1>
-              <p className="text-slate-500 dark:text-slate-400 mt-1">
-                {unreadCount > 0 ? `${unreadCount} unread notification${unreadCount > 1 ? "s" : ""}` : "All caught up!"}
+              <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+                আপনার অ্যাক্টিভিটি
+              </span>
+              <h1 className="font-display text-4xl font-semibold text-ink">
+                Notifications
+              </h1>
+              <p className="text-ink-muted mt-2">
+                {unreadCount > 0
+                  ? `${unreadCount} unread notification${
+                      unreadCount > 1 ? "s" : ""
+                    }`
+                  : "All caught up!"}
               </p>
             </div>
             {unreadCount > 0 && (
               <button
                 onClick={handleMarkAllAsRead}
-                className="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
+                className="text-sm text-primary-700 hover:text-primary-800 font-medium transition-colors duration-300 whitespace-nowrap"
               >
                 Mark all as read
               </button>
@@ -86,48 +116,71 @@ export default function NotificationsPage() {
           </div>
 
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-              <p className="text-slate-500 mt-2 text-sm">Loading notifications...</p>
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800 mx-auto" />
+              <p className="text-ink-muted mt-4 text-sm">
+                Loading notifications...
+              </p>
             </div>
           ) : error ? (
-            <div className="p-4 bg-red-50 text-red-650 rounded-lg text-center">{error}</div>
+            <div className="p-4 bg-terracotta/10 border border-terracotta/30 text-terracotta-800 rounded-card text-center">
+              {error}
+            </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {notifications.length === 0 ? (
-                <div className="card text-center py-12">
-                  <HiOutlineBell className="w-16 h-16 mx-auto text-slate-355 dark:text-slate-600 mb-4" />
-                  <p className="text-lg font-medium text-slate-500">No notifications yet</p>
+                <div className="card text-center py-16 hover:translate-y-0">
+                  <HiOutlineBell className="w-16 h-16 mx-auto text-stone mb-5" />
+                  <p className="font-display text-lg font-medium text-ink-muted">
+                    No notifications yet
+                  </p>
                 </div>
               ) : (
                 notifications.map((notification) => {
-                  const typeInfo = iconMap[notification.type as keyof typeof iconMap] || {
+                  const typeInfo = iconMap[
+                    notification.type as keyof typeof iconMap
+                  ] || {
                     icon: HiOutlineBell,
-                    color: "bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-300",
+                    tone: "bg-clay-light text-ink-muted",
                   };
                   const Icon = typeInfo.icon;
+                  const unread = !notification.isRead;
                   return (
                     <div
                       key={notification.id}
-                      onClick={() => !notification.isRead && handleMarkAsRead(notification.id)}
-                      className={`card flex gap-4 items-start cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-900/50 transition-all ${
-                        !notification.isRead ? "border-l-4 border-l-primary-600 bg-primary-50/10 dark:bg-primary-950/5" : ""
+                      onClick={() =>
+                        unread && handleMarkAsRead(notification.id)
+                      }
+                      className={`card flex gap-4 items-start cursor-pointer p-5 hover:translate-y-0 ${
+                        unread
+                          ? "border-l-2 border-l-primary-700"
+                          : "opacity-80"
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${typeInfo.color}`}>
+                      <div
+                        className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ${typeInfo.tone}`}
+                      >
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h3 className="font-semibold text-sm text-slate-900 dark:text-white">{notification.title}</h3>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{notification.message}</p>
+                            <h3
+                              className={`font-medium text-sm ${
+                                unread ? "text-ink" : "text-ink-muted"
+                              }`}
+                            >
+                              {notification.title}
+                            </h3>
+                            <p className="text-sm text-ink-muted mt-1">
+                              {notification.message}
+                            </p>
                           </div>
-                          {!notification.isRead && (
-                            <span className="w-2.5 h-2.5 rounded-full bg-primary-600 flex-shrink-0 mt-1.5 animate-pulse" />
+                          {unread && (
+                            <span className="w-2.5 h-2.5 rounded-full bg-primary-700 flex-shrink-0 mt-1.5" />
                           )}
                         </div>
-                        <p className="text-xs text-slate-400 mt-2">
+                        <p className="text-xs text-ink-muted/70 mt-3">
                           {new Date(notification.createdAt).toLocaleString()}
                         </p>
                       </div>

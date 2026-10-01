@@ -2,94 +2,182 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Botanical / Organic Serif — global surface.
+ * Warm alabaster paper, forest-ink typography, delicate borders,
+ * diffused shadows, and a mandatory paper-grain overlay.
+ */
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 15 23 42;
-  }
-
-  .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
+    --canvas: 249 248 244; /* #F9F8F4 */
+    --foreground: 45 58 49; /* #2D3A31 */
   }
 
   * {
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-50;
-    font-family: "Inter", "Noto Sans Bengali", sans-serif;
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-family: var(--font-body), var(--font-bangla), system-ui, -apple-system,
+      sans-serif;
+  }
+
+  /*
+   * Paper grain — the defining tactile layer. Fixed, non-interactive, and
+   * kept at z-index 1 so modals / toasts (z-50+) still paint above it.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.015;
+    background-repeat: repeat;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    @apply bg-primary-700 text-white;
   }
 }
 
 @layer components {
+  /* ---------- Buttons ------------------------------------------------ */
+  /* Pill-shaped, uppercase, wide tracking. Slow, graceful motion. */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+      bg-primary-800 text-white font-medium uppercase tracking-widest text-sm
+      px-8 py-3.5 min-h-[44px] transition-all duration-300 ease-out
+      hover:-translate-y-0.5 hover:bg-primary-700 hover:shadow-soft-md
+      active:translate-y-0 active:shadow-soft
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-700
+      focus-visible:ring-offset-2 focus-visible:ring-offset-canvas
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0;
   }
 
+  /* Sage-outlined secondary. Text uses a darkened sage to stay AA-legible. */
   .btn-secondary {
-    @apply bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700;
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+      border border-sage bg-transparent text-sage-800
+      font-medium uppercase tracking-widest text-sm
+      px-8 py-3.5 min-h-[44px] transition-all duration-300 ease-out
+      hover:border-sage-700 hover:text-sage-700 hover:bg-sage/10
+      active:translate-y-px
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-700
+      focus-visible:ring-offset-2 focus-visible:ring-offset-canvas
+      disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
+  /* Tertiary: delicate stone border on the paper surface. */
   .btn-outline {
-    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-50 font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-950;
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+      border border-stone bg-transparent text-ink
+      font-medium uppercase tracking-widest text-sm
+      px-8 py-3.5 min-h-[44px] transition-all duration-300 ease-out
+      hover:border-sage hover:text-primary-800 hover:bg-clay-light
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-700
+      focus-visible:ring-offset-2 focus-visible:ring-offset-canvas
+      disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
+  /* ---------- Surfaces ----------------------------------------------- */
   .card {
-    @apply bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6;
-  }
-
-  .input-field {
-    @apply w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
-  }
-
-  .label {
-    @apply block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5;
-  }
-
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4;
-  }
-
-  .section-subtitle {
-    @apply text-lg text-slate-600 dark:text-slate-400 mb-10;
-  }
-
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
-
-  .badge-primary {
-    @apply badge bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200;
-  }
-
-  .badge-success {
-    @apply badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
-  }
-
-  .badge-warning {
-    @apply badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
-  }
-
-  .badge-danger {
-    @apply badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
-  }
-
-  .sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-primary-50 dark:hover:bg-slate-700 hover:text-primary-600 dark:hover:text-primary-400 rounded-lg transition-all duration-200 font-medium;
-  }
-
-  .sidebar-link.active {
-    @apply bg-primary-50 dark:bg-primary-950 text-primary-600 dark:text-primary-400 font-semibold;
+    @apply bg-white rounded-card border border-stone/70 p-6 shadow-soft
+      transition-all duration-500 ease-out
+      hover:-translate-y-1 hover:shadow-soft-lg;
   }
 
   .stat-card {
     @apply card flex items-center gap-4;
   }
 
+  /* Icons float in soft, pale circles — never heavy boxes. */
   .stat-icon {
-    @apply w-12 h-12 rounded-lg flex items-center justify-center text-2xl;
+    @apply w-12 h-12 rounded-full bg-clay/40 text-sage-700
+      flex items-center justify-center text-2xl shrink-0;
+  }
+
+  /* ---------- Forms -------------------------------------------------- */
+  .input-field {
+    @apply w-full px-5 py-3 rounded-full bg-clay-light text-ink
+      placeholder:text-ink-muted/60 border border-transparent
+      transition-all duration-300 ease-out
+      focus:outline-none focus:border-sage-700 focus:bg-white
+      focus:ring-2 focus:ring-sage-700/20
+      disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-ink mb-2;
+  }
+
+  /* ---------- Typography --------------------------------------------- */
+  .section-title {
+    @apply font-display text-4xl md:text-5xl font-semibold leading-tight
+      tracking-tight text-ink mb-4;
+  }
+
+  /* Italicise a word inside a headline for editorial emphasis. */
+  .section-title em {
+    @apply italic text-primary-700;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-ink-muted leading-relaxed mb-10;
+  }
+
+  /* ---------- Badges ------------------------------------------------- */
+  .badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium
+      border border-stone bg-clay-light text-ink-muted;
+  }
+
+  .badge-primary {
+    @apply badge border-primary-100 bg-primary-50 text-primary-800;
+  }
+
+  .badge-success {
+    @apply badge border-sage/40 bg-sage/10 text-sage-800;
+  }
+
+  .badge-warning {
+    @apply badge border-clay bg-clay/30 text-ochre-800;
+  }
+
+  .badge-danger {
+    @apply badge border-terracotta/30 bg-terracotta/10 text-terracotta-800;
+  }
+
+  .badge-verified {
+    @apply badge border-sage/40 bg-sage/10 text-sage-800 font-semibold;
+  }
+
+  .badge-guarantee {
+    @apply badge border-clay bg-clay/30 text-ochre-800 font-semibold;
+  }
+
+  .trust-chip {
+    @apply inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium
+      border border-stone bg-clay-light text-ink-muted;
+  }
+
+  /* ---------- Navigation --------------------------------------------- */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-full text-ink-muted font-medium
+      transition-all duration-300 ease-out
+      hover:text-primary-800 hover:bg-clay-light
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-700
+      focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+
+  .sidebar-link.active {
+    @apply bg-sage/15 text-primary-800 font-semibold;
   }
 }
 
@@ -100,7 +188,7 @@
 
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
+    scrollbar-color: #e6e2da transparent;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -112,7 +200,27 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1;
+    background-color: #e6e2da;
     border-radius: 3px;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(242, 240, 235, 0) 0%,
+      rgba(242, 240, 235, 0.9) 50%,
+      rgba(242, 240, 235, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 }

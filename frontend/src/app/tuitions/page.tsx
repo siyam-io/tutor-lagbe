@@ -4,11 +4,12 @@ import { useState, useEffect, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useSearchParams } from "next/navigation";
-import { HiOutlineSearch, HiOutlineLocationMarker, HiOutlineCurrencyDollar, HiOutlineCalendar, HiOutlineUser } from "react-icons/hi";
+import { HiOutlineSearch, HiOutlineLocationMarker, HiOutlineCurrencyDollar, HiOutlineCalendar, HiOutlineUser, HiShieldCheck } from "react-icons/hi";
 import { SUBJECTS, CLASSES, MEDIUMS, DISTRICTS } from "@shared/types";
 import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
+import JsonLd from "@/components/JsonLd";
 
 function TuitionsContent() {
   const searchParams = useSearchParams();
@@ -127,35 +128,38 @@ function TuitionsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         {/* Header Section */}
-        <div className="mb-8 text-center sm:text-left">
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent dark:from-primary-400 dark:to-indigo-400">
-            Available Tuition Jobs
+        <div className="mb-12 text-center sm:text-left">
+          <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+            টিউশন জব বোর্ড
+          </span>
+          <h1 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-ink">
+            Available <em className="italic text-primary-700">Tuition Jobs</em>
           </h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-ink-muted">
             Browse and apply to tuition job postings from students and parents.
           </p>
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 mb-6 flex flex-col sm:flex-row gap-4 items-center">
+        <div className="card p-4 mb-10 flex flex-col sm:flex-row gap-4 items-center hover:translate-y-0 hover:shadow-soft">
           <div className="relative w-full flex-1">
-            <HiOutlineSearch className="absolute left-3 top-3.5 text-slate-400 w-5 h-5" />
+            <HiOutlineSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-ink-muted w-5 h-5" />
             <input
               type="text"
               placeholder="Search by title, subject, description..."
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="input-field pl-12"
             />
           </div>
           <button
             onClick={clearFilters}
-            className="w-full sm:w-auto px-6 py-2.5 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors"
+            className="btn-outline w-full sm:w-auto text-xs"
           >
             Clear Filters
           </button>
@@ -164,21 +168,21 @@ function TuitionsContent() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-              <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <div className="card p-6 hover:translate-y-0 hover:shadow-soft">
+              <h2 className="font-display text-lg font-semibold text-ink mb-6 flex items-center gap-2">
                 <span>⚡</span> Filter Jobs
               </h2>
 
               <div className="space-y-4">
                 {/* Subject */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Subject
                   </label>
                   <select
                     value={filters.subject}
                     onChange={(e) => handleFilterChange("subject", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="">All Subjects</option>
                     {SUBJECTS.map((sub) => (
@@ -191,13 +195,13 @@ function TuitionsContent() {
 
                 {/* Class */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Class / Grade
                   </label>
                   <select
                     value={filters.class}
                     onChange={(e) => handleFilterChange("class", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="">All Classes</option>
                     {CLASSES.map((cls) => (
@@ -210,13 +214,13 @@ function TuitionsContent() {
 
                 {/* Medium */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Medium
                   </label>
                   <select
                     value={filters.medium}
                     onChange={(e) => handleFilterChange("medium", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="">All Mediums</option>
                     {MEDIUMS.map((med) => (
@@ -229,13 +233,13 @@ function TuitionsContent() {
 
                 {/* District */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     District
                   </label>
                   <select
                     value={filters.locationDistrict}
                     onChange={(e) => handleFilterChange("locationDistrict", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="">All Districts</option>
                     {DISTRICTS.map((dist) => (
@@ -248,7 +252,7 @@ function TuitionsContent() {
 
                 {/* Area */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Area
                   </label>
                   <input
@@ -256,19 +260,19 @@ function TuitionsContent() {
                     placeholder="e.g. Dhanmondi"
                     value={filters.locationArea}
                     onChange={(e) => handleFilterChange("locationArea", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   />
                 </div>
 
                 {/* Tuition Type */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Tuition Type
                   </label>
                   <select
                     value={filters.tuitionType}
                     onChange={(e) => handleFilterChange("tuitionType", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="">All Types</option>
                     <option value="ONLINE">Online</option>
@@ -278,13 +282,13 @@ function TuitionsContent() {
 
                 {/* Gender Preference */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  <label className="label text-[11px] uppercase tracking-wider text-ink-muted font-medium">
                     Gender Preference
                   </label>
                   <select
                     value={filters.genderPreference}
                     onChange={(e) => handleFilterChange("genderPreference", e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="input-field py-2.5 text-sm"
                   >
                     <option value="ALL">Any Gender</option>
                     <option value="MALE">Male Tutor</option>
@@ -302,15 +306,27 @@ function TuitionsContent() {
                 {[...Array(4)].map((_, i) => (
                   <div
                     key={i}
-                    className="animate-pulse bg-white dark:bg-slate-900 h-64 border border-slate-200 dark:border-slate-800 rounded-2xl"
-                  ></div>
+                    className="card relative overflow-hidden h-64 p-6 space-y-4 animate-pulse hover:translate-y-0"
+                  >
+                    <div className="absolute inset-0 shimmer pointer-events-none" />
+                    <div className="flex justify-between">
+                      <div className="h-5 bg-clay/40 rounded w-28" />
+                      <div className="h-4 bg-clay/40 rounded w-20" />
+                    </div>
+                    <div className="h-6 bg-clay/40 rounded w-3/4" />
+                    <div className="space-y-2">
+                      <div className="h-3.5 bg-clay/40 rounded w-full" />
+                      <div className="h-3.5 bg-clay/40 rounded w-5/6" />
+                    </div>
+                    <div className="h-10 bg-clay/40 rounded-xl mt-6" />
+                  </div>
                 ))}
               </div>
             ) : posts.length === 0 ? (
-              <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <span className="text-4xl">🔍</span>
-                <h3 className="mt-4 text-lg font-bold text-slate-700 dark:text-slate-300">No Jobs Found</h3>
-                <p className="mt-2 text-slate-500 dark:text-slate-400">Try adjusting your filters or search keywords.</p>
+              <div className="card text-center py-20 hover:translate-y-0">
+                <span className="text-4xl block mb-2">🔍</span>
+                <h3 className="mt-3 font-display text-2xl font-semibold text-ink">কোনো টিউশন জব পাওয়া যায়নি</h3>
+                <p className="mt-3 text-ink-muted text-sm">অনুগ্রহ করে ফিল্টার পরিবর্তন করুন অথবা নতুন পোস্টের জন্য অপেক্ষা করুন।</p>
               </div>
             ) : (
               <>
@@ -318,69 +334,73 @@ function TuitionsContent() {
                   {posts.map((post) => (
                     <div
                       key={post.id}
-                      className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 relative group"
+                      className="card p-6 flex flex-col justify-between relative group"
                     >
                       {/* Top Info */}
                       <div>
                         <div className="flex justify-between items-start mb-3">
-                          <div className="flex items-center gap-2">
-                            <span className="inline-block px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
-                              {post.tuitionType === "ONLINE" ? "🌐 Online" : "🏠 Offline"}
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="badge-primary">
+                              {post.tuitionType === "ONLINE" ? "🌐 অনলাইন" : "🏠 অফলাইন/হোম"}
                             </span>
-                            <span className="inline-block px-2 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                              👥 {post._count?.applications || 0} Applied
+                            <span className="badge-verified">
+                              <HiShieldCheck className="w-3.5 h-3.5 text-sage-700" />
+                              ভেরিফাইড
+                            </span>
+                            <span className="badge">
+                              👥 {post._count?.applications || 0} আবেদন
                             </span>
                           </div>
-                          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                            {new Date(post.createdAt).toLocaleDateString()}
+                          <span className="text-xs text-ink-muted">
+                            {new Date(post.createdAt).toLocaleDateString("bn-BD")}
                           </span>
                         </div>
 
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                        <h3 className="font-display text-lg font-semibold text-ink line-clamp-1 mb-2.5 group-hover:text-primary-800 transition-colors duration-300">
                           {post.title}
                         </h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
+                        <p className="text-sm text-ink-muted line-clamp-3 mb-5 leading-relaxed">
                           {post.description}
                         </p>
 
-                        <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-xs border-t border-slate-100 dark:border-slate-800 pt-4 mb-4">
-                          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                            <HiOutlineLocationMarker className="w-4 h-4 text-slate-400" />
+                        <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-xs border-t border-stone pt-5 mb-5">
+                          <div className="flex items-center gap-2 text-ink-muted">
+                            <HiOutlineLocationMarker className="w-4 h-4 text-sage-700" />
                             <span className="line-clamp-1">
                               {post.locationArea}, {post.locationDistrict}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                            <HiOutlineCurrencyDollar className="w-4 h-4 text-slate-400" />
+                          <div className="flex items-center gap-2 text-ink-muted">
+                            <HiOutlineCurrencyDollar className="w-4 h-4 text-sage-700" />
                             <span className="font-semibold">{post.salary} BDT/month</span>
                           </div>
-                          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                            <HiOutlineCalendar className="w-4 h-4 text-slate-400" />
+                          <div className="flex items-center gap-2 text-ink-muted">
+                            <HiOutlineCalendar className="w-4 h-4 text-sage-700" />
                             <span>{post.daysPerWeek} days/week</span>
                           </div>
-                          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                            <HiOutlineUser className="w-4 h-4 text-slate-400" />
+                          <div className="flex items-center gap-2 text-ink-muted">
+                            <HiOutlineUser className="w-4 h-4 text-sage-700" />
                             <span>Gender: {post.genderPreference}</span>
                           </div>
                         </div>
 
                         <div className="flex flex-wrap gap-1.5 mb-4">
-                          <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-xs">
+                          <span className="badge">
                             {post.class}
                           </span>
-                          <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-xs">
+                          <span className="badge">
                             {post.subject}
                           </span>
-                          <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-xs">
+                          <span className="badge">
                             {post.medium}
                           </span>
                         </div>
                       </div>
 
                       {/* Apply Action */}
-                      <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4 mt-auto">
+                      <div className="flex items-center justify-between border-t border-stone pt-5 mt-auto">
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                          <div className="w-9 h-9 rounded-full bg-clay/40 border border-stone overflow-hidden">
                             {post.student?.avatarUrl ? (
                               <img
                                 src={post.student.avatarUrl}
@@ -388,12 +408,12 @@ function TuitionsContent() {
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <span className="w-full h-full flex items-center justify-center font-bold text-slate-500 uppercase text-sm">
+                              <span className="w-full h-full flex items-center justify-center font-display font-semibold text-primary-800 uppercase text-sm">
                                 {post.student?.name?.charAt(0)}
                               </span>
                             )}
                           </div>
-                          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                          <span className="text-xs font-medium text-ink">
                             {post.student?.name}
                           </span>
                         </div>
@@ -401,7 +421,7 @@ function TuitionsContent() {
                         {post.hasApplied ? (
                           <button
                             disabled
-                            className="bg-slate-100 dark:bg-slate-850 text-slate-400 dark:text-slate-500 py-1.5 px-4 text-xs font-semibold rounded-lg cursor-not-allowed border border-slate-200 dark:border-slate-800"
+                            className="bg-clay-light text-ink-muted py-2 px-5 text-xs font-medium rounded-full cursor-not-allowed border border-stone"
                           >
                             Applied
                           </button>
@@ -419,7 +439,7 @@ function TuitionsContent() {
                               }
                               setSelectedPost(post);
                             }}
-                            className="btn-primary py-1.5 px-4 text-xs font-semibold"
+                            className="btn-primary py-2 px-5 text-[11px]"
                           >
                             Apply Now
                           </button>
@@ -435,17 +455,17 @@ function TuitionsContent() {
                     <button
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
-                      className="px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl disabled:opacity-50"
+                      className="px-5 py-2.5 border border-stone text-ink-muted rounded-full disabled:opacity-50 hover:border-sage hover:text-primary-800 transition-colors duration-300"
                     >
                       Prev
                     </button>
-                    <span className="px-4 py-2 text-slate-600 dark:text-slate-400">
+                    <span className="px-4 py-2 text-ink-muted">
                       Page {currentPage} of {totalPages}
                     </span>
                     <button
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
-                      className="px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl disabled:opacity-50"
+                      className="px-5 py-2.5 border border-stone text-ink-muted rounded-full disabled:opacity-50 hover:border-sage hover:text-primary-800 transition-colors duration-300"
                     >
                       Next
                     </button>
@@ -459,18 +479,18 @@ function TuitionsContent() {
 
       {/* Apply Modal */}
       {selectedPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 w-full max-w-lg shadow-2xl animate-scale-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white border border-stone rounded-card p-8 w-full max-w-lg shadow-soft-xl animate-fade-up">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Apply for Tuition</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                <h3 className="font-display text-2xl font-semibold text-ink">Apply for Tuition</h3>
+                <p className="text-xs text-ink-muted mt-1">
                   Posting: <span className="font-semibold">{selectedPost.title}</span>
                 </p>
               </div>
               <button
                 onClick={() => setSelectedPost(null)}
-                className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="p-2 rounded-full text-ink-muted hover:bg-clay-light transition-colors duration-300"
               >
                 ✕
               </button>
@@ -478,7 +498,7 @@ function TuitionsContent() {
 
             <form onSubmit={handleApplySubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Expected Salary (BDT/month)
                 </label>
                 <input
@@ -486,13 +506,13 @@ function TuitionsContent() {
                   placeholder={`Recommended budget is ${selectedPost.salary} BDT`}
                   value={expectedSalary}
                   onChange={(e) => setExpectedSalary(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Cover Letter / Proposal
                 </label>
                 <textarea
@@ -500,7 +520,7 @@ function TuitionsContent() {
                   placeholder="Explain why you are the best fit for this tuition. Mention your experience, qualifications, and teaching methods..."
                   value={coverLetter}
                   onChange={(e) => setCoverLetter(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500 text-sm leading-relaxed"
+                  className="input-field text-sm leading-relaxed"
                   required
                 ></textarea>
               </div>
@@ -509,14 +529,14 @@ function TuitionsContent() {
                 <button
                   type="button"
                   onClick={() => setSelectedPost(null)}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="btn-outline text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-primary px-6 py-2 rounded-xl text-sm font-semibold flex items-center gap-2"
+                  className="btn-primary text-xs"
                 >
                   {submitting ? "Sending..." : "Submit Application"}
                 </button>
@@ -534,8 +554,8 @@ function TuitionsContent() {
 export default function TuitionsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800"></div>
       </div>
     }>
       <TuitionsContent />

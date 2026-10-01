@@ -152,17 +152,17 @@ function BookingContent() {
 
   if (loadingTutor) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-stone border-t-primary-800"></div>
       </div>
     );
   }
 
   if (error && !tutor) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 text-center">
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Booking Error</h2>
-        <p className="text-slate-500 mb-6">{error}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
+        <h2 className="font-display text-3xl font-semibold text-ink mb-3">Booking Error</h2>
+        <p className="text-ink-muted mb-8">{error}</p>
         <Link href="/find-tutor" className="btn-primary">Find a Tutor</Link>
       </div>
     );
@@ -171,46 +171,46 @@ function BookingContent() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
+      <main className="py-10 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumbs */}
-          <nav className="flex text-xs text-slate-400 dark:text-slate-500 gap-1.5 mb-6">
-            <Link href="/" className="hover:underline">Home</Link>
-            <span>&gt;</span>
-            <Link href="/find-tutor" className="hover:underline">Find Tutors</Link>
-            <span>&gt;</span>
+          <nav className="flex text-xs text-ink-muted gap-2 mb-8">
+            <Link href="/" className="hover:text-primary-800 transition-colors duration-300">Home</Link>
+            <span className="text-stone">&gt;</span>
+            <Link href="/find-tutor" className="hover:text-primary-800 transition-colors duration-300">Find Tutors</Link>
+            <span className="text-stone">&gt;</span>
             <span className="truncate max-w-[150px]">{tutor?.user?.name || "Tutor Details"}</span>
-            <span>&gt;</span>
-            <span className="text-primary-600 font-medium">Book a Session</span>
+            <span className="text-stone">&gt;</span>
+            <span className="text-primary-800 font-medium">Book a Session</span>
           </nav>
 
           {/* Heading with Stepper */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 border-b border-slate-200 dark:border-slate-800 pb-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 border-b border-stone pb-8">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-1">Book a Session</h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Choose your preferred time and book your session.</p>
+              <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-2">Book a Session</h1>
+              <p className="text-sm text-ink-muted">Choose your preferred time and book your session.</p>
             </div>
 
             {/* Stepper Progress Indicator */}
-            <div className="flex items-center gap-4 text-xs font-semibold text-slate-400">
+            <div className="flex items-center gap-4 text-xs font-medium text-ink-muted">
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-primary-600 text-white flex items-center justify-center text-[10px]">1</span>
-                <span className="text-primary-600">Select Time</span>
+                <span className="w-5 h-5 rounded-full bg-primary-800 text-white flex items-center justify-center text-[10px]">1</span>
+                <span className="text-primary-800">Select Time</span>
               </div>
-              <div className="h-[1px] w-6 bg-slate-200 dark:bg-slate-800"></div>
+              <div className="h-px w-6 bg-stone"></div>
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-[10px]">2</span>
+                <span className="w-5 h-5 rounded-full bg-clay border border-stone text-ink-muted flex items-center justify-center text-[10px]">2</span>
                 <span>Session Details</span>
               </div>
-              <div className="h-[1px] w-6 bg-slate-200 dark:bg-slate-800"></div>
+              <div className="h-px w-6 bg-stone"></div>
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-[10px]">3</span>
+                <span className="w-5 h-5 rounded-full bg-clay border border-stone text-ink-muted flex items-center justify-center text-[10px]">3</span>
                 <span>Payment</span>
               </div>
-              <div className="h-[1px] w-6 bg-slate-200 dark:bg-slate-800"></div>
+              <div className="h-px w-6 bg-stone"></div>
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-[10px]">4</span>
+                <span className="w-5 h-5 rounded-full bg-clay border border-stone text-ink-muted flex items-center justify-center text-[10px]">4</span>
                 <span>Confirmation</span>
               </div>
             </div>
@@ -224,24 +224,24 @@ function BookingContent() {
               
               {/* Section 1: Date & Time */}
               <div className="card p-6 md:p-8 space-y-6">
-                <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="text-primary-600">📅</span> 1. Select Date & Time
+                <h2 className="font-display text-lg font-semibold text-ink flex items-center gap-2">
+                  <span className="text-sage-700">📅</span> 1. Select Date & Time
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
                   {/* Calendar Widget */}
                   <div className="md:col-span-6 space-y-4">
-                    <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-800">
-                      <button type="button" onClick={handlePrevMonth} className="text-slate-600 dark:text-slate-400 font-bold hover:text-primary-600 text-sm">&lt;</button>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200 text-xs">{monthNames[currentMonth]} {currentYear}</span>
-                      <button type="button" onClick={handleNextMonth} className="text-slate-600 dark:text-slate-400 font-bold hover:text-primary-600 text-sm">&gt;</button>
+                    <div className="flex justify-between items-center bg-clay-light p-3 rounded-full border border-stone">
+                      <button type="button" onClick={handlePrevMonth} className="text-ink-muted hover:text-primary-800 text-sm transition-colors duration-300">&lt;</button>
+                      <span className="font-medium text-ink text-xs">{monthNames[currentMonth]} {currentYear}</span>
+                      <button type="button" onClick={handleNextMonth} className="text-ink-muted hover:text-primary-800 text-sm transition-colors duration-300">&gt;</button>
                     </div>
 
-                    <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-medium text-ink-muted uppercase tracking-wider">
                       <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
                     </div>
 
-                    <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-800 dark:text-slate-200">
+                    <div className="grid grid-cols-7 gap-1 text-center text-xs text-ink">
                       {calendarCells.map((day, idx) => {
                         if (day === null) return <div key={`empty-${idx}`} className="py-2"></div>;
                         const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
@@ -251,10 +251,10 @@ function BookingContent() {
                             key={`day-${day}`}
                             type="button"
                             onClick={() => setSelectedDate(dateStr)}
-                            className={`py-2 rounded-lg font-medium transition-all ${
+                            className={`py-2 rounded-full font-medium transition-colors duration-300 ${
                               isSelected
-                                ? "bg-primary-600 text-white font-bold"
-                                : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400"
+                                ? "bg-primary-800 text-white"
+                                : "hover:bg-clay-light text-ink-muted"
                             }`}
                           >
                             {day}
@@ -263,8 +263,8 @@ function BookingContent() {
                       })}
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <span className="w-2.5 h-2.5 rounded-full bg-primary-600"></span>
+                    <div className="flex items-center gap-2 text-xs text-ink-muted">
+                      <span className="w-2.5 h-2.5 rounded-full bg-primary-800"></span>
                       <span>Available Dates</span>
                     </div>
                   </div>
@@ -272,8 +272,8 @@ function BookingContent() {
                   {/* Time Slots Widget */}
                   <div className="md:col-span-6 space-y-4">
                     <div>
-                      <p className="font-bold text-slate-900 dark:text-white text-sm">{getFormattedDate(selectedDate)}</p>
-                      <p className="text-xs text-slate-400">☀️ Dhaka Time (GMT+6)</p>
+                      <p className="font-medium text-ink text-sm">{getFormattedDate(selectedDate)}</p>
+                      <p className="text-xs text-ink-muted">☀️ Dhaka Time (GMT+6)</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3.5">
@@ -284,10 +284,10 @@ function BookingContent() {
                             key={slot}
                             type="button"
                             onClick={() => setSelectedTimeSlot(slot)}
-                            className={`py-3.5 px-4 rounded-xl border text-xs font-semibold text-center transition-all ${
+                            className={`py-3.5 px-4 rounded-full border text-xs font-medium text-center transition-colors duration-300 ${
                               isSelected
-                                ? "border-primary-600 bg-primary-600 text-white shadow-sm"
-                                : "border-slate-200 dark:border-slate-800 hover:border-primary-500 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900"
+                                ? "border-primary-800 bg-primary-800 text-white"
+                                : "border-stone hover:border-sage text-ink bg-white"
                             }`}
                           >
                             {slot}
@@ -296,7 +296,7 @@ function BookingContent() {
                       })}
                     </div>
 
-                    <button type="button" className="w-full py-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/40 dark:hover:bg-slate-800/70 border border-slate-200/50 dark:border-slate-800 rounded-xl text-xs text-slate-500 font-semibold transition-all">
+                    <button type="button" className="w-full py-2.5 bg-clay-light hover:bg-clay/50 border border-stone rounded-full text-xs text-ink-muted font-medium transition-colors duration-300">
                       View More ∨
                     </button>
                   </div>
@@ -305,8 +305,8 @@ function BookingContent() {
 
               {/* Section 2: Session Details */}
               <div className="card p-6 md:p-8 space-y-6">
-                <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="text-primary-600">📄</span> 2. Session Details
+                <h2 className="font-display text-lg font-semibold text-ink flex items-center gap-2">
+                  <span className="text-sage-700">📄</span> 2. Session Details
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -332,7 +332,7 @@ function BookingContent() {
                       onChange={(e) => setTopic(e.target.value.slice(0, 200))}
                       className="input-field"
                     />
-                    <p className="text-right text-[10px] text-slate-400 mt-1">{topic.length}/200</p>
+                    <p className="text-right text-[10px] text-ink-muted mt-1">{topic.length}/200</p>
                   </div>
 
                   <div>
@@ -390,8 +390,8 @@ function BookingContent() {
 
               {/* Section 3: Notes */}
               <div className="card p-6 md:p-8 space-y-6">
-                <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="text-primary-600">✍️</span> 3. Add Extra Notes (Optional)
+                <h2 className="font-display text-lg font-semibold text-ink flex items-center gap-2">
+                  <span className="text-sage-700">✍️</span> 3. Add Extra Notes (Optional)
                 </h2>
                 <div>
                   <textarea
@@ -401,12 +401,12 @@ function BookingContent() {
                     onChange={(e) => setNotes(e.target.value.slice(0, 300))}
                     className="input-field"
                   />
-                  <p className="text-right text-[10px] text-slate-400 mt-1">{notes.length}/300</p>
+                  <p className="text-right text-[10px] text-ink-muted mt-1">{notes.length}/300</p>
                 </div>
               </div>
 
               {error && (
-                <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm text-center border border-red-200">
+                <div className="p-4 bg-terracotta/10 text-terracotta-800 rounded-card text-sm text-center border border-terracotta/30">
                   {error}
                 </div>
               )}
@@ -416,18 +416,18 @@ function BookingContent() {
                 <button
                   onClick={handleBookSession}
                   disabled={isSubmitting || (mode.includes("Offline") && !address)}
-                  className="w-full btn-primary py-4 font-bold flex items-center justify-center gap-2 transition-all"
+                  className="w-full btn-primary text-sm"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/40 border-t-white"></div>
                       Booking your session...
                     </>
                   ) : (
                     "Continue to Payment →"
                   )}
                 </button>
-                <p className="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
+                <p className="text-center text-xs text-ink-muted flex items-center justify-center gap-1.5">
                   🛡️ Your payment information is secure and encrypted.
                 </p>
               </div>
@@ -439,9 +439,9 @@ function BookingContent() {
               
               {/* Tutor Profile Header */}
               <div className="card p-5 space-y-4">
-                <h3 className="font-bold text-slate-500 dark:text-slate-400 text-xs tracking-wider uppercase">Tutor Information</h3>
+                <h3 className="font-display font-semibold text-sage-700 text-xs tracking-wider uppercase">Tutor Information</h3>
                 <div className="flex gap-4">
-                  <div className="w-14 h-14 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold overflow-hidden shadow-sm">
+                  <div className="w-14 h-14 rounded-image bg-clay/40 border border-stone flex items-center justify-center font-display font-semibold text-primary-800 overflow-hidden">
                     {tutor?.photoUrl ? (
                       <img src={tutor.photoUrl} alt={tutor.user?.name} className="w-full h-full object-cover" />
                     ) : (
@@ -449,23 +449,23 @@ function BookingContent() {
                     )}
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1">
+                    <h4 className="font-display font-semibold text-ink text-base flex items-center gap-1.5">
                       {tutor?.user?.name}
-                      <span className="text-blue-500 text-xs" title="Verified Tutor">✓</span>
+                      <span className="text-sage-700 text-xs" title="Verified Tutor">✓</span>
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{tutor?.qualification || "Mathematics Specialist"}</p>
+                    <p className="text-xs text-ink-muted mt-0.5">{tutor?.qualification || "Mathematics Specialist"}</p>
                     
-                    <div className="flex items-center gap-1 mt-1 text-yellow-500 text-xs">
+                    <div className="flex items-center gap-1.5 mt-1.5 text-terracotta-700 text-xs">
                       <span>★</span>
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">{tutor?.averageRating ? tutor.averageRating.toFixed(1) : "4.9"}</span>
-                      <span className="text-slate-400 text-[10px]">({tutor?.totalReviews || 120} Reviews)</span>
+                      <span className="font-medium text-ink">{tutor?.averageRating ? tutor.averageRating.toFixed(1) : "4.9"}</span>
+                      <span className="text-ink-muted text-[10px]">({tutor?.totalReviews || 120} Reviews)</span>
                     </div>
 
                     <div className="flex gap-1.5 flex-wrap mt-2">
-                      <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
+                      <span className="badge">
                         ৳{tutor?.hourlyRate || 500}/hr
                       </span>
-                      <span className="text-[10px] bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 font-bold px-2 py-0.5 rounded-full">
+                      <span className="badge-primary">
                         ৳{tutor?.expectedSalary?.toLocaleString() || "6,000"}/mo
                       </span>
                     </div>
@@ -475,15 +475,15 @@ function BookingContent() {
 
               {/* Booking Summary details */}
               <div className="card p-5 space-y-4">
-                <h3 className="font-bold text-slate-500 dark:text-slate-400 text-xs tracking-wider uppercase">Booking Summary</h3>
-                <div className="space-y-3.5 text-xs text-slate-600 dark:text-slate-400">
+                <h3 className="font-display font-semibold text-sage-700 text-xs tracking-wider uppercase">Booking Summary</h3>
+                <div className="space-y-3.5 text-xs text-ink-muted">
                   <div className="flex justify-between">
                     <span>Date</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{getFormattedDate(selectedDate)}</span>
+                    <span className="font-medium text-ink">{getFormattedDate(selectedDate)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Time</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{selectedTimeSlot} - {(() => {
+                    <span className="font-medium text-ink">{selectedTimeSlot} - {(() => {
                       try {
                         const [time, modifier] = selectedTimeSlot.split(" ");
                         let [hours, minutes] = time.split(":").map(Number);
@@ -501,80 +501,80 @@ function BookingContent() {
                   </div>
                   <div className="flex justify-between">
                     <span>Duration</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{duration}</span>
+                    <span className="font-medium text-ink">{duration}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Session Type</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{sessionType}</span>
+                    <span className="font-medium text-ink">{sessionType}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Mode</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{mode}</span>
+                    <span className="font-medium text-ink">{mode}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Subject</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{subject || "Mathematics"}</span>
+                    <span className="font-medium text-ink">{subject || "Mathematics"}</span>
                   </div>
                 </div>
               </div>
 
               {/* Price Details */}
               <div className="card p-5 space-y-4">
-                <h3 className="font-bold text-slate-500 dark:text-slate-400 text-xs tracking-wider uppercase">Price Details</h3>
-                <div className="space-y-3 text-xs border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                <h3 className="font-display font-semibold text-sage-700 text-xs tracking-wider uppercase">Price Details</h3>
+                <div className="space-y-3 text-xs border-b border-stone pb-5">
                   <div className="flex justify-between">
                     <span>Rate ({duration})</span>
-                    <span className="font-semibold text-slate-800 dark:text-slate-200">৳ {tutorRate}</span>
+                    <span className="font-medium text-ink">৳ {tutorRate}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-1">
                       Platform Fee
-                      <HiOutlineQuestionMarkCircle className="w-3.5 h-3.5 text-slate-400" />
+                      <HiOutlineQuestionMarkCircle className="w-3.5 h-3.5 text-sage-700" />
                     </span>
-                    <span className="font-semibold text-slate-800 dark:text-slate-200">৳ 50</span>
+                    <span className="font-medium text-ink">৳ 50</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center pt-2">
-                  <span className="font-bold text-slate-950 dark:text-white text-sm">Total Amount</span>
-                  <span className="font-extrabold text-primary-600 dark:text-primary-400 text-xl">৳ {tutorRate + 50}</span>
+                  <span className="font-medium text-ink text-sm">Total Amount</span>
+                  <span className="font-display font-semibold text-primary-800 text-xl">৳ {tutorRate + 50}</span>
                 </div>
               </div>
 
               {/* Guarantee badges */}
               <div className="space-y-4">
                 {/* 100% Secure badge */}
-                <div className="flex gap-3 bg-green-50/50 dark:bg-green-950/20 border border-green-200/50 dark:border-green-950/50 p-4 rounded-xl">
-                  <div className="w-5 h-5 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 text-xs">✓</div>
+                <div className="flex gap-3 bg-sage/10 border border-sage/30 p-4 rounded-card">
+                  <div className="w-5 h-5 rounded-full bg-sage-700 text-white flex items-center justify-center flex-shrink-0 text-xs">✓</div>
                   <div>
-                    <h5 className="font-bold text-slate-900 dark:text-white text-xs">100% Secure Booking</h5>
-                    <p className="text-[10px] text-slate-500 mt-0.5">Your session is confirmed only after successful payment.</p>
+                    <h5 className="font-medium text-ink text-xs">100% Secure Booking</h5>
+                    <p className="text-[10px] text-ink-muted mt-1">Your session is confirmed only after successful payment.</p>
                   </div>
                 </div>
 
                 {/* Additional Info links list */}
-                <div className="card p-5 space-y-4.5 text-xs">
+                <div className="card p-6 space-y-5 text-xs">
                   <div className="flex gap-3.5 items-start">
                     <span className="text-lg">📅</span>
                     <div>
-                      <p className="font-bold text-slate-900 dark:text-white">Flexible Reschedule</p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Reschedule your session up to 2 hours before the scheduled time.</p>
+                      <p className="font-medium text-ink">Flexible Reschedule</p>
+                      <p className="text-[10px] text-ink-muted mt-1">Reschedule your session up to 2 hours before the scheduled time.</p>
                     </div>
                   </div>
 
                   <div className="flex gap-3.5 items-start">
                     <span className="text-lg">🎧</span>
                     <div>
-                      <p className="font-bold text-slate-900 dark:text-white">24/7 Support</p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">We are here to help you anytime you need.</p>
+                      <p className="font-medium text-ink">24/7 Support</p>
+                      <p className="text-[10px] text-ink-muted mt-1">We are here to help you anytime you need.</p>
                     </div>
                   </div>
 
                   <div className="flex gap-3.5 items-start">
                     <span className="text-lg">🛡️</span>
                     <div>
-                      <p className="font-bold text-slate-900 dark:text-white">Satisfaction Guarantee</p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Not satisfied? Get a full refund within 24 hours of the session.</p>
+                      <p className="font-medium text-ink">Satisfaction Guarantee</p>
+                      <p className="text-[10px] text-ink-muted mt-1">Not satisfied? Get a full refund within 24 hours of the session.</p>
                     </div>
                   </div>
                 </div>
@@ -594,8 +594,8 @@ function BookingContent() {
 export default function BookingPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-stone border-t-primary-800"></div>
       </div>
     }>
       <BookingContent />

@@ -62,10 +62,10 @@ export default function TuitionPostDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="flex flex-1 items-center justify-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800"></div>
         </div>
       </div>
     );
@@ -73,12 +73,12 @@ export default function TuitionPostDetailsPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex-1 max-w-3xl mx-auto p-8 text-center space-y-4">
+        <div className="flex-1 max-w-3xl mx-auto p-8 text-center space-y-5">
           <span className="text-4xl">⚠️</span>
-          <h2 className="text-xl font-bold">Tuition Post Not Found</h2>
-          <button onClick={() => router.push("/dashboard/student/tuitions")} className="btn-primary py-2 px-4 text-sm font-semibold">
+          <h2 className="font-display text-2xl font-semibold text-ink">Tuition Post Not Found</h2>
+          <button onClick={() => router.push("/dashboard/student/tuitions")} className="btn-primary text-xs">
             Back to Posts
           </button>
         </div>
@@ -87,85 +87,85 @@ export default function TuitionPostDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="flex">
         <DashboardSidebar role="STUDENT" />
 
-        <main className="flex-1 p-6 md:p-8 max-w-5xl mx-auto space-y-8">
+        <main className="flex-1 p-6 md:p-12 max-w-5xl mx-auto space-y-10">
           {/* Back button */}
           <button
             onClick={() => router.push("/dashboard/student/tuitions")}
-            className="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-semibold"
+            className="flex items-center gap-2 text-ink-muted hover:text-primary-800 transition-colors duration-300 text-sm font-medium"
           >
             <HiOutlineArrowLeft className="w-4 h-4" />
             <span>Back to My Posts</span>
           </button>
 
           {/* Job Details Card */}
-          <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="card p-8 space-y-6 hover:translate-y-0">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <span className="inline-block px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 mb-2">
+                <span className="badge-primary mb-4">
                   {post.tuitionType}
                 </span>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{post.title}</h1>
+                <h1 className="font-display text-3xl font-semibold text-ink">{post.title}</h1>
               </div>
               <span
-                className={`px-3 py-1 text-xs font-bold rounded-full ${
+                className={`px-3 py-1 text-xs font-medium rounded-full border ${
                   post.status === "OPEN"
-                    ? "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400"
-                    : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400"
+                    ? "bg-sage/15 border-sage/40 text-sage-800"
+                    : "bg-clay-light border-stone text-ink-muted"
                 }`}
               >
                 Status: {post.status}
               </span>
             </div>
 
-            <p className="text-slate-600 dark:text-slate-400 whitespace-pre-line text-sm leading-relaxed">
+            <p className="text-ink-muted whitespace-pre-line text-sm leading-relaxed">
               {post.description}
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-b border-slate-100 dark:border-slate-800 py-4 text-sm">
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <HiOutlineLocationMarker className="w-5 h-5 text-slate-400" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 border-t border-b border-stone py-6 text-sm">
+              <div className="flex items-center gap-2 text-ink-muted">
+                <HiOutlineLocationMarker className="w-5 h-5 text-sage-700" />
                 <div>
-                  <div className="text-xs text-slate-400">Location</div>
-                  <span className="font-semibold">{post.locationArea}, {post.locationDistrict}</span>
+                  <div className="text-xs text-ink-muted">Location</div>
+                  <span className="font-medium text-ink">{post.locationArea}, {post.locationDistrict}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <HiOutlineCurrencyDollar className="w-5 h-5 text-slate-400" />
+              <div className="flex items-center gap-2 text-ink-muted">
+                <HiOutlineCurrencyDollar className="w-5 h-5 text-sage-700" />
                 <div>
-                  <div className="text-xs text-slate-400">Budget / Salary</div>
-                  <span className="font-semibold text-primary-600 dark:text-primary-400">{post.salary} BDT/m</span>
+                  <div className="text-xs text-ink-muted">Budget / Salary</div>
+                  <span className="font-medium text-primary-800">{post.salary} BDT/m</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <HiOutlineCalendar className="w-5 h-5 text-slate-400" />
+              <div className="flex items-center gap-2 text-ink-muted">
+                <HiOutlineCalendar className="w-5 h-5 text-sage-700" />
                 <div>
-                  <div className="text-xs text-slate-400">Schedule</div>
-                  <span className="font-semibold">{post.daysPerWeek} days/week</span>
+                  <div className="text-xs text-ink-muted">Schedule</div>
+                  <span className="font-medium text-ink">{post.daysPerWeek} days/week</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <HiOutlineUser className="w-5 h-5 text-slate-400" />
+              <div className="flex items-center gap-2 text-ink-muted">
+                <HiOutlineUser className="w-5 h-5 text-sage-700" />
                 <div>
-                  <div className="text-xs text-slate-400">Gender Preference</div>
-                  <span className="font-semibold">{post.genderPreference}</span>
+                  <div className="text-xs text-ink-muted">Gender Preference</div>
+                  <span className="font-medium text-ink">{post.genderPreference}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-semibold">
+              <span className="badge">
                 Class: {post.class}
               </span>
-              <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-semibold">
+              <span className="badge">
                 Subject: {post.subject}
               </span>
-              <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-semibold">
+              <span className="badge">
                 Medium: {post.medium}
               </span>
             </div>
@@ -173,12 +173,12 @@ export default function TuitionPostDetailsPage() {
 
           {/* Applications list */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold flex items-center gap-2">
+            <h2 className="font-display text-2xl font-semibold text-ink flex items-center gap-2">
               <span>📋</span> Applications Received ({applications.length})
             </h2>
 
             {applications.length === 0 ? (
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-2xl text-center text-slate-500 dark:text-slate-400 shadow-sm">
+              <div className="card p-8 text-center text-ink-muted hover:translate-y-0">
                 No applications received for this post yet.
               </div>
             ) : (
@@ -186,12 +186,12 @@ export default function TuitionPostDetailsPage() {
                 {applications.map((app) => (
                   <div
                     key={app.id}
-                    className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4"
+                    className="card p-6 space-y-5 hover:translate-y-0"
                   >
                     {/* Header: Tutor info */}
                     <div className="flex justify-between items-start flex-wrap gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                        <div className="w-12 h-12 rounded-image bg-clay/40 border border-stone overflow-hidden">
                           {app.tutorProfile?.user?.avatarUrl ? (
                             <img
                               src={app.tutorProfile.user.avatarUrl}
@@ -199,36 +199,36 @@ export default function TuitionPostDetailsPage() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <span className="w-full h-full flex items-center justify-center font-bold text-slate-500 uppercase text-lg">
+                            <span className="w-full h-full flex items-center justify-center font-display font-semibold text-primary-800 uppercase text-lg">
                               {app.tutorProfile?.user?.name?.charAt(0)}
                             </span>
                           )}
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 dark:text-white">
+                          <h4 className="font-display font-semibold text-ink">
                             {app.tutorProfile?.user?.name}
                           </h4>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">
+                          <div className="text-xs text-ink-muted">
                             {app.tutorProfile?.qualification} • {app.tutorProfile?.institution}
                           </div>
                         </div>
                       </div>
 
                       <div className="text-right">
-                        <div className="text-xs text-slate-400">Expected Salary</div>
-                        <span className="font-bold text-slate-900 dark:text-white">{app.expectedSalary} BDT</span>
+                        <div className="text-xs text-ink-muted">Expected Salary</div>
+                        <span className="font-display font-semibold text-ink">{app.expectedSalary} BDT</span>
                       </div>
                     </div>
 
                     {/* Cover Letter */}
-                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                      <div className="font-semibold text-xs text-slate-400 mb-1">Cover Letter:</div>
+                    <div className="bg-clay-light border border-stone p-5 rounded-card text-sm leading-relaxed text-ink-muted">
+                      <div className="font-medium text-xs text-sage-700 mb-2">Cover Letter:</div>
                       <p className="whitespace-pre-line">{app.coverLetter}</p>
                     </div>
 
                     {/* Actions / Status */}
-                    <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
-                      <div className="text-xs text-slate-500">
+                    <div className="flex items-center justify-between border-t border-stone pt-5">
+                      <div className="text-xs text-ink-muted">
                         Applied on {new Date(app.createdAt).toLocaleDateString()}
                       </div>
 
@@ -236,23 +236,23 @@ export default function TuitionPostDetailsPage() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleStatusChange(app.id, "REJECTED")}
-                            className="px-4 py-1.5 border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-950 dark:text-red-400 rounded-lg text-xs font-semibold"
+                            className="px-5 py-2 border border-terracotta/40 text-terracotta-800 hover:bg-terracotta/10 rounded-full text-xs font-medium transition-colors duration-300"
                           >
                             Reject
                           </button>
                           <button
                             onClick={() => handleStatusChange(app.id, "ACCEPTED")}
-                            className="btn-primary py-1.5 px-4 text-xs font-semibold"
+                            className="btn-primary text-[11px]"
                           >
                             Accept Application
                           </button>
                         </div>
                       ) : (
                         <span
-                          className={`text-xs font-bold px-3 py-1 rounded-full ${
+                          className={`text-xs font-medium px-3 py-1 rounded-full border ${
                             app.status === "ACCEPTED"
-                              ? "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400"
-                              : "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400"
+                              ? "bg-sage/15 border-sage/40 text-sage-800"
+                              : "bg-terracotta/10 border-terracotta/40 text-terracotta-800"
                           }`}
                         >
                           Status: {app.status}

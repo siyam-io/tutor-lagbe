@@ -11,7 +11,6 @@ import {
   HiOutlineChat,
   HiOutlineBell,
   HiOutlineUser,
-  HiOutlineCog,
   HiOutlineClipboardList,
 } from "react-icons/hi";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -31,18 +30,32 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
 
+  const dashboardHref =
+    user?.role === "TUTOR"
+      ? "/dashboard/tutor"
+      : user?.role === "ADMIN"
+      ? "/admin"
+      : "/dashboard/student";
+
+  const dashboardLabel =
+    user?.role === "TUTOR"
+      ? "Tutor Dashboard"
+      : user?.role === "ADMIN"
+      ? "Admin Dashboard"
+      : "Student Dashboard";
+
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+    <nav className="sticky top-0 z-50 bg-canvas/85 backdrop-blur-lg border-b border-stone">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <span className="text-2xl">🎓</span>
-            <div>
-              <span className="font-bold text-xl text-primary-600 group-hover:text-primary-700 transition-colors">
+            <div className="flex items-baseline gap-2">
+              <span className="font-display font-semibold text-xl text-ink group-hover:text-primary-800 transition-colors duration-300">
                 Tutor Lagbe
               </span>
-              <span className="hidden sm:inline text-xs text-slate-500 ml-1 font-bangla">
+              <span className="hidden sm:inline text-xs text-ink-muted font-bangla">
                 টিউটর লাগবে
               </span>
             </div>
@@ -55,10 +68,10 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                  "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
                   pathname === link.href
-                    ? "bg-primary-50 text-primary-600 dark:bg-primary-950 dark:text-primary-400"
-                    : "text-slate-600 hover:text-primary-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                    ? "bg-sage/15 text-primary-800"
+                    : "text-ink-muted hover:text-primary-800 hover:bg-clay-light"
                 )}
               >
                 <link.icon className="w-4 h-4" />
@@ -69,38 +82,36 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/tuitions"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-sage/15 text-sage-800 hover:bg-sage/25 transition-colors duration-300"
+            >
+              <span className="w-2 h-2 rounded-full bg-bangla-green" />
+              <span className="font-bangla">টিউশন জবসমূহ</span>
+            </Link>
+
             {isAuthenticated ? (
               <>
                 <Link
-                  href={
-                    user?.role === "TUTOR"
-                      ? "/dashboard/tutor"
-                      : user?.role === "ADMIN"
-                      ? "/admin"
-                      : "/dashboard/student"
-                  }
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
+                  href={dashboardHref}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-medium text-ink-muted hover:text-primary-800 hover:bg-clay-light transition-colors duration-300"
                 >
                   <HiOutlineUser className="w-4 h-4" />
-                  {user?.role === "TUTOR"
-                    ? "Tutor Dashboard"
-                    : user?.role === "ADMIN"
-                    ? "Admin Dashboard"
-                    : "Student Dashboard"}
+                  {dashboardLabel}
                 </Link>
                 <button
                   onClick={logout}
-                  className="btn-outline text-sm py-2 px-4"
+                  className="btn-outline text-xs py-2.5 px-5"
                 >
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="btn-outline text-sm py-2 px-4">
+                <Link href="/login" className="btn-outline text-xs py-2.5 px-5">
                   Login
                 </Link>
-                <Link href="/register" className="btn-primary text-sm py-2 px-4">
+                <Link href="/register" className="btn-primary text-xs py-2.5 px-5">
                   Register
                 </Link>
               </>
@@ -110,7 +121,9 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+            aria-label="Toggle navigation"
+            aria-expanded={mobileOpen}
+            className="md:hidden p-2.5 rounded-full text-ink hover:bg-clay-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           >
             {mobileOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
           </button>
@@ -119,51 +132,41 @@ export default function Navbar() {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 animate-slide-up">
-          <div className="px-4 py-3 space-y-1">
+        <div className="md:hidden border-t border-stone animate-slide-up">
+          <div className="px-4 py-5 space-y-1.5">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all",
+                  "flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium transition-all duration-300",
                   pathname === link.href
-                    ? "bg-primary-50 text-primary-600 dark:bg-primary-950"
-                    : "text-slate-600 dark:text-slate-400"
+                    ? "bg-sage/15 text-primary-800"
+                    : "text-ink-muted hover:text-primary-800 hover:bg-clay-light"
                 )}
               >
                 <link.icon className="w-5 h-5" />
                 {link.label}
               </Link>
             ))}
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
+            <div className="pt-4 border-t border-stone">
               {isAuthenticated ? (
                 <>
                   <Link
-                    href={
-                      user?.role === "TUTOR"
-                        ? "/dashboard/tutor"
-                        : user?.role === "ADMIN"
-                        ? "/admin"
-                        : "/dashboard/student"
-                    }
+                    href={dashboardHref}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400"
+                    className="flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium text-ink-muted hover:text-primary-800 hover:bg-clay-light transition-colors duration-300"
                   >
                     <HiOutlineUser className="w-5 h-5" />
-                    {user?.role === "TUTOR"
-                      ? "Tutor Dashboard"
-                      : user?.role === "ADMIN"
-                      ? "Admin Dashboard"
-                      : "Student Dashboard"}
+                    {dashboardLabel}
                   </Link>
                   <button
                     onClick={() => {
                       logout();
                       setMobileOpen(false);
                     }}
-                    className="w-full mt-2 btn-outline text-sm py-2"
+                    className="w-full mt-3 btn-outline text-xs py-3"
                   >
                     Logout
                   </button>
@@ -173,14 +176,14 @@ export default function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 btn-outline text-sm text-center py-2"
+                    className="flex-1 btn-outline text-xs"
                   >
                     Login
                   </Link>
                   <Link
                     href="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 btn-primary text-sm text-center py-2"
+                    className="flex-1 btn-primary text-xs"
                   >
                     Register
                   </Link>

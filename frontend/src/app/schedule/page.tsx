@@ -161,12 +161,13 @@ export default function SchedulePage() {
 
   const mainContent = (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Schedule</h1>
-      <p className="text-slate-500 dark:text-slate-400 mb-8">
+      <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">Calendar</span>
+      <h1 className="font-display text-4xl font-semibold text-ink mb-2">Schedule</h1>
+      <p className="text-ink-muted mb-8">
         Manage your slots and view your scheduled classes.
       </p>
 
-      {error && <div className="p-4 bg-red-50 text-red-600 rounded-lg text-center mb-8">{error}</div>}
+      {error && <div className="p-4 bg-terracotta/10 text-terracotta-800 rounded-2xl text-center mb-8 border border-terracotta/30">{error}</div>}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Calendar Grid */}
@@ -176,16 +177,16 @@ export default function SchedulePage() {
             <div className="flex items-center justify-between mb-6">
               <button
                 onClick={prevMonth}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                className="p-2 hover:bg-clay-light rounded-full transition-colors text-ink"
               >
                 <HiOutlineChevronLeft className="w-5 h-5" />
               </button>
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+              <h2 className="font-display text-lg font-semibold text-ink">
                 {months[currentMonth]} {currentYear}
               </h2>
               <button
                 onClick={nextMonth}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                className="p-2 hover:bg-clay-light rounded-full transition-colors text-ink"
               >
                 <HiOutlineChevronRight className="w-5 h-5" />
               </button>
@@ -194,7 +195,7 @@ export default function SchedulePage() {
             {/* Day headers */}
             <div className="grid grid-cols-7 gap-1 mb-2">
               {days.map((d) => (
-                <div key={d} className="text-center text-xs font-semibold text-slate-500 dark:text-slate-400 py-2">
+                <div key={d} className="text-center text-xs font-semibold text-ink-muted py-2">
                   {d}
                 </div>
               ))}
@@ -213,17 +214,17 @@ export default function SchedulePage() {
                   <button
                     key={day}
                     onClick={() => setSelectedDate(day)}
-                    className={`aspect-square rounded-lg flex flex-col items-center justify-center text-sm transition-all relative ${
+                    className={`aspect-square rounded-xl flex flex-col items-center justify-center text-sm transition-all relative ${
                       selectedDate === day
-                        ? "bg-primary-600 text-white"
-                        : "hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300"
+                        ? "bg-primary-800 text-white shadow-soft"
+                        : "hover:bg-clay-light text-ink"
                     }`}
                   >
                     {day}
                     {hasClass && (
                       <span
                         className={`absolute bottom-1.5 w-1.5 h-1.5 rounded-full ${
-                          selectedDate === day ? "bg-white" : "bg-primary-600"
+                          selectedDate === day ? "bg-white" : "bg-sage-700"
                         }`}
                       />
                     )}
@@ -236,12 +237,12 @@ export default function SchedulePage() {
           {/* Selected Date Details */}
           {selectedDate && (
             <div className="card">
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-4">
+              <h3 className="font-display text-lg font-semibold text-ink mb-4">
                 Classes on {months[currentMonth]} {selectedDate}, {currentYear}
               </h3>
               <div className="space-y-3">
                 {selectedDateBookings.length === 0 ? (
-                  <p className="text-slate-500 text-sm py-4">No classes scheduled for this day.</p>
+                  <p className="text-ink-muted text-sm py-4">No classes scheduled for this day.</p>
                 ) : (
                   selectedDateBookings.map((cls) => {
                     const isTutor = user?.role === "TUTOR";
@@ -253,38 +254,38 @@ export default function SchedulePage() {
                     return (
                       <div
                         key={cls.id}
-                        className={`flex items-center gap-3 p-4 rounded-lg border ${
+                        className={`flex items-center gap-3 p-4 rounded-2xl border ${
                           cls.status === "ACCEPTED"
-                            ? "border-green-200 bg-green-50 dark:border-green-900/30 dark:bg-green-950/20"
+                            ? "border-sage/40 bg-sage/10"
                             : cls.status === "COMPLETED"
-                            ? "border-blue-200 bg-blue-50 dark:border-blue-900/30 dark:bg-blue-950/20"
-                            : "border-yellow-200 bg-yellow-50 dark:border-yellow-900/30 dark:bg-yellow-950/20"
+                            ? "border-primary-200 bg-primary-50"
+                            : "border-ochre/30 bg-ochre/10"
                         }`}
                       >
                         <div
                           className={`w-2.5 h-2.5 rounded-full ${
                             cls.status === "ACCEPTED"
-                              ? "bg-green-500"
+                              ? "bg-sage-600"
                               : cls.status === "COMPLETED"
-                              ? "bg-blue-500"
-                              : "bg-yellow-500"
+                              ? "bg-primary-600"
+                              : "bg-ochre"
                           }`}
                         />
                         <div className="flex-1">
-                          <p className="font-medium text-slate-900 dark:text-white text-sm">
+                          <p className="font-medium text-ink text-sm">
                             {subject} - {counterpartName}
                           </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                          <p className="text-xs text-ink-muted mt-0.5">
                             Slot: {cls.timeSlot} ({cls.tuitionType})
                           </p>
                         </div>
                         <span
-                          className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                          className={`${
                             cls.status === "ACCEPTED"
-                              ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
+                              ? "badge-success"
                               : cls.status === "COMPLETED"
-                              ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
-                              : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300"
+                              ? "badge-primary"
+                              : "badge-warning"
                           }`}
                         >
                           {cls.status}
@@ -303,23 +304,23 @@ export default function SchedulePage() {
           {/* Tutor Available Slots Manager */}
           {user?.role === "TUTOR" && tutorProfile && (
             <div className="card">
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-4">My Available Slots</h3>
+              <h3 className="font-display text-lg font-semibold text-ink mb-4">My Available Slots</h3>
               
               {/* List of current available slots */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {(tutorProfile.availableSlots || []).length === 0 ? (
-                  <p className="text-slate-500 text-sm py-2">No available slots configured yet.</p>
+                  <p className="text-ink-muted text-sm py-2">No available slots configured yet.</p>
                 ) : (
                   (tutorProfile.availableSlots || []).map((slot: string) => (
                     <span
                       key={slot}
-                      className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded bg-primary-50 text-primary-700 dark:bg-primary-950/40 dark:text-primary-300 border border-primary-200 dark:border-primary-900"
+                      className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-sage/15 text-primary-800 border border-sage/40"
                     >
                       {slot}
                       <button
                         onClick={() => handleRemoveSlot(slot)}
                         disabled={updatingSlots}
-                        className="text-primary-700 hover:text-red-600 dark:text-primary-300 dark:hover:text-red-400 transition-colors ml-1"
+                        className="text-sage-700 hover:text-terracotta-700 transition-colors ml-1"
                       >
                         <HiTrash className="w-3.5 h-3.5" />
                       </button>
@@ -329,15 +330,15 @@ export default function SchedulePage() {
               </div>
 
               {/* Add New Slot Form */}
-              <div className="border-t border-slate-200 dark:border-slate-800 pt-4">
-                <h4 className="text-sm font-medium text-slate-800 dark:text-slate-200 mb-3">Add Available Slot</h4>
+              <div className="border-t border-stone pt-4">
+                <h4 className="text-sm font-medium text-ink mb-3">Add Available Slot</h4>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Day</label>
+                    <label className="label">Day</label>
                     <select
                       value={selectedDay}
                       onChange={(e) => setSelectedDay(e.target.value)}
-                      className="w-full text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 text-slate-700 dark:text-slate-300"
+                      className="input-field text-sm"
                     >
                       {availableDaysOfWeek.map((day) => (
                         <option key={day} value={day}>
@@ -352,12 +353,12 @@ export default function SchedulePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
+                    <label className="label">Time</label>
                     <input
                       type="time"
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
-                      className="w-full text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 text-slate-700 dark:text-slate-300"
+                      className="input-field text-sm"
                     />
                   </div>
                   <button
@@ -375,8 +376,8 @@ export default function SchedulePage() {
 
           {/* Quick Info Card */}
           <div className="card">
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-3">Schedule Guide</h3>
-            <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2 list-disc list-inside">
+            <h3 className="font-display text-lg font-semibold text-ink mb-3">Schedule Guide</h3>
+            <ul className="text-xs text-ink-muted space-y-2 list-disc list-inside">
               <li>Indicator dots on the calendar show days with confirmed or pending classes.</li>
               <li>Click on any date to see the details of classes scheduled for that day.</li>
               {user?.role === "TUTOR" ? (
@@ -393,10 +394,10 @@ export default function SchedulePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="flex items-center justify-center min-h-screen bg-canvas">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="text-slate-500 mt-2">Loading schedule...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sage-700 mx-auto"></div>
+          <p className="text-ink-muted mt-3 text-sm">Loading schedule...</p>
         </div>
       </div>
     );
@@ -406,10 +407,10 @@ export default function SchedulePage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 flex items-center justify-center">
+        <main className="min-h-screen bg-canvas py-8 flex items-center justify-center">
           <div className="card max-w-md text-center p-8">
-            <h2 className="text-xl font-bold text-slate-950 dark:text-white mb-2">Login Required</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-6">Please log in to view and manage your schedule.</p>
+            <h2 className="font-display text-2xl font-semibold text-ink mb-2">Login Required</h2>
+            <p className="text-ink-muted mb-6">Please log in to view and manage your schedule.</p>
             <a href="/login" className="btn-primary inline-block">Go to Login</a>
           </div>
         </main>
@@ -419,7 +420,7 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen bg-canvas">
       <DashboardSidebar role={user?.role || "STUDENT"} />
       <div className="flex-1 p-6 lg:p-10">{mainContent}</div>
     </div>

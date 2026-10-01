@@ -2,12 +2,14 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="text-center">
-        <span className="text-8xl block mb-6">🔍</span>
-        <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white mb-4">404</h1>
-        <p className="text-xl text-slate-500 dark:text-slate-400 mb-8">Page not found</p>
-        <Link href="/" className="btn-primary inline-block">
+        <span className="text-8xl block mb-8">🔍</span>
+        <h1 className="font-display text-6xl font-semibold text-ink mb-5">
+          404
+        </h1>
+        <p className="text-xl text-ink-muted mb-10">Page not found</p>
+        <Link href="/" className="btn-primary">
           Go Home
         </Link>
       </div>

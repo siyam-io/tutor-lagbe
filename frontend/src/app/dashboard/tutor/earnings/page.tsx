@@ -85,12 +85,12 @@ export default function TutorEarningsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="flex min-h-screen">
         <DashboardSidebar role="TUTOR" />
-        <div className="flex-1 p-6 lg:p-10 flex items-center justify-center">
+        <div className="flex-1 p-6 lg:p-12 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-            <p className="text-slate-500 mt-2">Loading earnings data...</p>
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800 mx-auto"></div>
+            <p className="text-ink-muted mt-4">Loading earnings data...</p>
           </div>
         </div>
       </div>
@@ -98,88 +98,100 @@ export default function TutorEarningsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen">
       <DashboardSidebar role="TUTOR" />
-      <div className="flex-1 p-6 lg:p-10">
-        <div className="max-w-5xl space-y-8">
-          <div className="flex justify-between items-center">
+      <div className="flex-1 p-6 lg:p-12">
+        <div className="max-w-5xl space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Earnings</h1>
-              <p className="text-slate-500 dark:text-slate-400">Track your income, balance, and withdrawals</p>
+              <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+                আর্নিংস
+              </span>
+              <h1 className="font-display text-4xl font-semibold text-ink mb-3">Earnings</h1>
+              <p className="text-ink-muted">Track your income, balance, and withdrawals</p>
             </div>
             <button
               onClick={() => setShowModal(true)}
-              className="btn-primary flex items-center gap-1 text-xs py-2 px-5 font-bold"
+              className="btn-primary text-xs"
             >
               <HiPlus className="w-4 h-4" /> Request Payout
             </button>
           </div>
 
-          {error && <div className="p-4 bg-red-50 text-red-650 rounded-lg">{error}</div>}
-          {success && <div className="p-4 bg-green-50 text-green-700 rounded-lg">{success}</div>}
+          {error && (
+            <div className="p-4 bg-terracotta/10 border border-terracotta/30 text-terracotta-800 rounded-card">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="p-4 bg-sage/15 border border-sage/40 text-sage-800 rounded-card">
+              {success}
+            </div>
+          )}
 
           {/* Balance Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Total Earnings Card */}
-            <div className="card bg-gradient-to-r from-primary-600 to-primary-700 text-white">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+            <div className="card bg-primary-800 border-primary-800 text-white hover:translate-y-0">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-image bg-white/10 flex items-center justify-center">
                   <HiOutlineCurrencyDollar className="w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-primary-100 text-sm">Total Earnings</p>
-                  <p className="text-3xl font-bold">৳{totalEarnings.toLocaleString()}</p>
+                  <p className="text-white/60 text-sm">Total Earnings</p>
+                  <p className="font-display text-4xl font-semibold">৳{totalEarnings.toLocaleString()}</p>
                 </div>
               </div>
             </div>
 
             {/* Available Balance Card */}
-            <div className="card bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-primary-50 dark:bg-primary-950/20 text-primary-600 flex items-center justify-center text-lg font-bold">
+            <div className="card flex items-center justify-between hover:translate-y-0">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-image bg-clay/40 border border-stone text-primary-800 flex items-center justify-center font-display text-xl font-semibold">
                   ৳
                 </div>
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs">Available to Withdraw</p>
-                  <p className="text-3xl font-bold text-slate-800 dark:text-white">৳{availableBalance.toLocaleString()}</p>
+                  <p className="text-ink-muted text-xs">Available to Withdraw</p>
+                  <p className="font-display text-4xl font-semibold text-ink">৳{availableBalance.toLocaleString()}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-[10px] uppercase font-bold text-slate-400">Reserved / Pending</p>
-                <p className="text-xs font-semibold text-slate-500 mt-0.5">৳{totalWithdrawn.toLocaleString()}</p>
+                <p className="text-[10px] uppercase font-medium text-ink-muted">Reserved / Pending</p>
+                <p className="text-xs font-medium text-ink-muted mt-1">৳{totalWithdrawn.toLocaleString()}</p>
               </div>
             </div>
           </div>
 
           {/* Earnings & Payouts Tables tabs */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             {/* Received Payments History */}
-            <div className="lg:col-span-7 card space-y-4">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Received Payments</h2>
+            <div className="lg:col-span-7 card p-6 space-y-5 hover:translate-y-0">
+              <h2 className="font-display text-lg font-semibold text-ink">Received Payments</h2>
               {earnings.length === 0 ? (
-                <p className="text-slate-500 text-xs py-8 text-center">No payment history found.</p>
+                <p className="text-ink-muted text-xs py-8 text-center">No payment history found.</p>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs text-left">
                     <thead>
-                      <tr className="border-b border-slate-200 dark:border-slate-700">
-                        <th className="py-2.5 px-3 text-slate-500 font-medium">Student</th>
-                        <th className="py-2.5 px-3 text-slate-500 font-medium">Amount</th>
-                        <th className="py-2.5 px-3 text-slate-500 font-medium">Status</th>
+                      <tr className="border-b border-stone">
+                        <th className="py-2.5 px-3 text-ink-muted font-medium">Student</th>
+                        <th className="py-2.5 px-3 text-ink-muted font-medium">Amount</th>
+                        <th className="py-2.5 px-3 text-ink-muted font-medium">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {earnings.map((earning) => (
-                        <tr key={earning.id} className="border-b border-slate-100 dark:border-slate-800/60">
-                          <td className="py-3 px-3 font-medium text-slate-900 dark:text-white">
+                        <tr key={earning.id} className="border-b border-stone">
+                          <td className="py-3 px-3 font-medium text-ink">
                             {earning.booking?.student?.name || "Student"}
                           </td>
-                          <td className="py-3 px-3 font-bold text-primary-600">৳{earning.amount.toLocaleString()}</td>
+                          <td className="py-3 px-3 font-medium text-primary-800">৳{earning.amount.toLocaleString()}</td>
                           <td className="py-3 px-3">
-                            <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                              earning.status === "COMPLETED" ? "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300" :
-                              "bg-yellow-100 text-yellow-750 dark:bg-yellow-950/40 dark:text-yellow-300"
-                            }`}>
+                            <span className={
+                              earning.status === "COMPLETED"
+                                ? "badge-success"
+                                : "badge-warning"
+                            }>
                               {earning.status}
                             </span>
                           </td>
@@ -192,24 +204,26 @@ export default function TutorEarningsPage() {
             </div>
 
             {/* Withdrawal Requests Log */}
-            <div className="lg:col-span-5 card space-y-4">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Payout Status</h2>
+            <div className="lg:col-span-5 card p-6 space-y-5 hover:translate-y-0">
+              <h2 className="font-display text-lg font-semibold text-ink">Payout Status</h2>
               {withdrawals.length === 0 ? (
-                <p className="text-slate-500 text-xs py-8 text-center">No withdrawal requests placed yet.</p>
+                <p className="text-ink-muted text-xs py-8 text-center">No withdrawal requests placed yet.</p>
               ) : (
                 <div className="space-y-3">
                   {withdrawals.map((w) => (
-                    <div key={w.id} className="p-3.5 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200/50 dark:border-slate-800/80 flex justify-between items-center text-xs">
+                    <div key={w.id} className="p-4 bg-clay-light border border-stone rounded-card flex justify-between items-center text-xs">
                       <div>
-                        <p className="font-bold text-slate-800 dark:text-white">৳{w.amount.toLocaleString()}</p>
-                        <p className="text-[10px] text-slate-400 mt-0.5">{w.method} - {w.accountDetails}</p>
-                        {w.transactionId && <p className="text-[8px] font-mono text-slate-400 mt-1">Txn: {w.transactionId}</p>}
+                        <p className="font-medium text-ink">৳{w.amount.toLocaleString()}</p>
+                        <p className="text-[10px] text-ink-muted mt-1">{w.method} - {w.accountDetails}</p>
+                        {w.transactionId && <p className="text-[8px] font-mono text-ink-muted mt-1">Txn: {w.transactionId}</p>}
                       </div>
-                      <span className={`text-[9px] font-bold px-2.5 py-0.5 rounded-full ${
-                        w.status === "APPROVED" ? "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300" :
-                        w.status === "PENDING" ? "bg-yellow-100 text-yellow-750 dark:bg-yellow-950/40 dark:text-yellow-300" :
-                        "bg-red-100 text-red-750 dark:bg-red-950/40 dark:text-red-300"
-                      }`}>
+                      <span className={
+                        w.status === "APPROVED"
+                          ? "badge-success"
+                          : w.status === "PENDING"
+                          ? "badge-warning"
+                          : "badge-danger"
+                      }>
                         {w.status}
                       </span>
                     </div>
@@ -223,11 +237,11 @@ export default function TutorEarningsPage() {
 
       {/* Payout Request Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-white dark:bg-slate-950 rounded-2xl border border-slate-250 dark:border-slate-800 p-6 max-w-sm w-full">
+        <div className="fixed inset-0 bg-primary-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-white border border-stone rounded-card p-8 max-w-sm w-full shadow-soft-xl animate-fade-up">
             <form onSubmit={handleWithdrawalRequest} className="space-y-4">
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Request Payout</h3>
-              <p className="text-xs text-slate-500">Submit a withdrawal request. Maximum withdrawable amount is ৳{availableBalance.toLocaleString()}</p>
+              <h3 className="font-display text-xl font-semibold text-ink">Request Payout</h3>
+              <p className="text-xs text-ink-muted">Submit a withdrawal request. Maximum withdrawable amount is ৳{availableBalance.toLocaleString()}</p>
 
               <div>
                 <label className="label text-xs">Withdrawal Amount (BDT)</label>
@@ -272,14 +286,14 @@ export default function TutorEarningsPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="btn-secondary py-1.5 px-4 text-xs font-semibold"
+                  className="btn-outline text-[11px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting || Number(amount) > availableBalance}
-                  className="btn-primary py-1.5 px-4 text-xs font-semibold"
+                  className="btn-primary text-[11px]"
                 >
                   {submitting ? "Submitting..." : "Confirm Request"}
                 </button>

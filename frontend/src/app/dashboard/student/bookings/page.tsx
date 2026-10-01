@@ -11,31 +11,56 @@ export default function StudentBookingsPage() {
     { id: "3", tutor: "Tanvir Hasan", subject: "English", date: "2024-01-15", time: "11:00 AM", status: "COMPLETED", type: "Offline" },
   ];
 
+  const statusClass = (status: string) =>
+    status === "ACCEPTED"
+      ? "badge-success"
+      : status === "PENDING"
+      ? "badge-warning"
+      : "badge-primary";
+
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen">
       <DashboardSidebar role="STUDENT" />
-      <div className="flex-1 p-6 lg:p-10">
+      <div className="flex-1 p-6 lg:p-12">
         <div className="max-w-5xl">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">My Bookings</h1>
-          <p className="text-slate-500 dark:text-slate-400 mb-8">View and manage your tuition bookings</p>
-          <div className="space-y-4">
+          <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+            আপনার বুকিং
+          </span>
+          <h1 className="font-display text-4xl font-semibold text-ink mb-3">
+            My Bookings
+          </h1>
+          <p className="text-ink-muted mb-12">
+            View and manage your tuition bookings
+          </p>
+
+          <div className="space-y-5">
             {bookings.map((booking) => (
-              <div key={booking.id} className="card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div
+                key={booking.id}
+                className="card flex flex-col sm:flex-row sm:items-center justify-between gap-5"
+              >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 font-bold">
-                    <HiOutlineBookOpen className="w-6 h-6" />
-                  </div>
+                  <span className="stat-icon">
+                    <HiOutlineBookOpen className="w-5 h-5" />
+                  </span>
                   <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">{booking.subject}</p>
-                    <p className="text-sm text-slate-500">{booking.tutor} | {booking.date} at {booking.time} | {booking.type}</p>
+                    <p className="font-display font-semibold text-ink">
+                      {booking.subject}
+                    </p>
+                    <p className="text-sm text-ink-muted mt-0.5">
+                      {booking.tutor} | {booking.date} at {booking.time} |{" "}
+                      {booking.type}
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className={`badge text-xs ${
-                    booking.status === "ACCEPTED" ? "badge-success" :
-                    booking.status === "PENDING" ? "badge-warning" : "badge-primary"
-                  }`}>{booking.status}</span>
-                  <Link href={`/tutors/${booking.id}`} className="text-sm text-primary-600 font-medium hover:underline">
+                <div className="flex items-center gap-4">
+                  <span className={statusClass(booking.status)}>
+                    {booking.status}
+                  </span>
+                  <Link
+                    href={`/tutors/${booking.id}`}
+                    className="text-sm text-primary-700 font-medium hover:text-primary-800 transition-colors duration-300"
+                  >
                     View
                   </Link>
                 </div>

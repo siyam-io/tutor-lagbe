@@ -60,26 +60,29 @@ export default function NewTuitionPostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="flex">
         <DashboardSidebar role="STUDENT" />
 
-        <main className="flex-1 p-6 md:p-8 max-w-3xl mx-auto">
+        <main className="flex-1 p-6 md:p-12 max-w-3xl mx-auto">
           {/* Back btn */}
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-6 text-sm font-semibold"
+            className="flex items-center gap-2 text-ink-muted hover:text-primary-800 transition-colors duration-300 mb-8 text-sm font-medium"
           >
             <HiOutlineArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
           </button>
 
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold tracking-tight">Create Tuition Post</h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <div className="mb-12">
+            <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+              নতুন টিউশন পোস্ট
+            </span>
+            <h1 className="font-display text-4xl font-semibold text-ink">Create Tuition Post</h1>
+            <p className="text-sm text-ink-muted mt-3">
               Provide details about your tuition needs. Tutors will apply based on this information.
             </p>
           </div>
@@ -87,11 +90,11 @@ export default function NewTuitionPostPage() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6"
+            className="card p-8 space-y-7 hover:translate-y-0"
           >
             {/* Title */}
             <div>
-              <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+              <label className="label">
                 Post Title *
               </label>
               <input
@@ -100,14 +103,14 @@ export default function NewTuitionPostPage() {
                 placeholder="e.g. Need experienced Tutor for Class 9 Student (Science Group)"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                className="input-field"
                 required
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+              <label className="label">
                 Detailed Description *
               </label>
               <textarea
@@ -116,7 +119,7 @@ export default function NewTuitionPostPage() {
                 placeholder="Describe your student's needs, special requests, preferred teaching slots, class timings..."
                 value={formData.description}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500 text-sm leading-relaxed"
+                className="input-field text-sm leading-relaxed"
                 required
               ></textarea>
             </div>
@@ -124,14 +127,14 @@ export default function NewTuitionPostPage() {
             {/* Subject & Class */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Subject *
                 </label>
                 <select
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   <option value="">Select Subject</option>
@@ -144,14 +147,14 @@ export default function NewTuitionPostPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Class / Grade *
                 </label>
                 <select
                   name="class"
                   value={formData.class}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   <option value="">Select Class</option>
@@ -167,14 +170,14 @@ export default function NewTuitionPostPage() {
             {/* Medium & Tuition Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Medium *
                 </label>
                 <select
                   name="medium"
                   value={formData.medium}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   <option value="">Select Medium</option>
@@ -187,14 +190,14 @@ export default function NewTuitionPostPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Tuition Type *
                 </label>
                 <select
                   name="tuitionType"
                   value={formData.tuitionType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   <option value="OFFLINE">Offline (Home Tuition)</option>
@@ -206,14 +209,14 @@ export default function NewTuitionPostPage() {
             {/* District & Area */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   District *
                 </label>
                 <select
                   name="locationDistrict"
                   value={formData.locationDistrict}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   <option value="">Select District</option>
@@ -226,7 +229,7 @@ export default function NewTuitionPostPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Specific Area *
                 </label>
                 <input
@@ -235,7 +238,7 @@ export default function NewTuitionPostPage() {
                   placeholder="e.g. Dhanmondi, Road 12"
                   value={formData.locationArea}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 />
               </div>
@@ -244,7 +247,7 @@ export default function NewTuitionPostPage() {
             {/* Salary, Days, Gender Preference */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Salary (BDT/month) *
                 </label>
                 <input
@@ -253,20 +256,20 @@ export default function NewTuitionPostPage() {
                   placeholder="e.g. 6000"
                   value={formData.salary}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Days Per Week *
                 </label>
                 <select
                   name="daysPerWeek"
                   value={formData.daysPerWeek}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                   required
                 >
                   {[1, 2, 3, 4, 5, 6, 7].map((num) => (
@@ -278,14 +281,14 @@ export default function NewTuitionPostPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 text-slate-700 dark:text-slate-300">
+                <label className="label">
                   Tutor Gender Preference
                 </label>
                 <select
                   name="genderPreference"
                   value={formData.genderPreference}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-primary-500"
+                  className="input-field"
                 >
                   <option value="ANY">Any Gender</option>
                   <option value="MALE">Male</option>
@@ -295,18 +298,18 @@ export default function NewTuitionPostPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div className="flex justify-end gap-4 pt-7 border-t border-stone">
               <button
                 type="button"
                 onClick={() => router.push("/dashboard/student/tuitions")}
-                className="px-6 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="btn-outline text-xs"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn-primary px-8 py-2.5 rounded-xl text-sm font-semibold"
+                className="btn-primary text-xs"
               >
                 {submitting ? "Creating..." : "Post Tuition"}
               </button>

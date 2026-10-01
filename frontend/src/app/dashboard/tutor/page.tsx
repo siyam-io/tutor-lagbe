@@ -71,61 +71,64 @@ export default function TutorDashboardPage() {
   const averageRating = profile?.averageRating || 0;
 
   const stats = [
-    { label: "Total Earnings", value: `৳${totalEarnings.toLocaleString()}`, icon: HiOutlineCurrencyDollar, color: "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300" },
-    { label: "Active Students", value: String(activeStudentsCount), icon: HiOutlineUserGroup, color: "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300" },
-    { label: "Total Bookings", value: String(bookings.length), icon: HiOutlineCalendar, color: "bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300" },
-    { label: "Average Rating", value: averageRating.toFixed(1), icon: HiOutlineStar, color: "bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-300" },
+    { label: "Total Earnings", value: `৳${totalEarnings.toLocaleString()}`, icon: HiOutlineCurrencyDollar },
+    { label: "Active Students", value: String(activeStudentsCount), icon: HiOutlineUserGroup },
+    { label: "Total Bookings", value: String(bookings.length), icon: HiOutlineCalendar },
+    { label: "Average Rating", value: averageRating.toFixed(1), icon: HiOutlineStar },
   ];
 
   const pendingRequests = bookings.filter((b) => b.status === "PENDING");
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen">
       <DashboardSidebar role="TUTOR" />
-      <div className="flex-1 p-6 lg:p-10">
+      <div className="flex-1 p-6 lg:p-12">
         <div className="max-w-6xl">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Tutor Dashboard</h1>
-          <p className="text-slate-500 dark:text-slate-400 mb-8">Track your earnings, students, and upcoming sessions.</p>
+          <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+            শিক্ষক ড্যাশবোর্ড
+          </span>
+          <h1 className="font-display text-4xl font-semibold text-ink mb-3">Tutor Dashboard</h1>
+          <p className="text-ink-muted mb-12">Track your earnings, students, and upcoming sessions.</p>
 
           {loading ? (
             <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-              <p className="text-slate-500 mt-2">Loading dashboard...</p>
+              <div className="animate-spin rounded-full h-10 w-10 border-2 border-stone border-t-primary-800 mx-auto"></div>
+              <p className="text-ink-muted mt-4">Loading dashboard...</p>
             </div>
           ) : error ? (
-            <div className="p-4 bg-red-50 text-red-600 rounded-lg text-center mb-8">{error}</div>
+            <div className="p-4 bg-terracotta/10 border border-terracotta/30 text-terracotta-800 rounded-card text-center mb-8">{error}</div>
           ) : (
             <>
               {/* Stats */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 {stats.map((stat) => {
                   const Icon = stat.icon;
                   return (
                     <div key={stat.label} className="stat-card">
-                      <div className={`stat-icon ${stat.color}`}><Icon /></div>
+                      <span className="stat-icon"><Icon className="w-5 h-5" /></span>
                       <div>
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">{stat.label}</p>
+                        <p className="font-display text-2xl font-semibold text-ink">{stat.value}</p>
+                        <p className="text-sm text-ink-muted mt-0.5">{stat.label}</p>
                       </div>
                     </div>
                   );
                 })}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Monthly Income Charts placeholder */}
                 <div className="card">
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Monthly Income</h2>
+                  <h2 className="font-display text-lg font-semibold text-ink mb-6">Monthly Income</h2>
                   <div className="h-64 flex items-end justify-between gap-2 px-4">
                     {["Jan", "Feb", "Mar", "Apr", "May", "Jun"].map((month, i) => {
                       const heights = [40, 65, 45, 80, 55, 90];
                       return (
                         <div key={month} className="flex flex-col items-center flex-1">
                           <div
-                            className="w-full max-w-[40px] bg-primary-500 rounded-t-lg transition-all hover:bg-primary-600"
+                            className="w-full max-w-[40px] bg-primary-800 rounded-t-full transition-colors duration-300 hover:bg-primary-700"
                             style={{ height: `${heights[i]}%` }}
                           />
-                          <span className="text-xs text-slate-500 mt-2">{month}</span>
+                          <span className="text-xs text-ink-muted mt-2">{month}</span>
                         </div>
                       );
                     })}
@@ -134,19 +137,19 @@ export default function TutorDashboardPage() {
 
                 {/* Pending Requests */}
                 <div className="card">
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Tuition Requests</h2>
+                  <h2 className="font-display text-lg font-semibold text-ink mb-6">Tuition Requests</h2>
                   <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1">
                     {pendingRequests.length === 0 ? (
-                      <p className="text-slate-500 text-sm py-4">No pending tuition requests.</p>
+                      <p className="text-ink-muted text-sm py-4">No pending tuition requests.</p>
                     ) : (
                       pendingRequests.map((req) => (
-                        <div key={req.id} className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                          <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold text-sm">
+                        <div key={req.id} className="flex items-center gap-4 p-4 bg-clay-light border border-stone rounded-card">
+                          <div className="w-10 h-10 rounded-image bg-clay/40 border border-stone flex items-center justify-center font-display font-semibold text-primary-800 text-sm">
                             {req.student?.name ? req.student.name.split(" ").map((n: string) => n[0]).join("") : "S"}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-slate-900 dark:text-white truncate">{req.student?.name}</p>
-                            <p className="text-xs text-slate-500 truncate">
+                            <p className="font-medium text-sm text-ink truncate">{req.student?.name}</p>
+                            <p className="text-xs text-ink-muted truncate">
                               Type: {req.tuitionType} | Slot: {req.timeSlot} | {new Date(req.date).toLocaleDateString()}
                             </p>
                           </div>
@@ -154,14 +157,14 @@ export default function TutorDashboardPage() {
                             <button
                               onClick={() => handleUpdateStatus(req.id, "ACCEPTED")}
                               disabled={actionLoadingId === req.id}
-                              className="btn-primary text-xs py-1.5 px-3"
+                              className="btn-primary text-[10px]"
                             >
                               Accept
                             </button>
                             <button
                               onClick={() => handleUpdateStatus(req.id, "REJECTED")}
                               disabled={actionLoadingId === req.id}
-                              className="btn-secondary text-xs py-1.5 px-3"
+                              className="btn-outline text-[10px]"
                             >
                               Reject
                             </button>

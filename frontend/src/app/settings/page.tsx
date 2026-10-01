@@ -305,13 +305,14 @@ export default function SettingsPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
+      <main className="min-h-screen bg-canvas py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-6">Settings</h1>
+          <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">Account</span>
+          <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-6">Settings</h1>
 
-          <div className="card p-0 overflow-hidden shadow-sm">
+          <div className="card p-0 overflow-hidden">
             {/* Tabs */}
-            <div className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+            <div className="flex border-b border-stone overflow-x-auto">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -320,8 +321,8 @@ export default function SettingsPage() {
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 transition-all ${
                       activeTab === tab.id
-                        ? "border-primary-600 text-primary-600"
-                        : "border-transparent text-slate-400 hover:text-slate-600"
+                        ? "border-primary-800 text-primary-800"
+                        : "border-transparent text-ink-muted hover:text-ink"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -335,19 +336,19 @@ export default function SettingsPage() {
             <div className="p-6 md:p-8">
               {activeTab === "profile" && (
                 <form onSubmit={handleUpdateProfile} className="space-y-5">
-                  {profileSuccessMsg && <div className="p-3 bg-green-50 text-green-700 text-xs font-semibold rounded-lg border border-green-200">{profileSuccessMsg}</div>}
-                  {profileError && <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-lg border border-red-200">{profileError}</div>}
+                  {profileSuccessMsg && <div className="p-3 bg-sage/15 text-sage-800 text-xs font-semibold rounded-xl border border-sage/40">{profileSuccessMsg}</div>}
+                  {profileError && <div className="p-3 bg-terracotta/10 text-terracotta-800 text-xs font-semibold rounded-xl border border-terracotta/30">{profileError}</div>}
                   
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 text-3xl font-bold shadow-sm overflow-hidden relative">
+                    <div className="w-20 h-20 rounded-image bg-clay/40 flex items-center justify-center text-sage-700 text-3xl font-bold shadow-soft overflow-hidden relative">
                       {form.avatarUrl ? <img src={form.avatarUrl} alt={form.name} className="w-full h-full object-cover" /> : form.name[0]}
                     </div>
                     <div>
-                      <label className="text-xs bg-primary-600 hover:bg-primary-700 text-white font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
+                      <label className="text-xs bg-primary-800 hover:bg-primary-900 text-white font-bold px-4 py-1.5 rounded-full cursor-pointer transition-colors">
                         {uploadingImage ? "Compressing & Uploading..." : "Change Photo"}
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "avatarUrl")} disabled={uploadingImage} />
                       </label>
-                      <p className="text-xs text-slate-400 mt-2">Images will be auto-compressed to under 500KB.</p>
+                      <p className="text-xs text-ink-muted mt-2">Images will be auto-compressed to under 500KB.</p>
                     </div>
                   </div>
                   <div>
@@ -356,7 +357,7 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <label className="label">Email Address</label>
-                    <input type="email" value={form.email} readOnly className="input-field bg-slate-50 text-slate-500 cursor-not-allowed" />
+                    <input type="email" value={form.email} readOnly className="input-field bg-clay-light text-ink-muted cursor-not-allowed" />
                   </div>
                   <div>
                     <label className="label">Phone Number</label>
@@ -368,8 +369,8 @@ export default function SettingsPage() {
 
               {activeTab === "password" && (
                 <form onSubmit={handleUpdatePassword} className="space-y-5">
-                  {profileSuccessMsg && <div className="p-3 bg-green-50 text-green-700 text-xs font-semibold rounded-lg border border-green-200">{profileSuccessMsg}</div>}
-                  {profileError && <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-lg border border-red-200">{profileError}</div>}
+                  {profileSuccessMsg && <div className="p-3 bg-sage/15 text-sage-800 text-xs font-semibold rounded-xl border border-sage/40">{profileSuccessMsg}</div>}
+                  {profileError && <div className="p-3 bg-terracotta/10 text-terracotta-800 text-xs font-semibold rounded-xl border border-terracotta/30">{profileError}</div>}
 
                   <div>
                     <label className="label">Current Password</label>
@@ -390,7 +391,7 @@ export default function SettingsPage() {
               {activeTab === "tutor" && (
                 <div className="space-y-8">
                   {/* Step Level Indicators */}
-                  <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800">
+                  <div className="flex justify-between items-center bg-clay-light p-4 rounded-2xl border border-stone">
                     {[
                       { step: 1, label: "About & General" },
                       { step: 2, label: "Teaching & Schedule" },
@@ -401,35 +402,35 @@ export default function SettingsPage() {
                           onClick={() => setTutorStep(s.step)}
                           className={`w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                             tutorStep >= s.step
-                              ? "bg-primary-600 text-white"
-                              : "bg-slate-200 dark:bg-slate-800 text-slate-500"
+                              ? "bg-primary-800 text-white"
+                              : "bg-clay text-ink-muted"
                           }`}
                         >
                           {s.step}
                         </button>
-                        <span className={`text-[10px] md:text-xs font-bold ${tutorStep === s.step ? "text-primary-600" : "text-slate-400"}`}>
+                        <span className={`text-[10px] md:text-xs font-bold ${tutorStep === s.step ? "text-primary-800" : "text-ink-muted"}`}>
                           {s.label}
                         </span>
                       </div>
                     ))}
                   </div>
 
-                  {tutorSuccessMsg && <div className="p-3 bg-green-50 text-green-700 text-xs font-semibold rounded-lg border border-green-200">{tutorSuccessMsg}</div>}
-                  {tutorError && <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-lg border border-red-200">{tutorError}</div>}
+                  {tutorSuccessMsg && <div className="p-3 bg-sage/15 text-sage-800 text-xs font-semibold rounded-xl border border-sage/40">{tutorSuccessMsg}</div>}
+                  {tutorError && <div className="p-3 bg-terracotta/10 text-terracotta-800 text-xs font-semibold rounded-xl border border-terracotta/30">{tutorError}</div>}
 
                   {/* Step 1: Bio & General */}
                   {tutorStep === 1 && (
                     <div className="space-y-6 animate-slide-up">
-                      <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 1: Personal Details & Biography</h3>
+                      <h3 className="font-display text-lg font-semibold text-ink">Step 1: Personal Details & Biography</h3>
 
                       {/* Synced Profile Photo Status */}
-                      <div className="flex items-center gap-5 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div className="w-16 h-16 rounded-xl bg-slate-200 dark:bg-slate-850 flex items-center justify-center text-slate-500 font-bold overflow-hidden shadow-sm">
+                      <div className="flex items-center gap-5 bg-clay-light p-4 rounded-2xl border border-stone">
+                        <div className="w-16 h-16 rounded-image bg-clay flex items-center justify-center text-ink-muted font-bold overflow-hidden shadow-soft">
                           {form.avatarUrl ? <img src={form.avatarUrl} alt="Portrait" className="w-full h-full object-cover" /> : "Portrait"}
                         </div>
                         <div>
-                          <p className="text-xs font-bold text-slate-700 dark:text-slate-300">Profile Photo</p>
-                          <p className="text-[10px] text-slate-400 mt-1">Synced with your account profile picture (Tab 1).</p>
+                          <p className="text-xs font-bold text-ink">Profile Photo</p>
+                          <p className="text-[10px] text-ink-muted mt-1">Synced with your account profile picture (Tab 1).</p>
                         </div>
                       </div>
 
@@ -486,7 +487,7 @@ export default function SettingsPage() {
                         </div>
                       </div>
 
-                      <div className="flex justify-end pt-4 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex justify-end pt-4 border-t border-stone">
                         <button type="button" onClick={() => setTutorStep(2)} className="btn-primary px-8">Continue to Step 2 →</button>
                       </div>
                     </div>
@@ -495,7 +496,7 @@ export default function SettingsPage() {
                   {/* Step 2: Teaching & Schedule */}
                   {tutorStep === 2 && (
                     <div className="space-y-6 animate-slide-up">
-                      <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 2: Subjects, Classes, and Availability</h3>
+                      <h3 className="font-display text-lg font-semibold text-ink">Step 2: Subjects, Classes, and Availability</h3>
 
                       {/* Subjects Tag Editor */}
                       <div className="space-y-2">
@@ -523,18 +524,18 @@ export default function SettingsPage() {
                         </div>
                         <div className="flex flex-wrap gap-2 pt-1.5">
                           {tutorProfile.subjects.length === 0 ? (
-                            <span className="text-xs text-slate-400">No subjects added yet.</span>
+                            <span className="text-xs text-ink-muted">No subjects added yet.</span>
                           ) : (
                             tutorProfile.subjects.map((sub) => (
                               <span
                                 key={sub}
-                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-clay-light text-ink border border-stone"
                               >
                                 {sub}
                                 <button
                                   type="button"
                                   onClick={() => removeSubject(sub)}
-                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                  className="text-ink-muted hover:text-terracotta-700 font-bold ml-1 text-sm"
                                 >
                                   ×
                                 </button>
@@ -570,18 +571,18 @@ export default function SettingsPage() {
                         </div>
                         <div className="flex flex-wrap gap-2 pt-1.5">
                           {tutorProfile.classes.length === 0 ? (
-                            <span className="text-xs text-slate-400">No classes added yet.</span>
+                            <span className="text-xs text-ink-muted">No classes added yet.</span>
                           ) : (
                             tutorProfile.classes.map((cls) => (
                               <span
                                 key={cls}
-                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-clay-light text-ink border border-stone"
                               >
                                 {cls}
                                 <button
                                   type="button"
                                   onClick={() => removeClass(cls)}
-                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                  className="text-ink-muted hover:text-terracotta-700 font-bold ml-1 text-sm"
                                 >
                                   ×
                                 </button>
@@ -617,18 +618,18 @@ export default function SettingsPage() {
                         </div>
                         <div className="flex flex-wrap gap-2 pt-1.5">
                           {tutorProfile.mediums.length === 0 ? (
-                            <span className="text-xs text-slate-400">No mediums added yet.</span>
+                            <span className="text-xs text-ink-muted">No mediums added yet.</span>
                           ) : (
                             tutorProfile.mediums.map((med) => (
                               <span
                                 key={med}
-                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                                className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-clay-light text-ink border border-stone"
                               >
                                 {med}
                                 <button
                                   type="button"
                                   onClick={() => removeMedium(med)}
-                                  className="text-slate-500 hover:text-red-500 font-bold ml-1 text-sm"
+                                  className="text-ink-muted hover:text-terracotta-700 font-bold ml-1 text-sm"
                                 >
                                   ×
                                 </button>
@@ -639,24 +640,24 @@ export default function SettingsPage() {
                       </div>
 
                       {/* Weekly Available Slots visual editor */}
-                      <div className="space-y-3 border-t border-slate-200 dark:border-slate-850 pt-4">
+                      <div className="space-y-3 border-t border-stone pt-4">
                         <label className="label">Weekly Available Slots</label>
                         
                         {/* Selected Slots badges */}
                         <div className="flex flex-wrap gap-2 mb-4">
                           {tutorProfile.availableSlots.length === 0 ? (
-                            <span className="text-xs text-slate-400">No weekly available slots configured.</span>
+                            <span className="text-xs text-ink-muted">No weekly available slots configured.</span>
                           ) : (
                             tutorProfile.availableSlots.map((slot) => (
                               <span
                                 key={slot}
-                                className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded bg-primary-50 text-primary-700 dark:bg-primary-950/40 dark:text-primary-300 border border-primary-200 dark:border-primary-900"
+                                className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-sage/15 text-primary-800 border border-sage/40"
                               >
                                 {slot}
                                 <button
                                   type="button"
                                   onClick={() => removeSlot(slot)}
-                                  className="text-primary-750 hover:text-red-500 font-bold ml-1.5 text-sm"
+                                  className="text-sage-700 hover:text-terracotta-700 font-bold ml-1.5 text-sm"
                                 >
                                   ×
                                 </button>
@@ -668,7 +669,7 @@ export default function SettingsPage() {
                         {/* Add slot selectors */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
                           <div>
-                            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Day</label>
+                            <label className="block text-[10px] uppercase font-bold text-ink-muted mb-1">Day</label>
                             <select
                               value={selectedSlotDay}
                               onChange={(e) => setSelectedSlotDay(e.target.value)}
@@ -684,7 +685,7 @@ export default function SettingsPage() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Time</label>
+                            <label className="block text-[10px] uppercase font-bold text-ink-muted mb-1">Time</label>
                             <input
                               type="time"
                               value={selectedSlotTime}
@@ -702,7 +703,7 @@ export default function SettingsPage() {
                         </div>
                       </div>
 
-                      <div className="flex justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex justify-between pt-4 border-t border-stone">
                         <button type="button" onClick={() => setTutorStep(1)} className="btn-secondary px-8">Back to Step 1</button>
                         <button type="button" onClick={() => setTutorStep(3)} className="btn-primary px-8">Continue to Step 3 →</button>
                       </div>
@@ -712,7 +713,7 @@ export default function SettingsPage() {
                   {/* Step 3: Verification & FAQs */}
                   {tutorStep === 3 && (
                     <div className="space-y-6 animate-slide-up">
-                      <h3 className="font-bold text-slate-800 dark:text-white text-base">Step 3: Verification & FAQs list</h3>
+                      <h3 className="font-display text-lg font-semibold text-ink">Step 3: Verification & FAQs list</h3>
 
                       <div>
                         <label className="label">National ID (NID) Number</label>
@@ -720,34 +721,34 @@ export default function SettingsPage() {
                       </div>
 
                       {/* Verification doc upload */}
-                      <div className="flex items-center gap-5 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div className="w-16 h-16 rounded-xl bg-slate-200 dark:bg-slate-855 flex items-center justify-center text-[10px] font-bold text-slate-500 overflow-hidden shadow-sm">
-                          {tutorProfile.documentUrl ? <span className="text-green-600 font-bold">Uploaded ✓</span> : "NID Scan"}
+                      <div className="flex items-center gap-5 bg-clay-light p-4 rounded-2xl border border-stone">
+                        <div className="w-16 h-16 rounded-image bg-clay flex items-center justify-center text-[10px] font-bold text-ink-muted overflow-hidden shadow-soft">
+                          {tutorProfile.documentUrl ? <span className="text-sage-700 font-bold">Uploaded ✓</span> : "NID Scan"}
                         </div>
                         <div>
-                          <label className="text-xs bg-primary-600 hover:bg-primary-700 text-white font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
+                          <label className="text-xs bg-primary-800 hover:bg-primary-900 text-white font-bold px-4 py-1.5 rounded-full cursor-pointer transition-colors">
                             {uploadingImage ? "Compressing & Uploading..." : "Upload NID Document"}
                             <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "documentUrl")} disabled={uploadingImage} />
                           </label>
-                          <p className="text-[10px] text-slate-400 mt-2">Images will be compressed automatically to under 500KB.</p>
+                          <p className="text-[10px] text-ink-muted mt-2">Images will be compressed automatically to under 500KB.</p>
                         </div>
                       </div>
 
                       {/* FAQ items list */}
                       <div className="space-y-4">
-                        <h4 className="font-bold text-slate-800 dark:text-white text-xs flex justify-between items-center">
+                        <h4 className="font-display text-base font-semibold text-ink flex justify-between items-center">
                           <span>FAQ list</span>
                           <button 
                             type="button" 
                             onClick={() => setTutorProfile({ ...tutorProfile, faqs: [...tutorProfile.faqs, { question: "", answer: "" }] })}
-                            className="flex items-center gap-1.5 text-xs text-primary-600 font-bold"
+                            className="flex items-center gap-1.5 text-xs text-primary-800 font-bold"
                           >
                             <HiPlus className="w-4 h-4" /> Add FAQ
                           </button>
                         </h4>
 
                         {tutorProfile.faqs.map((faq, idx) => (
-                          <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200/50 dark:border-slate-800 space-y-3 relative">
+                          <div key={idx} className="p-4 bg-clay-light rounded-2xl border border-stone space-y-3 relative">
                             <button
                               type="button"
                               onClick={() => {
@@ -755,12 +756,12 @@ export default function SettingsPage() {
                                 newFaqs.splice(idx, 1);
                                 setTutorProfile({ ...tutorProfile, faqs: newFaqs });
                               }}
-                              className="absolute top-3 right-3 text-red-500 hover:text-red-650"
+                              className="absolute top-3 right-3 text-terracotta-700 hover:text-terracotta-800"
                             >
                               <HiTrash className="w-4 h-4" />
                             </button>
                             <div>
-                              <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Question</label>
+                              <label className="text-[10px] uppercase font-bold text-ink-muted block mb-1">Question</label>
                               <input 
                                 type="text" 
                                 placeholder="Do you provide trial classes?" 
@@ -774,7 +775,7 @@ export default function SettingsPage() {
                               />
                             </div>
                             <div>
-                              <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Answer</label>
+                              <label className="text-[10px] uppercase font-bold text-ink-muted block mb-1">Answer</label>
                               <textarea 
                                 rows={2}
                                 placeholder="Yes, I offer one free trial class for 30 minutes." 
@@ -791,7 +792,7 @@ export default function SettingsPage() {
                         ))}
                       </div>
 
-                      <div className="flex justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex justify-between pt-4 border-t border-stone">
                         <button type="button" onClick={() => setTutorStep(2)} className="btn-secondary px-8">Back to Step 2</button>
                         <button type="button" onClick={handleSaveTutorProfile} disabled={loadingTutor} className="btn-primary px-8">
                           {loadingTutor ? "Saving Changes..." : "Finish & Save Setup"}
@@ -806,32 +807,32 @@ export default function SettingsPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between py-3">
                     <div>
-                      <p className="font-medium text-slate-900 dark:text-white">Email Notifications</p>
-                      <p className="text-sm text-slate-500">Receive email updates and alerts</p>
+                      <p className="font-medium text-ink">Email Notifications</p>
+                      <p className="text-sm text-ink-muted">Receive email updates and alerts</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
+                      <div className="w-11 h-6 bg-stone peer-focus:ring-2 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-800 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                     </label>
                   </div>
                   <div className="flex items-center justify-between py-3">
                     <div>
-                      <p className="font-medium text-slate-900 dark:text-white">SMS Notifications</p>
-                      <p className="text-sm text-slate-500">Receive text message alerts</p>
+                      <p className="font-medium text-ink">SMS Notifications</p>
+                      <p className="text-sm text-ink-muted">Receive text message alerts</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
+                      <div className="w-11 h-6 bg-stone peer-focus:ring-2 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-800 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                     </label>
                   </div>
                   <div className="flex items-center justify-between py-3">
                     <div>
-                      <p className="font-medium text-slate-900 dark:text-white">Session Reminders</p>
-                      <p className="text-sm text-slate-500">Get reminded before your sessions</p>
+                      <p className="font-medium text-ink">Session Reminders</p>
+                      <p className="text-sm text-ink-muted">Get reminded before your sessions</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
+                      <div className="w-11 h-6 bg-stone peer-focus:ring-2 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-800 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                     </label>
                   </div>
                 </div>
@@ -841,15 +842,15 @@ export default function SettingsPage() {
                 <div className="space-y-5">
                   <div className="flex items-center justify-between py-3">
                     <div className="flex items-center gap-3">
-                      <HiOutlineMoon className="w-5 h-5 text-slate-500" />
+                      <HiOutlineMoon className="w-5 h-5 text-ink-muted" />
                       <div>
-                        <p className="font-medium text-slate-900 dark:text-white">Dark Mode</p>
-                        <p className="text-sm text-slate-500">Switch between light and dark themes</p>
+                        <p className="font-medium text-ink">Dark Mode</p>
+                        <p className="text-sm text-ink-muted">Switch between light and dark themes</p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
+                      <div className="w-11 h-6 bg-stone peer-focus:ring-2 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary-800 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                     </label>
                   </div>
                   <div>

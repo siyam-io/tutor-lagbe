@@ -30,14 +30,14 @@ export default function MessagesPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-2">
+      <main className="py-2">
         <div className="max-w-6xl mx-auto px-0 sm:px-4 lg:px-6">
-          <div className="bg-white dark:bg-slate-900 rounded-none sm:rounded-2xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-800" style={{ height: "calc(100vh - 80px)" }}>
+          <div className="bg-white rounded-none sm:rounded-card shadow-soft overflow-hidden border border-stone" style={{ height: "calc(100vh - 80px)" }}>
             <div className="flex h-full">
               {/* Chat List */}
-              <div className={`w-full sm:w-80 border-r border-slate-200 dark:border-slate-800 flex flex-col ${activeChat ? "hidden sm:flex" : "flex"}`}>
-                <div className="p-4 border-b border-slate-200 dark:border-slate-800">
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Messages</h2>
+              <div className={`w-full sm:w-80 border-r border-stone flex flex-col ${activeChat ? "hidden sm:flex" : "flex"}`}>
+                <div className="p-5 border-b border-stone">
+                  <h2 className="font-display text-xl font-semibold text-ink">Messages</h2>
                   <input
                     type="text"
                     placeholder="Search conversations..."
@@ -49,27 +49,29 @@ export default function MessagesPage() {
                     <button
                       key={conv.id}
                       onClick={() => setActiveChat(conv.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors text-left group ${
-                        activeChat === conv.id ? "bg-primary-50 dark:bg-primary-950" : ""
+                      className={`w-full flex items-center gap-3 px-4 py-3.5 transition-colors duration-300 text-left group border-l-2 ${
+                        activeChat === conv.id
+                          ? "bg-sage/10 border-primary-800"
+                          : "border-transparent hover:bg-clay-light"
                       }`}
                     >
                       <div className="relative flex-shrink-0">
-                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-sm shadow">
+                        <div className="w-11 h-11 rounded-image bg-clay/40 border border-stone flex items-center justify-center font-display font-semibold text-primary-800 text-sm">
                           {conv.name.split(" ").map((n) => n[0]).join("")}
                         </div>
                         {conv.online && (
-                          <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
+                          <span className="absolute bottom-0 right-0 w-3 h-3 bg-bangla-green rounded-full ring-2 ring-white" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <p className="font-medium text-sm text-slate-900 dark:text-white truncate">{conv.name}</p>
-                          <span className="text-xs text-slate-400">{conv.time}</span>
+                          <p className="font-medium text-sm text-ink truncate">{conv.name}</p>
+                          <span className="text-xs text-ink-muted">{conv.time}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <p className="text-xs text-slate-500 truncate">{conv.lastMessage}</p>
+                          <p className="text-xs text-ink-muted truncate">{conv.lastMessage}</p>
                           {conv.unread > 0 && (
-                            <span className="w-5 h-5 bg-primary-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                            <span className="w-5 h-5 bg-primary-800 text-white text-xs rounded-full flex items-center justify-center font-medium">
                               {conv.unread}
                             </span>
                           )}
@@ -85,27 +87,35 @@ export default function MessagesPage() {
                 {activeConversation ? (
                   <>
                     {/* Chat Header */}
-                    <div className="px-4 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <div className="px-5 py-4 border-b border-stone flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <button
                           onClick={() => setActiveChat("")}
-                          className="sm:hidden p-1 -ml-1 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                          className="sm:hidden p-1 -ml-1 text-ink-muted hover:text-ink transition-colors duration-300"
                         >
                           ←
                         </button>
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-sm shadow">
+                        <div className="w-9 h-9 rounded-image bg-clay/40 border border-stone flex items-center justify-center font-display font-semibold text-primary-800 text-sm">
                           {activeConversation.name.split(" ").map((n) => n[0]).join("")}
                         </div>
                         <div>
-                          <p className="font-medium text-sm text-slate-900 dark:text-white">{activeConversation.name}</p>
-                          <p className={`text-xs ${activeConversation.online ? "text-green-600" : "text-slate-400"}`}>
+                          <p className="font-medium text-sm text-ink">{activeConversation.name}</p>
+                          <p className={`text-xs ${activeConversation.online ? "text-sage-700" : "text-ink-muted"}`}>
                             {activeConversation.online ? "Online" : "Offline"}
                           </p>
                         </div>
                       </div>
-                      <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-primary-600 transition-colors">
+                      <button className="p-2.5 rounded-full hover:bg-clay-light text-sage-700 transition-colors duration-300">
                         <HiOutlinePhone className="w-5 h-5" />
                       </button>
+                    </div>
+
+                    {/* Safety Escrow Notice */}
+                    <div className="bg-ochre/10 px-5 py-3 border-b border-ochre/30 flex items-center justify-between text-xs text-ochre-800">
+                      <span className="flex items-center gap-1.5">
+                        <span>🛡️</span>
+                        <span>নিরাপত্তা পরামর্শ: কোনো অগ্রিম টাকা সরাসরি লেনদেন করবেন না। ডেমো ক্লাসের পর প্ল্যাটফর্মের মাধ্যমে কনফার্ম করুন।</span>
+                      </span>
                     </div>
 
                     {/* Messages */}
@@ -116,14 +126,14 @@ export default function MessagesPage() {
                           className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}
                         >
                           <div
-                            className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm ${
+                            className={`max-w-[75%] px-4 py-3 rounded-card text-sm ${
                               msg.sender === "me"
-                                ? "bg-primary-600 text-white rounded-br-md"
-                                : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-md"
+                                ? "bg-primary-800 text-white"
+                                : "bg-clay-light text-ink border border-stone"
                             }`}
                           >
                             <p>{msg.text}</p>
-                            <p className={`text-[10px] mt-1 ${msg.sender === "me" ? "text-primary-200" : "text-slate-400"}`}>
+                            <p className={`text-[10px] mt-1.5 text-right ${msg.sender === "me" ? "text-white/60" : "text-ink-muted"}`}>
                               {msg.time}
                             </p>
                           </div>
@@ -131,35 +141,57 @@ export default function MessagesPage() {
                       ))}
                     </div>
 
+                    {/* Quick Inquiry Chips (Increases conversion & speeds up responses) */}
+                    <div className="px-5 py-3 bg-clay-light/60 border-t border-stone flex items-center gap-2 overflow-x-auto scrollbar-thin">
+                      <span className="text-[11px] text-ink-muted font-medium flex-shrink-0">দ্রুত মেসেজ:</span>
+                      {[
+                        "১ দিনের ফ্রি ডেমো ক্লাস নেওয়া সম্ভব কি?",
+                        "সপ্তাহে কোন কোন দিন পড়াতে পারবেন?",
+                        "আপনার পড়ানোর মাধ্যম (বাংলা/ইংরেজি)?",
+                        "মাসিক পারিশ্রমিক কত আলোচনা হতে পারে?",
+                      ].map((chip) => (
+                        <button
+                          key={chip}
+                          onClick={() => setNewMessage(chip)}
+                          className="text-xs whitespace-nowrap px-3.5 py-1.5 bg-white hover:bg-sage/10 text-ink-muted hover:text-primary-800 rounded-full border border-stone transition-colors duration-300 flex-shrink-0"
+                        >
+                          {chip}
+                        </button>
+                      ))}
+                    </div>
+
                     {/* Message Input */}
-                    <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+                    <div className="p-5 border-t border-stone">
                       <div className="flex items-center gap-2">
-                        <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 transition-colors">
+                        <button 
+                          aria-label="Attach file"
+                          className="p-2.5 rounded-full hover:bg-clay-light text-ink-muted transition-colors duration-300"
+                        >
                           <HiOutlinePaperClip className="w-5 h-5" />
                         </button>
                         <input
                           type="text"
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
-                          placeholder="Type a message..."
+                          placeholder="মেসেজ লিখুন... (Type your message)"
                           className="flex-1 input-field text-sm py-2.5"
                           onKeyDown={(e) => e.key === "Enter" && setNewMessage("")}
                         />
                         <button
                           onClick={() => setNewMessage("")}
                           disabled={!newMessage}
-                          className="btn-primary text-sm py-2.5 px-5"
+                          className="btn-primary text-xs"
                         >
-                          Send
+                          পাঠান
                         </button>
                       </div>
                     </div>
                   </>
                 ) : (
-                  <div className="flex-1 flex items-center justify-center text-slate-400">
+                  <div className="flex-1 flex items-center justify-center text-ink-muted">
                     <div className="text-center">
-                      <HiOutlineUser className="w-16 h-16 mx-auto mb-4 text-slate-300 dark:text-slate-600" />
-                      <p className="text-lg font-medium">Select a conversation</p>
+                      <HiOutlineUser className="w-16 h-16 mx-auto mb-4 text-stone" />
+                      <p className="font-display text-lg font-medium">Select a conversation</p>
                       <p className="text-sm mt-1">Choose from your existing messages to start chatting</p>
                     </div>
                   </div>

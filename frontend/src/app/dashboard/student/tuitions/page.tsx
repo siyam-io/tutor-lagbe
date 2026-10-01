@@ -62,24 +62,27 @@ export default function StudentTuitionsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="flex">
         <DashboardSidebar role="STUDENT" />
 
-        <main className="flex-1 p-6 md:p-8 max-w-5xl mx-auto">
+        <main className="flex-1 p-6 md:p-12 max-w-5xl mx-auto">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">My Tuition Posts</h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              <span className="text-xs font-medium text-sage-700 uppercase tracking-widest mb-3 block">
+                আপনার টিউশন পোস্ট
+              </span>
+              <h1 className="font-display text-4xl font-semibold text-ink">My Tuition Posts</h1>
+              <p className="text-sm text-ink-muted mt-3">
                 Manage your tuition jobs and review applications from tutors.
               </p>
             </div>
             <Link
               href="/dashboard/student/tuitions/new"
-              className="btn-primary py-2.5 px-4 font-semibold text-sm flex items-center justify-center gap-2 self-start sm:self-auto"
+              className="btn-primary text-xs self-start sm:self-auto"
             >
               <HiOutlinePlus className="w-5 h-5" />
               <span>Create Tuition Post</span>
@@ -92,15 +95,15 @@ export default function StudentTuitionsPage() {
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="animate-pulse bg-white dark:bg-slate-900 h-32 border border-slate-200 dark:border-slate-800 rounded-2xl"
+                  className="animate-pulse card h-32 hover:translate-y-0"
                 ></div>
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div className="card text-center py-20 hover:translate-y-0">
               <span className="text-4xl">📝</span>
-              <h3 className="mt-4 text-lg font-bold text-slate-700 dark:text-slate-300">No Tuition Posts</h3>
-              <p className="mt-2 text-slate-500 dark:text-slate-400">
+              <h3 className="mt-5 font-display text-2xl font-semibold text-ink">No Tuition Posts</h3>
+              <p className="mt-3 text-ink-muted">
                 You haven't created any tuition posts yet. Click the button above to create one.
               </p>
             </div>
@@ -109,36 +112,36 @@ export default function StudentTuitionsPage() {
               {posts.map((post) => (
                 <div
                   key={post.id}
-                  className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-md transition-shadow"
+                  className="card p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-5"
                 >
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white hover:text-primary-600 transition-colors">
+                      <h3 className="font-display text-lg font-semibold text-ink hover:text-primary-800 transition-colors duration-300">
                         <Link href={`/dashboard/student/tuitions/${post.id}`}>{post.title}</Link>
                       </h3>
                       <span
-                        className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded-lg ${
+                        className={`inline-block px-3 py-1 text-xs font-medium rounded-full border ${
                           post.status === "OPEN"
-                            ? "bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400"
-                            : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                            ? "bg-sage/15 border-sage/40 text-sage-800"
+                            : "bg-clay-light border-stone text-ink-muted"
                         }`}
                       >
                         {post.status}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-ink-muted">
                       <div className="flex items-center gap-1">
-                        <HiOutlineLocationMarker className="w-4 h-4 text-slate-400" />
+                        <HiOutlineLocationMarker className="w-4 h-4 text-sage-700" />
                         <span>
                           {post.locationArea}, {post.locationDistrict}
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <HiOutlineCurrencyDollar className="w-4 h-4 text-slate-400" />
+                        <HiOutlineCurrencyDollar className="w-4 h-4 text-sage-700" />
                         <span className="font-semibold">{post.salary} BDT/month</span>
                       </div>
-                      <div className="flex items-center gap-1 text-primary-600 dark:text-primary-400 font-semibold">
+                      <div className="flex items-center gap-1 text-primary-800 font-medium">
                         <HiOutlineUsers className="w-4 h-4" />
                         <span>{post._count?.applications || 0} Tutors Applied</span>
                       </div>
@@ -146,20 +149,20 @@ export default function StudentTuitionsPage() {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-wrap items-center gap-2 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 mt-2 md:mt-0">
+                  <div className="flex flex-wrap items-center gap-2 w-full md:w-auto border-t border-stone md:border-t-0 pt-5 md:pt-0 mt-2 md:mt-0">
                     <Link
                       href={`/dashboard/student/tuitions/${post.id}`}
-                      className="btn-outline text-xs py-2 px-3 flex-1 md:flex-initial text-center"
+                      className="btn-outline text-[11px] flex-1 md:flex-initial"
                     >
                       View Applications
                     </Link>
 
                     <button
                       onClick={() => toggleStatus(post)}
-                      className={`text-xs py-2 px-3 rounded-lg border font-semibold flex-1 md:flex-initial text-center transition-colors ${
+                      className={`text-[11px] py-2.5 px-5 rounded-full border font-medium flex-1 md:flex-initial text-center transition-colors duration-300 ${
                         post.status === "OPEN"
-                          ? "border-amber-200 text-amber-600 hover:bg-amber-50 dark:border-amber-950 dark:text-amber-400 dark:hover:bg-amber-950/30"
-                          : "border-green-200 text-green-600 hover:bg-green-50 dark:border-green-950 dark:text-green-400 dark:hover:bg-green-950/30"
+                          ? "border-ochre text-ochre-800 hover:bg-ochre/10"
+                          : "border-sage text-sage-800 hover:bg-sage/10"
                       }`}
                     >
                       {post.status === "OPEN" ? "Close Post" : "Open Post"}
@@ -167,7 +170,7 @@ export default function StudentTuitionsPage() {
 
                     <button
                       onClick={() => handleDelete(post.id)}
-                      className="border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-950 dark:text-red-400 dark:hover:bg-red-950/30 text-xs py-2 px-3 rounded-lg font-semibold flex-1 md:flex-initial text-center transition-colors"
+                      className="border border-terracotta/40 text-terracotta-800 hover:bg-terracotta/10 text-[11px] py-2.5 px-5 rounded-full font-medium flex-1 md:flex-initial text-center transition-colors duration-300"
                     >
                       Delete
                     </button>
