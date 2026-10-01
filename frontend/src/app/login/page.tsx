@@ -58,9 +58,11 @@ export default function LoginPage() {
         <div className="absolute -bottom-40 -right-20 w-[28rem] h-[28rem] rounded-full border border-white/10" />
 
         <div className="relative text-center text-white px-12">
-          <div className="w-16 h-16 rounded-2xl bg-white/10 text-cream flex items-center justify-center mx-auto mb-6 shadow-sm">
-            <LuGraduationCap className="w-9 h-9" />
-          </div>
+          <img
+            src="/logo.png"
+            alt="Tutor Lagbe Logo"
+            className="w-20 h-20 rounded-2xl mx-auto mb-6 shadow-md object-cover"
+          />
           <h1 className="font-display text-5xl font-semibold mb-4">
             Tutor Lagbe
           </h1>
@@ -76,7 +78,11 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-10">
-            <span className="text-4xl">🎓</span>
+            <img
+              src="/logo.png"
+              alt="Tutor Lagbe"
+              className="w-14 h-14 rounded-2xl mx-auto mb-2 shadow-xs object-cover"
+            />
             <h1 className="font-display text-2xl font-semibold text-ink mt-3">
               Tutor Lagbe
             </h1>

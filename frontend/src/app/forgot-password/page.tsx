@@ -28,9 +28,11 @@ export default function ForgotPasswordPage() {
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <div className="lg:hidden text-center mb-10">
-            <div className="w-12 h-12 rounded-xl bg-primary-800 text-cream flex items-center justify-center mx-auto mb-3 shadow-xs">
-              <LuGraduationCap className="w-7 h-7" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Tutor Lagbe"
+              className="w-14 h-14 rounded-2xl mx-auto mb-2 shadow-xs object-cover"
+            />
             <h1 className="font-display text-2xl font-semibold text-ink mt-3">
               Tutor Lagbe
             </h1>

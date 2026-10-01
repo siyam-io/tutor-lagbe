@@ -76,9 +76,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                <LuGraduationCap className="w-6 h-6 text-cream" />
-              </div>
+              <img
+                src="/logo.png"
+                alt="Tutor Lagbe"
+                className="w-10 h-10 rounded-xl object-cover group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="flex flex-col">
                 <span className="font-display font-semibold text-xl text-white">
                   Tutor Lagbe

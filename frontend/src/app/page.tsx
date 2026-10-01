@@ -182,54 +182,40 @@ export default function HomePage() {
 
       <main>
         {/* ---------- Hero ------------------------------------------------ */}
-        <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32">
+        <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-              {/* Copy */}
-              <div className="animate-fade-up">
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-stone bg-white text-[11px] font-medium uppercase tracking-widest text-ink-muted">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sage-700" />
-                  বাংলাদেশের বিশ্বস্ত টিউটর ম্যাচিং
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              {/* Copy & Search Box (7 Cols on desktop) */}
+              <div className="lg:col-span-7 animate-fade-up">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone/80 bg-white/80 text-[11px] font-semibold uppercase tracking-wider text-primary-800 shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  বাংলাদেশের বিশ্বস্ত টিউটর প্ল্যাটফর্ম
                 </span>
 
-                <h1 className="mt-7 font-display text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.05] tracking-tight text-ink text-balance">
+                <h1 className="mt-5 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.12] tracking-tight text-ink text-balance">
                   সন্তানের পড়াশোনায়{" "}
-                  <em className="italic text-primary-700">সেরা শিক্ষক</em>,
-                  নিশ্চিন্ত অভিভাবক
+                  <span className="text-primary-800 underline decoration-sage/30 decoration-wavy">
+                    সেরা শিক্ষক
+                  </span>
+                  , নিশ্চিন্ত অভিভাবক
                 </h1>
 
-                <p className="mt-6 text-lg text-ink-muted leading-relaxed max-w-xl">
-                  বুয়েট, ঢাবি, মেডিকেল সহ দেশের শীর্ষ প্রতিষ্ঠানের ভেরিফাইড
-                  শিক্ষকদের সাথে সরাসরি সংযোগ। ফ্রি ট্রায়াল ক্লাস এবং সম্পূর্ণ
-                  নিরাপদ পেমেন্ট।
+                <p className="mt-4 text-base sm:text-lg text-ink-muted leading-relaxed max-w-xl font-bangla">
+                  বুয়েট, ঢাবি, মেডিকেল সহ দেশের শীর্ষ প্রতিষ্ঠানের ভেরিফাইড শিক্ষকদের সাথে সরাসরি সংযোগ। ফ্রি ট্রায়াল ক্লাস এবং সম্পূর্ণ নিরাপদ পেমেন্ট।
                 </p>
 
-                <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                  <Link href="/find-tutor" className="btn-primary">
-                    <HiOutlineSearch className="w-4 h-4" />
-                    টিউটর খুঁজুন
-                  </Link>
-                  <Link href="/tuitions" className="btn-secondary">
-                    টিউশন পোস্ট করুন
-                  </Link>
-                </div>
-
-                <div className="mt-10">
-                  <TrustHeroBadge />
-                </div>
-
-                {/* Instant Tutor Matcher */}
-                <div className="mt-10 rounded-card border border-stone bg-white p-6 shadow-soft-md">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Streamlined, High-End Search Module */}
+                <div className="mt-8 p-4 sm:p-5 rounded-2xl border border-stone/80 bg-white shadow-md">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label htmlFor="hero-subject" className="label">
+                      <label htmlFor="hero-subject" className="text-xs font-bold text-ink-muted uppercase tracking-wider block mb-1.5 pl-0.5">
                         পছন্দের বিষয় / Subject
                       </label>
                       <select
                         id="hero-subject"
                         value={searchSubject}
                         onChange={(e) => setSearchSubject(e.target.value)}
-                        className="input-field"
+                        className="w-full bg-clay-light/50 border border-stone/80 rounded-xl px-3.5 py-2.5 text-sm text-ink font-medium focus:ring-2 focus:ring-primary-700/20 focus:border-primary-700 outline-none transition-all"
                       >
                         <option value="">সকল বিষয় (All Subjects)</option>
                         {subjects.map((s) => (
@@ -241,14 +227,14 @@ export default function HomePage() {
                     </div>
 
                     <div>
-                      <label htmlFor="hero-location" className="label">
+                      <label htmlFor="hero-location" className="text-xs font-bold text-ink-muted uppercase tracking-wider block mb-1.5 pl-0.5">
                         আপনার জেলা / Location
                       </label>
                       <select
                         id="hero-location"
                         value={searchLocation}
                         onChange={(e) => setSearchLocation(e.target.value)}
-                        className="input-field"
+                        className="w-full bg-clay-light/50 border border-stone/80 rounded-xl px-3.5 py-2.5 text-sm text-ink font-medium focus:ring-2 focus:ring-primary-700/20 focus:border-primary-700 outline-none transition-all"
                       >
                         <option value="">সকল এলাকা (All Locations)</option>
                         <option value="Dhaka">ঢাকা (Dhaka)</option>
@@ -261,57 +247,75 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={handleSearch}
-                    className="btn-primary w-full mt-5"
-                  >
-                    <HiOutlineSearch className="w-5 h-5" />
-                    টিউটর খুঁজুন
-                  </button>
-
-                  <div className="flex flex-wrap items-center justify-between gap-3 mt-5 pt-4 border-t border-stone text-xs text-ink-muted">
-                    <span className="inline-flex items-center gap-1.5">
-                      <HiShieldCheck className="w-4 h-4 text-sage-700" />
-                      ১০০% বিনা খরচে খুঁজুন • অভিভাবকের কোনো ফি নেই
-                    </span>
+                  <div className="mt-4 flex flex-col sm:flex-row items-center gap-3">
+                    <button
+                      onClick={handleSearch}
+                      className="w-full sm:flex-1 btn-primary py-3 px-6 text-sm font-semibold flex items-center justify-center gap-2 shadow-xs hover:shadow-sm"
+                    >
+                      <HiOutlineSearch className="w-4 h-4" />
+                      <span>টিউটর খুঁজুন</span>
+                    </button>
                     <Link
                       href="/tuitions"
-                      className="font-medium text-primary-700 hover:text-primary-800 transition-colors duration-300"
+                      className="w-full sm:w-auto px-5 py-3 rounded-xl border border-stone text-xs font-semibold text-ink hover:text-primary-800 hover:bg-clay-light text-center transition-colors font-bangla"
                     >
-                      টিউটর রিকুয়েস্ট পোস্ট করতে চান? &rarr;
+                      টিউশন পোস্ট করুন
                     </Link>
                   </div>
                 </div>
+
+                {/* Clean, Non-Congested Trust Badges Strip */}
+                <div className="mt-5 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-ink-muted">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <HiShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span>১০০% ভেরিফাইড শিক্ষক</span>
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <HiOutlineCheckCircle className="w-4 h-4 text-primary-700 flex-shrink-0" />
+                    <span>ফ্রি ডেমো ক্লাস গ্যারান্টি</span>
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <HiStar className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                    <strong className="text-ink">৪.৯/৫</strong>
+                    <span>(২,০০০+ অভিভাবকের আস্থা)</span>
+                  </span>
+                </div>
               </div>
 
-              {/* Arch visual — the iconic architectural moment */}
-              <div className="relative animate-fade-in">
+              {/* Right Visual (5 Cols on desktop) */}
+              <div className="lg:col-span-5 relative animate-fade-in">
                 <div className="relative mx-auto w-full max-w-sm sm:max-w-md">
-                  <div className="relative aspect-[3/4] rounded-arch border border-stone bg-gradient-to-b from-clay via-clay-light to-canvas shadow-soft-lg overflow-hidden">
-                    {/* Concentric botanical rings */}
+                  <div className="relative aspect-[3/4] rounded-arch border border-stone/80 bg-gradient-to-b from-clay via-clay-light to-canvas shadow-md overflow-hidden flex items-center justify-center">
+                    {/* Concentric rings */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-4/5 aspect-square rounded-full border border-stone/80" />
+                      <div className="w-4/5 aspect-square rounded-full border border-stone/60" />
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-3/5 aspect-square rounded-full border border-sage/30" />
                     </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-2/5 aspect-square rounded-full bg-white/70 backdrop-blur-sm border border-stone flex items-center justify-center shadow-soft animate-sway">
-                        <HiOutlineAcademicCap className="w-14 h-14 text-sage-700" />
-                      </div>
+                    
+                    {/* Real Logo Emblem in Arch */}
+                    <div className="relative z-10 w-28 h-28 rounded-3xl bg-white p-3 shadow-lg border border-stone/60 flex items-center justify-center animate-sway">
+                      <img
+                        src="/logo.png"
+                        alt="Tutor Lagbe Emblem"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
                     </div>
                   </div>
 
-                  {/* Floating glass stat card */}
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 sm:left-6 sm:translate-x-0 w-[88%] sm:w-auto">
-                    <div className="flex items-center gap-4 rounded-card border border-stone bg-white/80 backdrop-blur-md px-5 py-4 shadow-soft-lg">
-                      <span className="stat-icon">🛡️</span>
+                  {/* Floating Trust Card */}
+                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0 w-[90%] sm:w-auto">
+                    <div className="flex items-center gap-3.5 rounded-2xl border border-stone bg-white/95 backdrop-blur-md px-5 py-3.5 shadow-md">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                        <HiShieldCheck className="w-6 h-6" />
+                      </div>
                       <div>
-                        <p className="font-display text-xl font-semibold text-ink leading-none">
-                          ৪.৯/৫
+                        <p className="font-display text-lg font-bold text-ink leading-tight">
+                          ৪.৯ / ৫.০ রেটিং
                         </p>
-                        <p className="text-xs text-ink-muted mt-1">
-                          ১২,০০০+ অভিভাবকের আস্থা
+                        <p className="text-xs text-ink-muted mt-0.5 font-bangla">
+                          ১২,০০০+ অভিভাবকের বিশ্বস্ততা
                         </p>
                       </div>
                     </div>

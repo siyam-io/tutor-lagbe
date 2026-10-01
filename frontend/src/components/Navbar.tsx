@@ -51,9 +51,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-            <div className="w-10 h-10 rounded-xl bg-primary-800 text-cream flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-primary-900 transition-all duration-300">
-              <LuGraduationCap className="w-6 h-6" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Tutor Lagbe Logo"
+              className="w-10 h-10 rounded-xl shadow-xs group-hover:scale-105 transition-transform duration-300 object-cover"
+            />
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl tracking-tight text-ink group-hover:text-primary-800 transition-colors duration-300">
                 Tutor Lagbe

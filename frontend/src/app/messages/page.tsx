@@ -150,21 +150,21 @@ export default function MessagesPage() {
       <Navbar />
 
       {/* Main Chat App Area */}
-      <div className="flex-1 flex overflow-hidden max-w-7xl w-full mx-auto sm:px-4 sm:py-3">
-        <div className="flex-1 flex bg-white sm:rounded-2xl border border-stone/80 shadow-xs overflow-hidden">
+      <div className="flex-1 flex overflow-hidden w-full max-w-7xl mx-auto px-2 sm:px-6 py-2 sm:py-4">
+        <div className="flex-1 flex bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
           {/* Conversation Sidebar */}
           <aside
-            className={`w-full sm:w-84 lg:w-96 border-r border-stone/70 flex flex-col bg-white/60 ${
+            className={`w-full sm:w-80 lg:w-96 border-r border-stone-200/80 flex flex-col bg-slate-50/50 ${
               activeChatId ? "hidden sm:flex" : "flex"
             }`}
           >
             {/* Header & Search */}
-            <div className="p-4 border-b border-stone/60">
+            <div className="p-4 border-b border-stone-200/80 bg-white">
               <div className="flex items-center justify-between mb-3">
-                <h1 className="font-display text-xl font-bold text-ink">
+                <h1 className="font-display text-lg font-bold text-ink">
                   ইনবক্স (Messages)
                 </h1>
-                <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-primary-50 text-primary-800">
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
                   {conversations.length} Contacts
                 </span>
               </div>
@@ -176,35 +176,35 @@ export default function MessagesPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="নাম বা বিষয় খুঁজুন..."
-                  className="w-full bg-clay-light/60 border border-stone/70 rounded-xl pl-10 pr-4 py-2 text-xs text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-primary-700/20 focus:border-primary-700 transition-all"
+                  className="w-full bg-slate-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2 text-xs text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all font-bangla"
                 />
               </div>
             </div>
 
             {/* Conversation List */}
-            <div className="flex-1 overflow-y-auto divide-y divide-stone/40">
+            <div className="flex-1 overflow-y-auto divide-y divide-stone-100">
               {filteredConversations.map((conv) => {
                 const isActive = activeChatId === conv.id;
                 return (
                   <button
                     key={conv.id}
                     onClick={() => setActiveChatId(conv.id)}
-                    className={`w-full p-4 flex items-start gap-3.5 transition-colors text-left focus:outline-none ${
+                    className={`w-full p-4 flex items-start gap-3.5 transition-all text-left focus:outline-none ${
                       isActive
-                        ? "bg-primary-50/70 border-l-4 border-primary-800"
-                        : "hover:bg-clay-light/50 border-l-4 border-transparent"
+                        ? "bg-white border-l-4 border-emerald-600 shadow-xs"
+                        : "hover:bg-slate-100/70 border-l-4 border-transparent"
                     }`}
                   >
                     <div className="relative flex-shrink-0">
                       <img
                         src={conv.avatar}
                         alt={conv.name}
-                        className="w-12 h-12 rounded-xl object-cover border border-stone/60"
+                        className="w-12 h-12 rounded-xl object-cover border border-stone-200"
                       />
                       {conv.online ? (
                         <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full ring-2 ring-white" />
                       ) : (
-                        <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-stone-400 rounded-full ring-2 ring-white" />
+                        <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-stone-300 rounded-full ring-2 ring-white" />
                       )}
                     </div>
 
@@ -218,16 +218,16 @@ export default function MessagesPage() {
                         </span>
                       </div>
 
-                      <p className="text-xs text-primary-700 font-medium truncate mb-1">
+                      <p className="text-xs text-emerald-700 font-medium truncate mb-1">
                         {conv.role}
                       </p>
 
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-xs text-ink-muted truncate">
+                        <p className="text-xs text-ink-muted truncate font-bangla">
                           {conv.lastMessage}
                         </p>
                         {conv.unread > 0 && (
-                          <span className="w-4 h-4 rounded-full bg-primary-800 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
+                          <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
                             {conv.unread}
                           </span>
                         )}
@@ -241,18 +241,18 @@ export default function MessagesPage() {
 
           {/* Active Chat Conversation Area */}
           <main
-            className={`flex-1 flex flex-col bg-canvas/30 ${
+            className={`flex-1 flex flex-col bg-slate-50/30 ${
               activeChatId ? "flex" : "hidden sm:flex"
             }`}
           >
             {activeConversation ? (
               <>
                 {/* Chat Top Header */}
-                <div className="px-5 py-3.5 bg-white border-b border-stone/70 flex items-center justify-between">
+                <div className="px-5 py-3 bg-white border-b border-stone-200/80 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setActiveChatId("")}
-                      className="sm:hidden p-2 -ml-2 rounded-lg text-ink-muted hover:text-ink hover:bg-clay-light transition-colors"
+                      className="sm:hidden p-2 -ml-2 rounded-lg text-ink-muted hover:text-ink hover:bg-slate-100 transition-colors"
                       aria-label="Back to contacts"
                     >
                       <LuArrowLeft className="w-5 h-5" />
@@ -262,11 +262,11 @@ export default function MessagesPage() {
                       <img
                         src={activeConversation.avatar}
                         alt={activeConversation.name}
-                        className="w-10 h-10 rounded-xl object-cover border border-stone/60"
+                        className="w-10 h-10 rounded-xl object-cover border border-stone-200"
                       />
                       <span
                         className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full ring-2 ring-white ${
-                          activeConversation.online ? "bg-emerald-500" : "bg-stone-400"
+                          activeConversation.online ? "bg-emerald-500" : "bg-stone-300"
                         }`}
                       />
                     </div>
@@ -276,10 +276,10 @@ export default function MessagesPage() {
                         {activeConversation.name}
                       </h2>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[11px] text-primary-700 font-medium">
+                        <span className="text-[11px] text-emerald-700 font-medium">
                           {activeConversation.role}
                         </span>
-                        <span className="text-stone/60">•</span>
+                        <span className="text-stone-300">•</span>
                         <span className="text-[11px] text-emerald-600 font-medium">
                           {activeConversation.online ? "অনলাইন (Active Now)" : "অফলাইন"}
                         </span>
@@ -290,13 +290,13 @@ export default function MessagesPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setCallAlert(`সরাসরি কল নম্বর: ${activeConversation.phone}`)}
-                      className="p-2.5 rounded-xl border border-stone/70 text-ink hover:text-primary-800 hover:bg-clay-light transition-colors"
+                      className="p-2 rounded-xl border border-stone-200 text-ink hover:text-emerald-700 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors"
                       title="কল করুন"
                     >
                       <LuPhone className="w-4 h-4" />
                     </button>
                     <button
-                      className="p-2.5 rounded-xl border border-stone/70 text-ink hover:text-primary-800 hover:bg-clay-light transition-colors"
+                      className="p-2 rounded-xl border border-stone-200 text-ink hover:text-emerald-700 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors"
                       title="More options"
                     >
                       <FiMoreVertical className="w-4 h-4" />
@@ -306,24 +306,24 @@ export default function MessagesPage() {
 
                 {/* Call Alert Toast (if triggered) */}
                 {callAlert && (
-                  <div className="bg-primary-800 text-white text-xs py-2 px-4 flex items-center justify-between">
+                  <div className="bg-emerald-800 text-white text-xs py-2 px-4 flex items-center justify-between">
                     <span>{callAlert}</span>
-                    <button onClick={() => setCallAlert(null)} className="font-bold text-sm">
+                    <button onClick={() => setCallAlert(null)} className="font-bold text-sm hover:opacity-80">
                       ✕
                     </button>
                   </div>
                 )}
 
                 {/* Safety & Trust Escrow Banner */}
-                <div className="bg-amber-50/90 border-b border-amber-200/80 px-4 py-2.5 flex items-center gap-2.5 text-xs text-amber-900">
-                  <LuShieldAlert className="w-4 h-4 text-amber-700 flex-shrink-0" />
-                  <span className="leading-tight font-bangla">
+                <div className="bg-amber-50/90 border-b border-amber-200/80 px-4 py-2 flex items-center gap-2.5 text-xs text-amber-900">
+                  <LuShieldAlert className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                  <span className="leading-tight font-bangla text-[12px]">
                     <strong>নিরাপত্তা পরামর্শ:</strong> ডেমো ক্লাস নেওয়ার আগে কোনো অগ্রিম টাকা সরাসরি ব্যক্তিগত নাম্বারে লেনদেন করবেন না।
                   </span>
                 </div>
 
                 {/* Messages Feed */}
-                <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50/40">
                   {currentMessages.map((msg) => {
                     const isMe = msg.sender === "me";
                     return (
@@ -334,18 +334,18 @@ export default function MessagesPage() {
                         <div
                           className={`max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-sm shadow-xs ${
                             isMe
-                              ? "bg-primary-800 text-white rounded-br-none"
-                              : "bg-white text-ink border border-stone/80 rounded-bl-none"
+                              ? "bg-emerald-700 text-white rounded-br-xs"
+                              : "bg-white text-ink border border-stone-200/90 rounded-bl-xs"
                           }`}
                         >
                           <p className="leading-relaxed font-bangla">{msg.text}</p>
                           <div
                             className={`flex items-center justify-end gap-1.5 mt-1 text-[10px] ${
-                              isMe ? "text-cream/80" : "text-ink-muted/80"
+                              isMe ? "text-emerald-100" : "text-ink-muted/80"
                             }`}
                           >
                             <span>{msg.time}</span>
-                            {isMe && <LuCheckCheck className="w-3.5 h-3.5 text-cream" />}
+                            {isMe && <LuCheckCheck className="w-3.5 h-3.5 text-emerald-200" />}
                           </div>
                         </div>
                       </div>
@@ -354,7 +354,7 @@ export default function MessagesPage() {
                 </div>
 
                 {/* Quick Inquiry Chips */}
-                <div className="px-4 py-2.5 bg-white/70 border-t border-stone/60 flex items-center gap-2 overflow-x-auto scrollbar-none">
+                <div className="px-4 py-2.5 bg-white border-t border-stone-200/80 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   <span className="text-[11px] font-bold text-ink-muted flex-shrink-0 font-bangla">
                     দ্রুত প্রশ্ন:
                   </span>
@@ -362,7 +362,7 @@ export default function MessagesPage() {
                     <button
                       key={chip}
                       onClick={() => setNewMessage(chip)}
-                      className="text-xs whitespace-nowrap px-3.5 py-1.5 rounded-full bg-clay-light/80 hover:bg-primary-50 hover:text-primary-800 text-ink border border-stone/70 transition-all font-bangla flex-shrink-0"
+                      className="text-xs whitespace-nowrap px-3.5 py-1.5 rounded-full bg-slate-100/80 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-ink border border-stone-200 transition-all font-bangla flex-shrink-0"
                     >
                       {chip}
                     </button>
@@ -370,12 +370,12 @@ export default function MessagesPage() {
                 </div>
 
                 {/* Message Input Box */}
-                <div className="p-4 bg-white border-t border-stone/70">
+                <div className="p-3.5 bg-white border-t border-stone-200/80">
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       aria-label="ফাইল যুক্ত করুন"
-                      className="p-2.5 rounded-xl border border-stone/70 text-ink-muted hover:text-ink hover:bg-clay-light transition-colors"
+                      className="p-2.5 rounded-xl border border-stone-200 text-ink-muted hover:text-ink hover:bg-slate-100 transition-colors"
                     >
                       <LuPaperclip className="w-4 h-4" />
                     </button>
@@ -386,16 +386,16 @@ export default function MessagesPage() {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                       placeholder="এখানে আপনার মেসেজ লিখুন... (Type a message)"
-                      className="flex-1 bg-clay-light/40 border border-stone/80 rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-primary-700/20 focus:border-primary-700 transition-all font-bangla"
+                      className="flex-1 bg-slate-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all font-bangla"
                     />
 
                     <button
                       type="button"
                       onClick={handleSendMessage}
                       disabled={!newMessage.trim()}
-                      className="p-2.5 px-4 rounded-xl bg-primary-800 text-white font-medium text-xs flex items-center gap-1.5 hover:bg-primary-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
+                      className="p-2.5 px-4 rounded-xl bg-emerald-700 text-white font-medium text-xs flex items-center gap-1.5 hover:bg-emerald-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
                     >
-                      <span>পাঠান</span>
+                      <span className="font-bangla font-semibold">পাঠান</span>
                       <LuSend className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -404,13 +404,13 @@ export default function MessagesPage() {
             ) : (
               /* Empty selection state */
               <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-primary-50 text-primary-800 flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4 border border-emerald-100">
                   <LuMessageSquare className="w-8 h-8" />
                 </div>
                 <h3 className="font-display text-lg font-bold text-ink">
                   একটি চ্যাট নির্বাচন করুন
                 </h3>
-                <p className="text-sm text-ink-muted max-w-sm mt-1 leading-relaxed">
+                <p className="text-sm text-ink-muted max-w-sm mt-1 leading-relaxed font-bangla">
                   বাম পাশের তালিকা থেকে যেকোনো টিউটর বা শিক্ষার্থীর মেসেজে ক্লিক করে কথা বলা শুরু করুন।
                 </p>
               </div>
