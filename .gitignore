@@ -11,7 +11,8 @@ build/
 *.tsbuildinfo
 frontend/tsconfig.tsbuildinfo
 
-# AI Agents & Tooling Config
+# Documentation & AI Agents Config
+docs/
 .ai/
 .agents/
 .freebuff/
