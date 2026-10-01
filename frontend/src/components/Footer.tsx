@@ -10,6 +10,12 @@ import {
   FaInstagram,
   FaLinkedin,
 } from "react-icons/fa";
+import {
+  LuGraduationCap,
+  LuShieldCheck,
+  LuLock,
+  LuHeadphones,
+} from "react-icons/lu";
 
 const footerLinks = {
   Company: [
@@ -41,17 +47,25 @@ const socialLinks = [
 
 const trustBadges = [
   {
-    icon: "🛡️",
+    icon: LuShieldCheck,
     title: "১০০% ভেরিফাইড শিক্ষক",
     sub: "NID ও সার্টিফিকেট যাচাইকৃত",
   },
-  { icon: "🎓", title: "ফ্রি ট্রায়াল ক্লাস", sub: "পছন্দ হলে তবেই কনফার্ম করুন" },
   {
-    icon: "🔒",
+    icon: LuGraduationCap,
+    title: "ফ্রি ট্রায়াল ক্লাস",
+    sub: "পছন্দ হলে তবেই কনফার্ম করুন",
+  },
+  {
+    icon: LuLock,
     title: "নিরাপদ পেমেন্ট গেটওয়ে",
     sub: "বিকাশ, নগদ ও ব্যাংক ট্রান্সফার",
   },
-  { icon: "📞", title: "২৪/৭ কাস্টমার সাপোর্ট", sub: "যেকোনো তথ্যে পাশে আছি" },
+  {
+    icon: LuHeadphones,
+    title: "২৪/৭ কাস্টমার সাপোর্ট",
+    sub: "যেকোনো তথ্যে পাশে আছি",
+  },
 ];
 
 export default function Footer() {
@@ -61,11 +75,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 mb-6">
-              <span className="text-2xl">🎓</span>
-              <span className="font-display font-semibold text-xl text-white">
-                Tutor Lagbe
-              </span>
+            <Link href="/" className="flex items-center gap-3 mb-6 group">
+              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                <LuGraduationCap className="w-6 h-6 text-cream" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-display font-semibold text-xl text-white">
+                  Tutor Lagbe
+                </span>
+                <span className="text-xs text-white/40 font-bangla">
+                  টিউটর লাগবে
+                </span>
+              </div>
             </Link>
             <p className="text-white/60 mb-8 max-w-sm leading-relaxed">
               Bangladesh&apos;s premier platform connecting students with
@@ -112,16 +133,21 @@ export default function Footer() {
 
         {/* Trust Badges & Guarantee Strip */}
         <div className="mt-16 pt-12 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
-          {trustBadges.map((badge) => (
-            <div
-              key={badge.title}
-              className="p-5 rounded-card bg-white/5 border border-white/10"
-            >
-              <span className="text-2xl mb-2 block">{badge.icon}</span>
-              <p className="font-medium text-white text-sm">{badge.title}</p>
-              <p className="text-xs text-white/50 mt-1.5">{badge.sub}</p>
-            </div>
-          ))}
+          {trustBadges.map((badge) => {
+            const Icon = badge.icon;
+            return (
+              <div
+                key={badge.title}
+                className="p-5 rounded-card bg-white/5 border border-white/10 flex flex-col items-center justify-center hover:bg-white/10 transition-colors duration-200"
+              >
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-3">
+                  <Icon className="w-5 h-5 text-cream" />
+                </div>
+                <p className="font-medium text-white text-sm">{badge.title}</p>
+                <p className="text-xs text-white/50 mt-1.5">{badge.sub}</p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Bottom */}

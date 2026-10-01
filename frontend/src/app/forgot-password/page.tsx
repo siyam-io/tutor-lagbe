@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { HiOutlineMail } from "react-icons/hi";
+import { LuKeyRound, LuGraduationCap } from "react-icons/lu";
 
 export default function ForgotPasswordPage() {
   return (
@@ -11,7 +12,9 @@ export default function ForgotPasswordPage() {
         <div className="absolute -bottom-40 -right-20 w-[28rem] h-[28rem] rounded-full border border-white/10" />
 
         <div className="relative text-center text-white px-12">
-          <span className="text-6xl mb-6 block">🔑</span>
+          <div className="w-16 h-16 rounded-2xl bg-white/10 text-cream flex items-center justify-center mx-auto mb-6 shadow-sm">
+            <LuKeyRound className="w-8 h-8" />
+          </div>
           <h1 className="font-display text-4xl font-semibold mb-4">
             Forgot Password?
           </h1>
@@ -25,7 +28,9 @@ export default function ForgotPasswordPage() {
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <div className="lg:hidden text-center mb-10">
-            <span className="text-4xl">🎓</span>
+            <div className="w-12 h-12 rounded-xl bg-primary-800 text-cream flex items-center justify-center mx-auto mb-3 shadow-xs">
+              <LuGraduationCap className="w-7 h-7" />
+            </div>
             <h1 className="font-display text-2xl font-semibold text-ink mt-3">
               Tutor Lagbe
             </h1>
